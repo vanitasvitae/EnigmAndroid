@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity" >
+
+    <item android:id="@+id/action_version"
+        android:title="@string/action_version"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_reset"
+        android:orderInCategory="99"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_reset" />
+</menu>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EnigmAndroid</string>
+    <string name="action_settings">Version</string>
+    <string name="hint_enigma_usertype">Hier Tippen</string>
+    <string name="hint_enigma_code">Enigma-Code</string>
+    <string name="hint_enigma_plugboard">Steckerbrett (AZ,BE...)</string>
+    <string name="hint_w1">Walze 1</string>
+    <string name="hint_w2">Walze 2</string>
+    <string name="hint_w3">Walze 3</string>
+    <string name="hint_ukw">Umkehr-\nWalze</string>
+    <string name="hint_w1pos">Position\nWalze 1</string>
+    <string name="hint_w2pos">Position\nWalze 2</string>
+    <string name="hint_w3pos">Position\nWalze 3</string>
+    <string name="button_crypt">Ver-/Entschlüsseln</string>
+
+    <string-array name="enigma_walzen">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+    </string-array>
+    <string-array name="enigma_ukw">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+    <string-array name="positions">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </string-array>
+</resources>
