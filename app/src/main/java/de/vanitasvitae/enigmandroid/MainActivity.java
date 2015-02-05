@@ -75,7 +75,9 @@ public class MainActivity extends Activity
             enigma = new Enigma(null,null);
         }
         catch(Plugboard.PlugAlreadyUsedException e)
-        {}
+        {
+            //There is nothing that could possibly go wrong here.
+        }
 
         char[][] pbconf = null;
         try
@@ -97,7 +99,7 @@ public class MainActivity extends Activity
         catch(Plugboard.PlugAlreadyUsedException e)
         {
             Toast.makeText(this.getApplicationContext(), e.getMessage(),
-                    Toast.LENGTH_SHORT).show();;
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -174,6 +176,8 @@ public class MainActivity extends Activity
         plugboard = (EditText) findViewById(R.id.plugboard);
         input = (EditText) findViewById(R.id.input);
         output = (EditText) findViewById(R.id.output);
+
+        input.requestFocus();
     }
 
     public void updateSpinner(int[] c)

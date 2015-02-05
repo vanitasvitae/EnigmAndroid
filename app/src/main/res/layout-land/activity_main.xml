@@ -1,0 +1,168 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lin_lay_names_1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_ukw"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_w3"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_w2"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_w1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_w3pos"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_w2pos"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_w1pos"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lin_lay_1"
+        android:layout_below="@+id/lin_lay_names_1">
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/ukw">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/w3">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/w2">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/w1">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/w3pos">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/w2pos">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="wrap_content"
+            android:id="@+id/w1pos">
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons_lay"
+        android:layout_below="@+id/lin_lay_1"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="75"
+            android:layout_height="match_parent"
+            android:id="@+id/plugboard"
+            android:hint="@string/hint_enigma_plugboard">
+
+        </EditText>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_layer"
+            android:id="@+id/button_crypt"
+            android:onClick="crypto"
+            android:text="@string/button_crypt"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttons_lay"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/text_layer">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:id="@+id/input"
+            android:hint="@string/hint_enigma_usertype" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:editable="false"
+            android:textIsSelectable="true"
+            android:id="@+id/output"
+            android:hint="@string/hint_enigma_code"/>
+
+        </LinearLayout>
+
+
+</RelativeLayout>
