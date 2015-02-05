@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">EnigmAndroid</string>
+    <string name="action_version">Version</string>
+    <string name="action_reset">Zurücksetzen</string>
     <string name="action_settings">Version</string>
     <string name="hint_enigma_usertype">Hier Tippen</string>
     <string name="hint_enigma_code">Enigma-Code</string>
@@ -14,6 +16,9 @@
     <string name="hint_w2pos">Position\nWalze 2</string>
     <string name="hint_w3pos">Position\nWalze 3</string>
     <string name="button_crypt">Ver-/Entschlüsseln</string>
+    <string name="error_parsing_plugs">Fehler: Fehlerhafte Steckerbrettkonfiguration.</string>
+    <string name="error_unable_to_plug_a_b">Kann Stecker nicht setzen: </string>
+    <string name="error_plug_already_in_use">Fehler: Einer oder mehrere dieser Stecker sind bereits in Benutzung: </string>
 
     <string-array name="enigma_walzen">
         <item>I</item>
