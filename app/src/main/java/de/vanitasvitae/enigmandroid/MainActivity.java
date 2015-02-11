@@ -25,18 +25,19 @@ public class MainActivity extends Activity
 
     private Enigma enigma;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_main);
 
         this.initLayout();
         this.reset();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        this.getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -48,13 +49,13 @@ public class MainActivity extends Activity
         int id = item.getItemId();
         if (id == R.id.action_version)
         {
-            Toast.makeText(getApplicationContext(), R.string.version,
+            Toast.makeText(this.getApplicationContext(), R.string.version,
                     Toast.LENGTH_SHORT).show();
             return true;
         }
         else if(id == R.id.action_reset)
         {
-            reset();
+            this.reset();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -92,7 +93,7 @@ public class MainActivity extends Activity
         }
         try
         {
-            enigma.konfiguration(conf);
+            enigma.setConfiguration(conf);
             enigma.setPlugboard(pbconf);
 
         }
@@ -110,7 +111,7 @@ public class MainActivity extends Activity
         m = Enigma.prepare(m);
         input.setText(m);
         output.setText(enigma.encrypt(m));
-        updateSpinner(enigma.getKonfiguration());
+        updateSpinner(enigma.getConfiguration());
 
     }
 

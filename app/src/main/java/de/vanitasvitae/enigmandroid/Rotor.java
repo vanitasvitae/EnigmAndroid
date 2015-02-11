@@ -31,14 +31,15 @@ public class Rotor
 	public static final Integer[] backwardsRotor4 = {7,25,22,21,0,17,19,13,11,6,20,15,23,16,2,4,9,12,1,18,10,3,24,14,8,5};
 	public static final Integer[] backwardsRotor5 = {16,2,24,11,23,22,4,13,5,19,25,14,18,12,21,9,20,3,10,6,8,0,17,15,7,1};
 
-	//Original reversing rotors					  	A,B,C, D, E,F, G, H, I, J,K, L,M,N, O, P, Q, R, S, T, U, V,W, X,Y,Z
-	public static final Integer[] reversingRotorA = {4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3};
-	public static final Integer[] reversingRotorB = {24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19};
-	public static final Integer[] reversingRotorC = {5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11};
+	//Original reflector rotors					  	A,B,C, D, E,F, G, H, I, J,K, L,M,N, O, P, Q, R, S, T, U, V,W, X,Y,Z
+	public static final Integer[] reflectorA = {4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3};
+	public static final Integer[] reflectorB = {24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19};
+	public static final Integer[] reflectorC = {5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11};
 
+    //Atributes of the rotor
 	private Integer[] rotor;        //choose one of rotor1-5
 	private Integer[] rrotor;       //choose one of backwardsRotor1-5
-	private int ringsetting;
+	private int ringsetting;    //TODO: Add functionality to this.
 	private int counter;
 	private String name;
     private int type;
@@ -100,7 +101,7 @@ public class Rotor
 		}
 		case 'A': 
 		{
-			this.rotor = reversingRotorA;
+			this.rotor = reflectorA;
 			this.rrotor = null;
 			this.counter = 0;
 			this.name="A";
@@ -109,7 +110,7 @@ public class Rotor
 		}
 		case 'B': 
 		{
-			this.rotor = reversingRotorB;
+			this.rotor = reflectorB;
 			this.rrotor = null;
 			this.counter = 0;
 			this.name="B";
@@ -118,7 +119,7 @@ public class Rotor
 		}
 		case 'C': 
 		{
-			this.rotor = reversingRotorC;
+			this.rotor = reflectorC;
 			this.rrotor = null;
 			this.counter = 0;
 			this.name="C";
@@ -166,6 +167,15 @@ public class Rotor
 	}
 
     /**
+     * Return true, if rotor is at a position, where it turns over the next rotor
+     * @return boolean
+     */
+    public boolean isAtTurnoverPosition()
+    {
+        return this.getCounter() == this.getRingsetting();  //Todo: this ist still wrong.
+    }
+
+    /**
      * Return the name of the rotor
      * @return name
      */
@@ -184,8 +194,8 @@ public class Rotor
 	}
 
     /**
-     * Returns the integer, which was used to create this rotor. TODO: This is too resource hungry.
-     * @return
+     * Returns the integer, which was used to create this rotor.
+     * @return the type of the rotor
      */
     public int getType()
     {
