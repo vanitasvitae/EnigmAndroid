@@ -39,7 +39,9 @@ public class Rotor
     //Atributes of the rotor
 	private Integer[] rotor;        //choose one of rotor1-5
 	private Integer[] rrotor;       //choose one of backwardsRotor1-5
-	private int ringsetting;    //TODO: Add functionality to this.
+	private int ringsetting;        //http://people.physik.hu-berlin.de/~palloks/js/enigma/enigma-u_v20.html
+                                    //My fault?
+    private int turnOver;
 	private int counter;
 	private String name;
     private int type;
@@ -60,6 +62,7 @@ public class Rotor
 			this.rrotor = backwardsRotor1;
 			this.counter = setting;
 			this.name="I";
+            this.turnOver = 17; //"Royal"
             this.type = 1;
 			break;
 		}
@@ -69,6 +72,7 @@ public class Rotor
 			this.rrotor = backwardsRotor2;
 			this.counter = setting;
 			this.name="II";
+            this.turnOver = 5; //"Flags"
             this.type = 2;
 			break;
 		}
@@ -78,6 +82,7 @@ public class Rotor
 			this.rrotor = backwardsRotor3;
 			this.counter = setting;
 			this.name="III";
+            this.turnOver = 22; //"Wave"
             this.type = 3;
 			break;
 		}
@@ -87,6 +92,7 @@ public class Rotor
 			this.rrotor = backwardsRotor4;
 			this.counter = setting;
 			this.name="IV";
+            this.turnOver = 10; //"Kings"
             this.type = 4;
 			break;
 		}
@@ -96,6 +102,7 @@ public class Rotor
 			this.rrotor = backwardsRotor5;
 			this.counter = setting;
 			this.name="V";
+            this.turnOver = 0; //"Above"
             this.type = 5;
 			break;
 		}
@@ -136,8 +143,8 @@ public class Rotor
 	 */
 	public int encryptForward(int x)
 	{
-        return this.rotor[(26+x)%26];
-	}
+        return this.rotor[(26+x+ringsetting)%26];
+	} //TODO: Verify "+ringsetting"
 
 	/**encrypt in backward direction (coming from the reversing rotor)
 	 * @param x incoming character
@@ -145,7 +152,7 @@ public class Rotor
 	 */
 	public int encryptBackward(int x)
 	{
-		if(this.rrotor ==null) 	return this.rotor[(26+x)%26];
+		if(this.rrotor == null) 	return this.rotor[(26+x+ringsetting)%26]; //TODO: Verify "+ringsetting"
 		else					return this.rrotor[(26+x)%26];
 	}
 
@@ -172,7 +179,7 @@ public class Rotor
      */
     public boolean isAtTurnoverPosition()
     {
-        return this.getCounter() == this.getRingsetting();  //Todo: this ist still wrong.
+        return this.getCounter() == this.turnOver;
     }
 
     /**
@@ -185,7 +192,7 @@ public class Rotor
 	}
 
     /**
-     * Return ringsettings of the rotor (TODO: Find out, how ringsetting was implemented in original enigma. Wikipedia is not enough :/
+     * Return ringsettings of the rotor
      * @return ringsetting
      */
 	public int getRingsetting()
