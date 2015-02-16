@@ -144,7 +144,7 @@ public class Rotor
 	public int encryptForward(int x)
 	{
         return this.rotor[(26+x+ringsetting)%26];
-	} //TODO: Verify "+ringsetting"
+	}
 
 	/**encrypt in backward direction (coming from the reversing rotor)
 	 * @param x incoming character
@@ -152,7 +152,7 @@ public class Rotor
 	 */
 	public int encryptBackward(int x)
 	{
-		if(this.rrotor == null) 	return this.rotor[(26+x+ringsetting)%26]; //TODO: Verify "+ringsetting"
+		if(this.rrotor == null) 	return this.rotor[(26+x+ringsetting)%26];
 		else					return this.rrotor[(26+x)%26];
 	}
 

@@ -120,7 +120,7 @@ public class MainActivity extends Activity
         w1.setSelection(0);
         w2.setSelection(1);
         w3.setSelection(2);
-        reversingRotor.setSelection(0);
+        reversingRotor.setSelection(1);
         w1pos.setSelection(0);
         w2pos.setSelection(0);
         w3pos.setSelection(0);

@@ -16,8 +16,8 @@ public class Enigma
 	private Rotor r3;
     //Slot for the reflector
 	private Rotor reflector;
-    //Standard configuration (rotors 1-3, reflector A, all three rotors set to position 1)
-	private static final int[] STANDARD_CONFIGURATION = {1,2,3,1,1,1,1};
+    //Standard configuration (rotors 1-3, reflector B, all three rotors set to position 1)
+	private static final int[] STANDARD_CONFIGURATION = {1,2,3,2,1,1,1};
 
 	/**
      * Create new Enigma with given configuration.
