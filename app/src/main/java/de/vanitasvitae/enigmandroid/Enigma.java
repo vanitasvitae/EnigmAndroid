@@ -16,6 +16,7 @@ public class Enigma
 	private Rotor r3;
     //Slot for the reflector
 	private Rotor reflector;
+    private boolean anomaly;
     //Standard configuration (rotors 1-3, reflector B, all three rotors set to position 1)
 	private static final int[] STANDARD_CONFIGURATION = {1,2,3,2,1,1,1};
 
@@ -56,7 +57,7 @@ public class Enigma
 
 	/**
 	 * Perform crypto on char.
-	 * Beforehand rotate rotors..
+	 * Beforehand rotate rotors. Also implement the rotor anomaly.
 	 * @param k input char
 	 * @return output char
 	 */
@@ -64,9 +65,14 @@ public class Enigma
 	{
 		//Rotate rotors
 		r1.incrementCounter();
-		if(r1.isAtTurnoverPosition()) {
+		if(r1.isAtTurnoverPosition() || this.anomaly)
+        {
             r2.incrementCounter();
-            if (r2.isAtTurnoverPosition()) {
+            //Handle Anomaly
+            this.anomaly = false;
+            if(r2.getCounter() == r2.getTurnOver()-1) this.anomaly=true;
+            if (r2.isAtTurnoverPosition())
+            {
                 r3.incrementCounter();
             }
         }

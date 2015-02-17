@@ -1,7 +1,7 @@
 package de.vanitasvitae.enigmandroid;
 
 /**
- * Klasse, die eine Walze der Enigmamaschine representiert (I-V,A-C)
+ * Class representing a rotor of the Enigma machine (I-V,A-C)
  * @author vanitas
  *
  */
@@ -39,8 +39,7 @@ public class Rotor
     //Atributes of the rotor
 	private Integer[] rotor;        //choose one of rotor1-5
 	private Integer[] rrotor;       //choose one of backwardsRotor1-5
-	private int ringsetting;        //http://people.physik.hu-berlin.de/~palloks/js/enigma/enigma-u_v20.html
-                                    //My fault?
+	private int ringsetting;
     private int turnOver;
 	private int counter;
 	private String name;
@@ -180,6 +179,11 @@ public class Rotor
     public boolean isAtTurnoverPosition()
     {
         return this.getCounter() == this.turnOver;
+    }
+
+    public int getTurnOver()
+    {
+        return this.turnOver;
     }
 
     /**

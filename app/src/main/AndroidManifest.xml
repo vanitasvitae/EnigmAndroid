@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.vanitasvitae.enigmandroid"
-    android:versionCode="00004"
-    android:versionName="11.02.2015-beta">
+    package="de.vanitasvitae.enigmandroid">
 
     <application
         android:allowBackup="true"
