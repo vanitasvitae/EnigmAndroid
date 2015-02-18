@@ -7,7 +7,11 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
     <item android:id="@+id/action_reset"
-        android:orderInCategory="99"
+        android:orderInCategory="98"
         android:showAsAction="ifRoom"
         android:title="@string/action_reset" />
+    <item android:id="@+id/action_choose_ringstellung"
+        android:title="@string/action_choose_ringsettings"
+        android:orderInCategory="99"
+        android:showAsAction="never" />
 </menu>

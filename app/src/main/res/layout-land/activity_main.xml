@@ -18,43 +18,43 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_ukw"/>
+            android:text="@string/hint_reflector"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_w3"/>
+            android:text="@string/hint_rotor3"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_w2"/>
+            android:text="@string/hint_rotor2"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_w1"/>
+            android:text="@string/hint_rotor1"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_w3pos"/>
+            android:text="@string/hint_rotor3_position"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_w2pos"/>
+            android:text="@string/hint_rotor2_position"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/hint_w1pos"/>
+            android:text="@string/hint_rotor1_position"/>
     </LinearLayout>
 
     <LinearLayout
@@ -68,49 +68,49 @@
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/ukw">
+            android:id="@+id/reflector">
         </Spinner>
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/w3">
+            android:id="@+id/rotor3">
         </Spinner>
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/w2">
+            android:id="@+id/rotor2">
         </Spinner>
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/w1">
+            android:id="@+id/rotor1">
         </Spinner>
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/w3pos">
+            android:id="@+id/rotor3position">
         </Spinner>
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/w2pos">
+            android:id="@+id/rotor2position">
         </Spinner>
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".14"
             android:layout_height="wrap_content"
-            android:id="@+id/w1pos">
+            android:id="@+id/rotor1position">
         </Spinner>
 
     </LinearLayout>
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_layer"
             android:id="@+id/button_crypt"
-            android:onClick="crypto"
+            android:onClick="doCrypto"
             android:text="@string/button_crypt"/>
     </LinearLayout>
 
@@ -151,7 +151,7 @@
             android:layout_weight=".50"
             android:layout_height="match_parent"
             android:id="@+id/input"
-            android:hint="@string/hint_enigma_usertype" />
+            android:hint="@string/hint_enigma_type_here" />
 
         <EditText
             android:layout_width="0dp"

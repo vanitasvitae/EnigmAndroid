@@ -5,34 +5,42 @@
     <string name="action_version">Version</string>
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_settings">Version</string>
-    <string name="hint_enigma_usertype">Hier Tippen</string>
+    <string name="action_choose_ringsettings">Ringstellung</string>
+    <string name="message_choose_ringsettings">Wähle die Ringstellungen für die Walzen:</string>
+    <string name="hint_enigma_type_here">Hier Tippen</string>
     <string name="hint_enigma_code">Enigma-Code</string>
     <string name="hint_enigma_plugboard">Steckerbrett (AZ,BE...)</string>
-    <string name="hint_w1">Walze 1</string>
-    <string name="hint_w2">Walze 2</string>
-    <string name="hint_w3">Walze 3</string>
-    <string name="hint_ukw">Umkehr-\nWalze</string>
-    <string name="hint_w1pos">Position\nWalze 1</string>
-    <string name="hint_w2pos">Position\nWalze 2</string>
-    <string name="hint_w3pos">Position\nWalze 3</string>
+    <string name="hint_rotor1">Walze 1</string>
+    <string name="hint_rotor2">Walze 2</string>
+    <string name="hint_rotor3">Walze 3</string>
+    <string name="hint_reflector">Umkehr-\nWalze</string>
+    <string name="hint_rotor1_position">Position\nWalze 1</string>
+    <string name="hint_rotor2_position">Position\nWalze 2</string>
+    <string name="hint_rotor3_position">Position\nWalze 3</string>
     <string name="button_crypt">Ver-/Entschlüsseln</string>
     <string name="error_parsing_plugs">Fehler: Fehlerhafte Steckerbrettkonfiguration.</string>
     <string name="error_unable_to_plug_a_b">Kann Stecker nicht setzen: </string>
     <string name="error_plug_already_in_use">Fehler: Einer oder mehrere dieser Stecker sind bereits in Benutzung: </string>
+    <string name="title_ringsetting">Ringstellungen</string>
+    <string name="dialog_positiv">OK</string>
+    <string name="dialog_negativ">Abbrechen</string>
+    <string name="dialog_ringsettings_success">Setze Ringe auf</string>
+    <string name="dialog_ringsettings_abort">Keine Änderungen</string>
+    <string name="message_reset">Enigma zurückgesetzt</string>
 
-    <string-array name="enigma_walzen">
+    <string-array name="enigma_rotors">
         <item>I</item>
         <item>II</item>
         <item>III</item>
         <item>IV</item>
         <item>V</item>
     </string-array>
-    <string-array name="enigma_ukw">
+    <string-array name="enigma_reflectors">
         <item>A</item>
         <item>B</item>
         <item>C</item>
     </string-array>
-    <string-array name="positions">
+    <string-array name="rotor_positions">
         <item>A</item>
         <item>B</item>
         <item>C</item>
@@ -59,5 +67,34 @@
         <item>X</item>
         <item>Y</item>
         <item>Z</item>
+    </string-array>
+
+    <string-array name="ring_positions">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
     </string-array>
 </resources>
