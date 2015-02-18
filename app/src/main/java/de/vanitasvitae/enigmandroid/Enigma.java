@@ -187,7 +187,7 @@ public class Enigma
     }
 
     /**
-     * Set the plugboard to a new created object and give it the configuration
+     * Set the plugboard to a new created object and set the configuration
      *
      * @param c configuration
      * @throws Plugboard.PlugAlreadyUsedException
