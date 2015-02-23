@@ -19,9 +19,10 @@ Features:
 	* Working plugboard
 
 More Information about the historical Enigma can be found on Wikipedia.org
+(I recommend the german article, since it is very detailed.)
 .
 
 Repo Type: git
-Build:0.1.1-18.02.2015-beta,6
+Build:0.1.1-23.02.2015-beta,7
 Auto Update Mode:None
 Update Check Mode:None

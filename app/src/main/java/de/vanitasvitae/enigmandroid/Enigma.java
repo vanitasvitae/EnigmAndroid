@@ -148,6 +148,7 @@ public class Enigma
      */
     public static char[][] parsePlugs(String p) throws InvalidPlugboardConfigurationFormatException
     {
+        p = p.toUpperCase();
         //Check, if empty
         if (p.length() == 0)
         {
@@ -177,9 +178,15 @@ public class Enigma
                 //If it does
                 else
                 {
-                    //add it to the array
-                    plugs[i] = x.toCharArray();
-                    i++;
+                    char[] pair = x.toCharArray();
+                    //Check, if Plugs are in alphabet
+                    if(pair[0]<65 || pair[1]<65 || pair[0]>90 || pair[1]>90) throw new InvalidPlugboardConfigurationFormatException("Error parsing plugs! Maybe you entered a number or a special character?");
+                    else
+                    {
+                        //add it to the array
+                        plugs[i] = pair;
+                        i++;
+                    }
                 }
             }
             return plugs;
