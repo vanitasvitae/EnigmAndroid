@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,9 +28,12 @@ public class MainActivity extends Activity
     private EditText input;
     private EditText output;
 
+    private static final int RESULT_SETTINGS = 1;
+
     private Enigma enigma;
     //memory for the ringsettings
     private int[] ringsettings = {0,0,0};
+    private boolean anomaly = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -75,7 +80,7 @@ public class MainActivity extends Activity
         else if (id == R.id.action_settings)
         {
             Intent i = new Intent(this, SettingsActivity.class);
-            startActivityForResult(i, 0);
+            startActivityForResult(i, RESULT_SETTINGS);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -121,6 +126,7 @@ public class MainActivity extends Activity
         {
             enigma.setConfiguration(conf);
             enigma.setPlugboard(plugboardConfiguration);
+            enigma.setPrefAnomaly(anomaly);
 
         } catch (Plugboard.PlugAlreadyUsedException e)
         {
@@ -282,5 +288,20 @@ public class MainActivity extends Activity
                                 Toast.LENGTH_SHORT).show();
                     }
                 }).show();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_SETTINGS:
+            {
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+                boolean an = sharedPrefs.getBoolean("prefAnomaly", true);
+                System.out.println(an);
+                this.anomaly = an;
+                break;
+            }
+        }
     }
 }

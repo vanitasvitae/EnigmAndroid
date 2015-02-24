@@ -1,0 +1,13 @@
+<resources>
+    <string name="title_activity_settings">Einstellungen</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Settings for simulation -->
+    <string name="pref_header_simulation">Simulation</string>
+
+    <string name="pref_title_simulate_anomaly">Doppelschritt Anomalie</string>
+    <string name="pref_description_simulate_anomaly">Die Doppelschritt Anomalie lässt die mittlere Walze zweimal rotieren, falls sie sich vor dem Übertragspunkt befindet.
+    </string>
+
+</resources>

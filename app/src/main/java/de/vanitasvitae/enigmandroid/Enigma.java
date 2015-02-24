@@ -16,7 +16,8 @@ public class Enigma
     private Rotor r3;
     //Slot for the reflector
     private Rotor reflector;
-    private boolean anomaly;
+    private boolean prefAnomaly;  //Do you want to simulate the anomaly?
+    private boolean anomaly;    //Is it time to spin twice?
     //Standard configuration (rotors 1-3, reflector B, all three rotors set to position 1, rings too)
     public static final int[] STANDARD_CONFIGURATION = {1, 2, 3, 2, 1, 1, 1, 0, 0, 0};
 
@@ -68,7 +69,7 @@ public class Enigma
     {
         //Rotate rotors
         r1.incrementCounter();
-        if (r1.isAtTurnoverPosition() || this.anomaly)
+        if (r1.isAtTurnoverPosition() || (this.anomaly && prefAnomaly))
         {
             r2.incrementCounter();
             //Handle Anomaly
@@ -365,6 +366,11 @@ public class Enigma
             c[9] = r3.getRingsetting();
         }
         return c;
+    }
+
+    public void setPrefAnomaly(boolean b)
+    {
+        this.prefAnomaly = b;
     }
 
     public static class InvalidPlugboardConfigurationFormatException extends Exception

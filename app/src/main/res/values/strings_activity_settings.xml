@@ -8,7 +8,7 @@
 
     <string name="pref_title_simulate_anomaly">Simulate Anomaly</string>
     <string name="pref_description_simulate_anomaly">The double step anomaly causes the middle rotor
-        to rotate twice, if one step from turnover point.
+        to rotate twice, if it is one step before its turnover point.
     </string>
 
 </resources>
