@@ -12,6 +12,4 @@ public class SettingsActivity extends PreferenceActivity
         //noinspection deprecation
         addPreferencesFromResource(R.xml.pref_page);
     }
-
-
 }
