@@ -4,7 +4,7 @@
     <string name="app_name">EnigmAndroid</string>
     <string name="action_version">Version</string>
     <string name="action_reset">Zurücksetzen</string>
-    <string name="action_settings">Version</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="action_choose_ringsettings">Ringstellung</string>
     <string name="message_choose_ringsettings">Wähle die Ringstellungen für die Walzen:</string>
     <string name="hint_enigma_type_here">Hier Tippen</string>

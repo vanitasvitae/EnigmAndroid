@@ -3,6 +3,7 @@ package de.vanitasvitae.enigmandroid;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -70,6 +71,11 @@ public class MainActivity extends Activity
         {
             showRingsettingsDialog();
             return true;
+        }
+        else if (id == R.id.action_settings)
+        {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivityForResult(i, 0);
         }
         return super.onOptionsItemSelected(item);
     }

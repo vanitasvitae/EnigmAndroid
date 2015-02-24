@@ -181,7 +181,9 @@
             android:layout_below="@+id/text_layer"
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
-            android:text="@string/button_crypt"/>
+            android:text="@string/button_crypt"
+            android:background="@drawable/button"
+            />
         </LinearLayout>
 
 </RelativeLayout>

@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="example_checkbox"
+        android:title="@string/pref_title_simulate_anomaly"
+        android:summary="@string/pref_description_simulate_anomaly"
+        android:defaultValue="true" />
+</PreferenceScreen>
