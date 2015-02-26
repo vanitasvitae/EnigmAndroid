@@ -1,5 +1,5 @@
 Categories:Science & Education
-License:GPLv2
+License:GPLv3
 Web Site: https://github.com/vanitasvitae/EnigmAndroid
 Source Code: https://github.com/vanitasvitae/EnigmAndroid
 Issue Tracker: https://github.com/vanitasvitae/EnigmAndroid/issues
@@ -42,6 +42,6 @@ Build:0.1.2-24.02.2015-beta,8
     gradle=yes
 
 Auto Update Mode:None
-Update Check Mode:RepoManifest
+Update Check Mode:Tags
 Current Version:0.1.2-24.02.2015-beta
 Current Version Code:8
