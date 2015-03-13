@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2015  Paul Schaub
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 package de.vanitasvitae.enigmandroid;
 
 import android.app.Activity;
@@ -5,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -29,6 +48,7 @@ public class MainActivity extends Activity
     private EditText output;
 
     private static final int RESULT_SETTINGS = 1;
+    private static final String URI_CHANGELOG = "https://github.com/vanitasvitae/EnigmAndroid/blob/master/CHANGELOG.txt";
 
     private Enigma enigma;
     //memory for the ringsettings
@@ -59,13 +79,7 @@ public class MainActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
-        if (id == R.id.action_version)
-        {
-            Toast.makeText(this.getApplicationContext(), R.string.version,
-                    Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if (id == R.id.action_reset)
+        if (id == R.id.action_reset)
         {
             this.reset();
             Toast.makeText(getApplicationContext(), R.string.message_reset,
@@ -81,6 +95,11 @@ public class MainActivity extends Activity
         {
             Intent i = new Intent(this, SettingsActivity.class);
             startActivityForResult(i, RESULT_SETTINGS);
+        }
+        else if (id == R.id.action_about)
+        {
+            showAboutDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -241,7 +260,7 @@ public class MainActivity extends Activity
     }
 
     /**
-     * Show the dialog where the user can pick the ringsettings and set them if the user doesnt abort.
+     * Show the dialog where the user can pick the ringsettings and set them if the user doesn't abort.
      */
     public void showRingsettingsDialog()
     {
@@ -290,6 +309,31 @@ public class MainActivity extends Activity
                 }).show();
     }
 
+    public void showAboutDialog()
+    {
+        final View aboutView = View.inflate(this, R.layout.dialog_about, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title_about_dialog);
+        builder.setView(aboutView)
+                .setCancelable(true)
+                .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.button_show_changelog, new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                        openWebPage(URI_CHANGELOG);
+                    }
+                }).show();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -297,11 +341,17 @@ public class MainActivity extends Activity
             case RESULT_SETTINGS:
             {
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-                boolean an = sharedPrefs.getBoolean("prefAnomaly", true);
-                System.out.println(an);
-                this.anomaly = an;
+                this.anomaly = sharedPrefs.getBoolean("prefAnomaly", true);
                 break;
             }
+        }
+    }
+
+    public void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
         }
     }
 }

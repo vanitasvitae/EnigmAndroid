@@ -1,0 +1,93 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ringstellung_layout_hint">
+
+        <!-- About Enigma. -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:text="@string/title_about_dialog"
+            android:id="@+id/title_section_app_description_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            android:text="@string/description_text"
+            android:id="@+id/about_app_description"/>
+
+        <!-- About Version -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:text="@string/action_version"
+            android:id="@+id/title_section_version"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            android:text="@string/version"
+            android:id="@+id/about_version_section"/>
+
+        <!-- About How To -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:text="@string/title_section_how_to_use"
+            android:id="@+id/title_section_how_to_use"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            android:text="@string/section_how_to_use"
+            android:id="@+id/section_how_to_use"/>
+
+        <!-- About Developer -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:text="@string/title_section_developer"
+            android:id="@+id/title_section_developer_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            android:text="@string/section_developer"
+            android:id="@+id/about_developer_section"/>
+
+        <!-- About Disclaimer -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:text="@string/title_section_disclaimer"
+            android:id="@+id/title_section_disclaimer_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            android:text="@string/section_disclaimer"
+            android:id="@+id/about_disclaimer_section"/>
+
+    </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

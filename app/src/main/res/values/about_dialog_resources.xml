@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="button_show_changelog">Changelog</string>
+
+    <string name="title_action_about">About</string>
+    <string name="title_about_dialog">About EnigmAndroid</string>
+    <string name="description_text">EnigmAndroid is an implementation of a simulation of the Enigma Machine.
+    The Enigma Machine is a cypher machine developed in the 1920s. It was used by the german Wehrmacht to
+    encipher secret messaged during the second world war. For enciphering text, every letter is passed through 3 mechanical rotors that rotate with every keypress.
+    That way the enigma achieves polyalphabetic substitution and the output appears random. The rotors could be chosen from a set of 5. Additionally there was a
+    so called plugboard, where one could switch over pairs of letters.
+    </string>
+
+    <string name="title_section_how_to_use">How to use</string>
+    <string name="section_how_to_use">To encrypt/decrpyt a message, you can type it into the input field.
+        Afterwards you can select a reflector and the three rotors. Also select their initial positions.
+        Then you can set pairs on the plugboard. Therefore you just type the pairs separated by commas (e.g. \"ab,cd\").
+        Notice that you can\'t plug a letter twice.
+        Optionally you can set custom ring settings. Open the options menu and select \"Ringsettings\".
+        When you are ready press \"En-/Decrypt!\".</string>
+
+    <string name="title_section_developer">Developer</string>
+    <string name="section_developer">EnigmAndroid is developed by: \nPaul Schaub</string>
+
+    <string name="title_section_disclaimer">Disclaimer</string>
+    <string name="section_disclaimer">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+</resources>

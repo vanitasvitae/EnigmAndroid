@@ -1,0 +1,7 @@
+CHANGELOG ENIGMANDROID
+
+v0.1.3-14.03.2015<
+*Added About Dialog with ChangeLog-Button
+*Moved Version Info into About Dialog
+*Updated License Files
+*Fixed Landscape Layout
