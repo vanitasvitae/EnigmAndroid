@@ -3,9 +3,14 @@
     tools:context=".MainActivity" >
 
     <item android:id="@+id/action_reset"
-        android:orderInCategory="97"
+        android:orderInCategory="96"
         android:showAsAction="ifRoom"
         android:title="@string/action_reset" />
+    <item android:id="@+id/action_send"
+        android:orderInCategory="97"
+        android:showAsAction="always"
+        android:title="@string/action_send"
+        android:icon="@drawable/ic_send_white_48dp"/>
     <item android:id="@+id/action_choose_ringstellung"
         android:title="@string/action_choose_ringsettings"
         android:orderInCategory="98"

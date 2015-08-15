@@ -1,5 +1,12 @@
 CHANGELOG ENIGMANDROID
 
+v0.1.4-15.08.2015<
+*Rewrite of the core implementation to follow some principals of Software Engineering
+*Fixed some layout issues
+*Fixed anomaly for step by step inputs
+*Added send/receive text functionality
+
+
 v0.1.3-14.03.2015<
 *Added About Dialog with ChangeLog-Button
 *Moved Version Info into About Dialog

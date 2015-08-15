@@ -1,102 +1,145 @@
 package de.vanitasvitae.enigmandroid;
 
+import android.app.Activity;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
 /**
- * Class representing the plugboard
- *Copyright (C) 2015  Paul Schaub
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along
- with this program; if not, write to the Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- * @author vanitasvitae
+ * Created by vanitas on 12.08.15.
  */
 public class Plugboard
 {
-    //Plugboard
-    //	Q		W		E		R		T		Z		U		I		O
-    //		A		S		D		F		G		H		J		K
-    //	P		Y		X		C		V		B		N		M		L
+    Integer[] plugs;
 
-    //Array containing plugged pairs
-    int[] pb;
-    //Standard array to compare pb to.
-    public static final int[] ref = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
-
-    /**
-     * Create new plugboard without any plugged pairs. (empty, no scrambling here)
-     */
     public Plugboard()
     {
-        pb = new int[26];
-        resetPlugboard();
+        plugs = new Integer[26];
+    }
+
+    public Plugboard(int[][] configuration)
+    {
+        setConfiguration(configuration);
+    }
+
+    public Plugboard(String configuration)
+    {
+        setConfiguration(parseConfigurationString(configuration));
     }
 
     /**
-     * En-/decrypt a char following the connections on the plugboard
+     * Configure the plugboard according to the given array.
      *
-     * @param x char to perform crypto on
-     * @return en-/decrypted char
+     * @param configuration
      */
-    public int encrypt(int x)
+    public void setConfiguration(int[][] configuration)
     {
-        return pb[x];
+        if(configuration != null) {
+            boolean validConfiguration = true;
+            plugs = new Integer[26];
+            for (int[] p : configuration) {
+                if (!setPlugs(p[0], p[1])) {
+                    validConfiguration = false;
+                    break;
+                }
+            }
+            if (!validConfiguration) plugs = new Integer[26];
+        }
+        else plugs = new Integer[26];
     }
 
     /**
-     * Reset the plugboard (no plugged pairs)
+     * Parse configuration from input string
+     * input must have the following form: "" or "XY" or "XY,VW" or "XY,...,AB"
+     * A character must not be inside the input multiple times. Exception is ','
+     * This is not catched here!
+     * @param input String that codes the configuration
+     * @return two dimensional array of plugged symbols
      */
-    public void resetPlugboard()
+    public static int[][] parseConfigurationString(String input)
     {
-        pb = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+        Activity activity = MainActivity.ActivitySingleton.getInstance().getActivity();
+        //If length != 0,2,5,8... ( ,XY, XY-VW, ...)
+        if(((input.length()+1)%3)!=0&&input.length()!=0)
+        {
+            Toast.makeText(activity.getApplicationContext(), R.string.error_parsing_plugs,
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+        else {
+            input = input.toUpperCase();
+            ArrayList<int[]> plugList = new ArrayList<int[]>();
+            int[] plug = new int[2];
+            for (int i = 0; i < input.length(); i++) {
+                int c = input.charAt(i) - 65;
+                if (c < 0 || c > 25) {
+                    if (i % 3 != 2) {
+                        Toast.makeText(activity.getApplicationContext(), R.string.error_parsing_plugs,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
+                } else {
+                    if (i % 3 == 0) {
+                        plug = new int[2];
+                        plug[0] = c;
+                    }
+                    if (i % 3 == 1) {
+                        plug[1] = c;
+                        plugList.add(plug);
+                    }
+
+                }
+            }
+            int[][] parsedConfiguration = new int[plugList.size()][2];
+            for(int i=0; i<plugList.size(); i++)
+            {
+                parsedConfiguration[i] = plugList.get(i);
+            }
+            return parsedConfiguration;
+        }
+
     }
 
     /**
-     * Set a pair of plugs on the plugboard
-     *
-     * @param a first Plug
-     * @param b second Plug
+     * Set the given plugs (connect a and b)
+     * Return false, if something goes wrong (plugs already used somehow)
+     * @param a first plug
+     * @param b second plug
+     * @return success
      */
-    public void setPlugPair(char a, char b) throws PlugAlreadyUsedException
+    public boolean setPlugs(int a, int b)
     {
-        //prevent to plug a plug to itself
-        if (a == b)
+        Activity activity = MainActivity.ActivitySingleton.getInstance().getActivity();
+        if(a==b)
         {
-            throw new PlugAlreadyUsedException("Unable to plug " + a + " to " + a);
+            Toast.makeText(activity.getApplication().getApplicationContext(),
+                    activity.getResources().getText(R.string.error_unable_to_plug_a_b).toString()
+                            +" "+(char)(a+65)+","+(char) (b+65),Toast.LENGTH_LONG).show();
+            return false;
         }
-        int x = a - 65;
-        int y = b - 65;
-        //Check, if plugs already plugged
-        if (pb[x] != ref[x])
+        if(plugs[a] != null || plugs[b] != null)
         {
-            throw new PlugAlreadyUsedException("Plug " + a + " used twice!");
-        } else if (pb[y] != ref[y])
-        {
-            throw new PlugAlreadyUsedException("Plug " + b + " used twice!");
+            Toast.makeText(activity.getApplication().getApplicationContext(),
+                    activity.getResources().getText(R.string.error_plug_already_in_use).toString()
+                            +" "+(char) (a+65)+","+(char)(b +65), Toast.LENGTH_SHORT).show();
+            return false;
         }
-        //If everything is correct
         else
         {
-            //set the pair
-            int c = pb[x];
-            pb[x] = pb[y];
-            pb[y] = c;
+            plugs[a] = b;
+            plugs[b] = a;
+            return true;
         }
     }
 
-    public static class PlugAlreadyUsedException extends Exception
+    /**
+     * Encrypt input via plugboard connections
+     * @param input input symbol to encrypt
+     * @return encrypted symbol
+     */
+    public int encrypt(int input)
     {
-        public PlugAlreadyUsedException(String m)
-        {
-            super(m);
-        }
+        if(plugs[input]==null) return input;
+        else return plugs[input];
     }
 }

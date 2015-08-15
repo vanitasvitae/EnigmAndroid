@@ -7,7 +7,7 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar:///media/Daten/android-sdk-linux/extras/android/m2repository/com/android/support/support-v4/21.0.3/support-v4-21.0.3-sources.jar!/" />
+      <root url="jar:///media/Daten/AndroidSDK/android-sdk-linux/extras/android/m2repository/com/android/support/support-v4/21.0.3/support-v4-21.0.3-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

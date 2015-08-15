@@ -6,6 +6,8 @@
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_choose_ringsettings">Ringstellung</string>
+    <string name="action_send">Senden</string>
+    <string name="send_to">Senden an…</string>
     <string name="message_choose_ringsettings">Wähle die Ringstellungen für die Walzen:</string>
     <string name="hint_enigma_type_here">Hier Tippen</string>
     <string name="hint_enigma_code">Enigma-Code</string>
@@ -21,6 +23,7 @@
     <string name="error_parsing_plugs">Fehler: Fehlerhafte Steckerbrettkonfiguration.</string>
     <string name="error_unable_to_plug_a_b">Kann Stecker nicht setzen: </string>
     <string name="error_plug_already_in_use">Fehler: Einer oder mehrere dieser Stecker sind bereits in Benutzung: </string>
+    <string name="error_no_text_to_send">Nachricht ist leer.</string>
     <string name="title_ringsetting">Ringstellungen</string>
     <string name="dialog_positiv">OK</string>
     <string name="dialog_negativ">Abbrechen</string>
@@ -35,66 +38,11 @@
         <item>IV</item>
         <item>V</item>
     </string-array>
+
     <string-array name="enigma_reflectors">
         <item>A</item>
         <item>B</item>
         <item>C</item>
     </string-array>
-    <string-array name="rotor_positions">
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-        <item>D</item>
-        <item>E</item>
-        <item>F</item>
-        <item>G</item>
-        <item>H</item>
-        <item>I</item>
-        <item>J</item>
-        <item>K</item>
-        <item>L</item>
-        <item>M</item>
-        <item>N</item>
-        <item>O</item>
-        <item>P</item>
-        <item>Q</item>
-        <item>R</item>
-        <item>S</item>
-        <item>T</item>
-        <item>U</item>
-        <item>V</item>
-        <item>W</item>
-        <item>X</item>
-        <item>Y</item>
-        <item>Z</item>
-    </string-array>
 
-    <string-array name="ring_positions">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-    </string-array>
 </resources>
