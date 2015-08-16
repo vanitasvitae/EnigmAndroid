@@ -6,7 +6,23 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by vanitas on 12.08.15.
+ * Plugboard of the enigma
+ * Copyright (C) 2015  Paul Schaub
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * @author vanitasvitae
  */
 public class Plugboard
 {
@@ -30,7 +46,7 @@ public class Plugboard
     /**
      * Configure the plugboard according to the given array.
      *
-     * @param configuration
+     * @param configuration two dimensional array of plugs
      */
     public void setConfiguration(int[][] configuration)
     {
@@ -68,7 +84,7 @@ public class Plugboard
         }
         else {
             input = input.toUpperCase();
-            ArrayList<int[]> plugList = new ArrayList<int[]>();
+            ArrayList<int[]> plugList = new ArrayList<>();
             int[] plug = new int[2];
             for (int i = 0; i < input.length(); i++) {
                 int c = input.charAt(i) - 65;

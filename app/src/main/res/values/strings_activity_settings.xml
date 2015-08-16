@@ -8,5 +8,15 @@
     <string name="pref_description_simulate_anomaly">The double step anomaly causes the middle rotor
         to rotate twice, if it is one step before its turnover point.
     </string>
+    <string name="pref_title_numeric_spelling_language">Number spelling language</string>
+    <string name="pref_description_numeric_spelling_language">Language, in which numbers are spelled.</string>
+    <string-array name="pref_list_numeric_spelling_language">
+        <item>German</item>
+        <item>English</item>
+    </string-array>
+    <string-array translatable="false" name="pref_alias_numeric_spelling_language">
+        <item>de</item>
+        <item>en</item>
+    </string-array>
 
 </resources>

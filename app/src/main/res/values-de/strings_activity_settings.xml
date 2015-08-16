@@ -7,5 +7,11 @@
     <string name="pref_title_simulate_anomaly">Doppelschritt Anomalie</string>
     <string name="pref_description_simulate_anomaly">Die Doppelschritt Anomalie lässt die mittlere Walze zweimal rotieren, falls sie sich vor dem Übertragspunkt befindet.
     </string>
+    <string name="pref_title_numeric_spelling_language">Zahlenbuchstabiersprache</string>
+    <string name="pref_description_numeric_spelling_language">Sprache in der Zahlen buchstabiert werden sollen.</string>
+    <string-array name="pref_list_numeric_spelling_language">
+        <item>Deutsch</item>
+        <item>Englisch</item>
+    </string-array>
 
 </resources>

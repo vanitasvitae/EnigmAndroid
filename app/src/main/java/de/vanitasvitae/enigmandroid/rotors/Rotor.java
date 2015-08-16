@@ -1,7 +1,28 @@
 package de.vanitasvitae.enigmandroid.rotors;
 
 /**
- * Created by vanitas on 11.08.15.
+ * Rotor super class and inner concrete implementations
+ * The rotors were the key feature of the enigma used to scramble up input signals into
+ * encrypted signals difficult to predict. The rotors rotated to achieve a poly-alphabetic
+ * substitution which was hard to break. Each signal passes the rotor twice. Once in "forward"-
+ * direction and once in "backwards"-direction. There was a set of 3 out of 5 rotors inside the
+ * enigma machine M4.
+ * Copyright (C) 2015  Paul Schaub
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * @author vanitasvitae
  */
 public class Rotor
 {
@@ -14,6 +35,22 @@ public class Rotor
     protected int ringSetting;
     protected int rotation;
 
+    /**
+     * This constructor is not accessible from outside this class file.
+     * Use one of the createRotor* factory methods instead to create concrete Rotors.
+     * Note that connections and reversedConnections MUST be of the same size and that
+     * neither connections nor reversedConnections respectively MUST have any number between
+     * 0 and connections.length-1 only once (ie they represent permutations)
+     * @param name phonetic name of the rotor (usually I,II,...V)
+     * @param type type indicator (I -> 1,...,V -> 5)
+     * @param connections wiring of the rotor as Integer array
+     * @param reversedConnections inverse wiring used to encrypt in the opposite direction
+     *                            (connections[reversedConnections[i]] = i
+     *                            for all i in 0..getRotorSize()-1.
+     * @param turnOverNotch Position of the turnover notch
+     * @param ringSetting setting of the ring that holds the letters
+     * @param rotation rotation of the rotor
+     */
     protected Rotor(String name, int type, Integer[] connections, Integer[] reversedConnections,
                     int turnOverNotch, int ringSetting, int rotation)
     {
@@ -26,6 +63,14 @@ public class Rotor
         this.rotation = rotation;
     }
 
+    /**
+     * Factory method that creates a rotor accordingly to the type.
+     * Also initialize the rotor with ringSetting and rotation.
+     * @param type type indicator (1..5)
+     * @param ringSetting setting of the outer ring (0..25)
+     * @param rotation rotation of the rotor
+     * @return Concrete rotor
+     */
     public static Rotor createRotor(int type, int ringSetting, int rotation)
     {
         switch (type)
@@ -38,53 +83,103 @@ public class Rotor
         }
     }
 
+    /**
+     * Create concrete Rotor of type 1 (I) initialized with ringSetting and rotation
+     * @param ringSetting setting of the outer ring
+     * @param rotation rotation of the rotor
+     * @return RotorI
+     */
     public static Rotor createRotorI(int ringSetting, int rotation)
     {
         return new RotorI(ringSetting, rotation);
     }
 
+    /**
+     * Create concrete Rotor of type 2 (II) initialized with ringSetting and rotation
+     * @param ringSetting setting of the outer ring
+     * @param rotation rotation of the rotor
+     * @return RotorI
+     */
     public static Rotor createRotorII(int ringSetting, int rotation)
     {
         return new RotorII(ringSetting, rotation);
     }
 
+    /**
+     * Create concrete Rotor of type 3 (III) initialized with ringSetting and rotation
+     * @param ringSetting setting of the outer ring
+     * @param rotation rotation of the rotor
+     * @return RotorI
+     */
     public static Rotor createRotorIII(int ringSetting, int rotation)
     {
         return new RotorIII(ringSetting, rotation);
     }
 
+    /**
+     * Create concrete Rotor of type 4 (IV) initialized with ringSetting and rotation
+     * @param ringSetting setting of the outer ring
+     * @param rotation rotation of the rotor
+     * @return RotorI
+     */
     public static Rotor createRotorIV(int ringSetting, int rotation)
     {
         return new RotorIV(ringSetting, rotation);
     }
 
+    /**
+     * Create concrete Rotor of type 5 (V) initialized with ringSetting and rotation
+     * @param ringSetting setting of the outer ring
+     * @param rotation rotation of the rotor
+     * @return RotorI
+     */
     public static Rotor createRotorV(int ringSetting, int rotation)
     {
         return new RotorV(ringSetting, rotation);
     }
 
+    /**
+     * Encrypt an input signal via the internal wiring in "forward" direction (using connections)
+     * @param input signal
+     * @return encrypted signal
+     */
     public int encryptForward(int input)
     {
         return this.connections[normalize(input)];
     }
 
+    /**
+     * Encrypt an input signal via the internal wiring in "backwards" direction (using
+     * reversedConnections)
+     * @param input signal
+     * @return encrypted signal
+     */
     public int encryptBackward(int input)
     {
         return this.reversedConnections[normalize(input)];
     }
 
+    /**
+     * Return the type indicator (usually 1..5)
+     * @return type indicator
+     */
     public int getType()
     {
         return this.type;
     }
 
+    /**
+     * Return the current rotation of the rotor.
+     * The rotation consists of the actual rotation - the ringSetting
+     * @return rotation-ringSetting
+     */
     public int getRotation()
     {
         return this.rotation - this.getRingSetting();
     }
 
     /**
-     * increment rotation of the rotor by one.
+     * Increment rotation of the rotor by one.
      */
     public void rotate()
     {
@@ -92,9 +187,8 @@ public class Rotor
     }
 
     /**
-     * Return true, if rotor is at a position, where it turns over the next rotor
-     *
-     * @return boolean
+     * Return true, if the rotor is at a position, where it turns over the next rotor by one
+     * @return rotation==turnOverNotch
      */
     public boolean isAtTurnoverPosition()
     {
@@ -102,31 +196,28 @@ public class Rotor
     }
 
     /**
-     * The Double Turn Anomaly (deutsch: Doppelsprung Anomalie) is an anomaly in the rotor movement
+     * Return true, if the rotor is in a position where the double turn anomaly happens.
+     * The double turn anomaly (german: Doppelsprung-Anomalie) is an anomaly in the rotor movement
      * caused by the mechanical implementation of the enigma.
      * Whenever the rightmost rotor turns the middle rotor AND the middle rotor is only one move
      * from turning the leftmost rotor, the middle rotor turns again with the next character.
      * So technically there are only 26*25*26 possible rotor settings for any but firmly 3 rotors.
-     *
-     * @return boolean
+     * @return rotation == turnOverNotch-1
      */
     public boolean doubleTurnAnomaly()
     {
-        return this.rotation == this.turnOverNotch - 1;
+        return this.rotation == this.getTurnOver() - 1;
     }
 
-    @SuppressWarnings("unused")
     /**
      * Returns the position of the turnover notch
-     *
-     * @return turnOver
+     * @return turnOverNotch
      */
     public int getTurnOver()
     {
         return this.turnOverNotch;
     }
 
-    @SuppressWarnings("unused")
     /**
      * Return ringSettings of the rotor
      * @return ringSetting
@@ -136,21 +227,41 @@ public class Rotor
         return this.ringSetting;
     }
 
+    /**
+     * Returns the phonetic name of the rotor
+     * @return name
+     */
     public String getName()
     {
         return this.name;
     }
 
+    /**
+     * Returns the size (ie the number of wires/size of the connections array)
+     * of the rotor
+     * @return size
+     */
     public int getRotorSize()
     {
         return this.connections.length;
     }
 
+    /**
+     * Normalize the input.
+     * Normalizing means keeping the input via modulo in the range from 0 to n-1, where n is equal
+     * to the size of the rotor. This is necessary since java allows negative modulo values,
+     * which can break this implementation
+     * @param input input signal
+     * @return "normalized" input signal
+     */
     public int normalize(int input)
     {
         return (input + this.getRotorSize()) % this.getRotorSize();
     }
 
+    /**
+     * Concrete implementation of Rotor of type 1 (I)
+     */
     private static class RotorI extends Rotor
     {
         public RotorI(int ringSetting, int rotation)
@@ -162,6 +273,9 @@ public class Rotor
         }
     }
 
+    /**
+     * Concrete implementation of Rotor of type 2 (II)
+     */
     private static class RotorII extends Rotor
     {
         public RotorII(int ringSetting, int rotation)
@@ -173,6 +287,9 @@ public class Rotor
         }
     }
 
+    /**
+     * Concrete implementation of Rotor of type 3 (III)
+     */
     private static class RotorIII extends Rotor
     {
         public RotorIII(int ringSetting, int rotation)
@@ -184,6 +301,9 @@ public class Rotor
         }
     }
 
+    /**
+     * Concrete implementation of Rotor of type 4 (IV)
+     */
     private static class RotorIV extends Rotor
     {
         public RotorIV(int ringSetting, int rotation)
@@ -195,6 +315,9 @@ public class Rotor
         }
     }
 
+    /**
+     * Concrete implementation of Rotor of type 5 (V)
+     */
     private static class RotorV extends Rotor
     {
         public RotorV(int ringSetting, int rotation)

@@ -144,6 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="30pt"
         android:id="@+id/plugboard"
+        android:inputType="textNoSuggestions"
         android:hint="@string/hint_enigma_plugboard"
         android:layout_below="@+id/lin_lay_2"/>
 
@@ -158,13 +159,14 @@
             android:layout_weight=".50"
             android:layout_height="match_parent"
             android:id="@+id/input"
+            android:inputType="textNoSuggestions"
             android:hint="@string/hint_enigma_type_here" />
 
         <EditText
             android:layout_width="0dp"
             android:layout_weight=".50"
             android:layout_height="match_parent"
-            android:editable="false"
+            android:inputType="none"
             android:textIsSelectable="true"
             android:id="@+id/output"
             android:hint="@string/hint_enigma_code"/>
@@ -178,7 +180,6 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_layer"
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
             android:text="@string/button_crypt"

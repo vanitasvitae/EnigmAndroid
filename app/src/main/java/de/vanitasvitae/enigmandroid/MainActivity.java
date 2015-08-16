@@ -1,21 +1,3 @@
-/**
- * Copyright (C) 2015  Paul Schaub
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along
- with this program; if not, write to the Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
-
 package de.vanitasvitae.enigmandroid;
 
 import android.app.Activity;
@@ -33,21 +15,38 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+/**
+ * Main Android Activity of the app
+ * Copyright (C) 2015  Paul Schaub
 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * @author vanitasvitae
+ */
 public class MainActivity extends Activity
 {
-    private Menu menu;
-    private Spinner rotor1;
-    private Spinner rotor2;
-    private Spinner rotor3;
-    private Spinner reflector;
-    private Spinner rotor1Position;
-    private Spinner rotor2Position;
-    private Spinner rotor3Position;
+    private Spinner rotor1View;
+    private Spinner rotor2View;
+    private Spinner rotor3View;
+    private Spinner reflectorView;
+    private Spinner rotor1PositionView;
+    private Spinner rotor2PositionView;
+    private Spinner rotor3PositionView;
 
-    private EditText plugboard;
-    private EditText input;
-    private EditText output;
+    private EditText plugboardView;
+    private EditText inputView;
+    private EditText outputView;
 
     private static final int RESULT_SETTINGS = 1;
     private static final String URI_CHANGELOG = "https://github.com/vanitasvitae/EnigmAndroid/blob/master/CHANGELOG.txt";
@@ -56,6 +55,7 @@ public class MainActivity extends Activity
     //memory for the ringSettings
     private int[] ringSettings = {0,0,0};
     private boolean prefAnomaly;
+    private String prefNumericLanguage;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -63,7 +63,10 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
         this.initLayout();
-        this.prefAnomaly = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("prefAnomaly", true);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.prefAnomaly = sharedPreferences.getBoolean("prefAnomaly", true);
+        this.prefNumericLanguage = sharedPreferences.getString("prefNumericLanguage",getResources().
+                getStringArray(R.array.pref_alias_numeric_spelling_language)[0]);
         this.resetLayout();
         ActivitySingleton singleton = ActivitySingleton.getInstance();
         singleton.setActivity(this);
@@ -79,7 +82,7 @@ public class MainActivity extends Activity
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null)
                 {
-                    input.setText(sharedText);
+                    inputView.setText(sharedText);
                 }
             }
         }
@@ -88,7 +91,6 @@ public class MainActivity extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.menu = menu;
         this.getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -109,7 +111,7 @@ public class MainActivity extends Activity
         }
         else if (id == R.id.action_choose_ringstellung)
         {
-            showRingsettingsDialog();
+            showRingSettingsDialog();
             return true;
         }
         else if (id == R.id.action_settings)
@@ -124,15 +126,15 @@ public class MainActivity extends Activity
         }
         else if (id == R.id.action_send)
         {
-            if(output.getText().length() == 0)
+            if(outputView.getText().length() == 0)
             {
-                Toast.makeText(this, R.string.error_no_text_to_send, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.error_no_text_to_send, Toast.LENGTH_SHORT).show();
             }
             else
             {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, output.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, outputView.getText().toString());
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
             }
@@ -148,25 +150,26 @@ public class MainActivity extends Activity
     public void updateEnigma(View v)
     {
         int[] conf = new int[10];
-        conf[0] = rotor1.getSelectedItemPosition() + 1;
-        conf[1] = rotor2.getSelectedItemPosition() + 1;
-        conf[2] = rotor3.getSelectedItemPosition() + 1;
-        conf[3] = reflector.getSelectedItemPosition() + 1;
-        conf[4] = rotor1Position.getSelectedItemPosition() + 1;
-        conf[5] = rotor2Position.getSelectedItemPosition() + 1;
-        conf[6] = rotor3Position.getSelectedItemPosition() + 1;
+        conf[0] = rotor1View.getSelectedItemPosition() + 1;
+        conf[1] = rotor2View.getSelectedItemPosition() + 1;
+        conf[2] = rotor3View.getSelectedItemPosition() + 1;
+        conf[3] = reflectorView.getSelectedItemPosition() + 1;
+        conf[4] = rotor1PositionView.getSelectedItemPosition() + 1;
+        conf[5] = rotor2PositionView.getSelectedItemPosition() + 1;
+        conf[6] = rotor3PositionView.getSelectedItemPosition() + 1;
         conf[7] = ringSettings[0];
         conf[8] = ringSettings[1];
         conf[9] = ringSettings[2];
 
         enigma = new Enigma();
 
-        int[][] plugboardConfiguration = null;
-        plugboard.setText(plugboard.getText().toString().toUpperCase());
-        plugboardConfiguration = Plugboard.parseConfigurationString(plugboard.getText().toString());
+        int[][] plugboardConfiguration;
+        plugboardView.setText(plugboardView.getText().toString().toUpperCase());
+        plugboardConfiguration = Plugboard.parseConfigurationString(plugboardView.getText().toString());
         enigma.setConfiguration(conf);
         enigma.setPlugboard(new Plugboard(plugboardConfiguration));
         enigma.setPrefAnomaly(prefAnomaly);
+        enigma.setInputPreparator(InputPreparator.createInputPreparator(prefNumericLanguage));
     }
 
     /**
@@ -177,12 +180,12 @@ public class MainActivity extends Activity
      */
     public void doCrypto(View v)
     {
-        if(input.getText().length()!=0) {
+        if(inputView.getText().length()!=0) {
             updateEnigma(null);
-            String m = input.getText().toString();
-            m = Enigma.prepare(m);
-            input.setText(m);
-            output.setText(enigma.encrypt(m));
+            String m = inputView.getText().toString();
+            m = enigma.getInputPreparator().prepareString(m);
+            inputView.setText(m);
+            outputView.setText(enigma.encrypt(m));
             updateSpinner(enigma.getConfiguration());
         }
     }
@@ -193,17 +196,17 @@ public class MainActivity extends Activity
      */
     private void resetLayout()
     {
-        rotor1.setSelection(0);
-        rotor2.setSelection(1);
-        rotor3.setSelection(2);
-        reflector.setSelection(1);
-        rotor1Position.setSelection(0);
-        rotor2Position.setSelection(0);
-        rotor3Position.setSelection(0);
+        rotor1View.setSelection(0);
+        rotor2View.setSelection(1);
+        rotor3View.setSelection(2);
+        reflectorView.setSelection(1);
+        rotor1PositionView.setSelection(0);
+        rotor2PositionView.setSelection(0);
+        rotor3PositionView.setSelection(0);
         ringSettings = new int[]{0,0,0};
-        plugboard.setText("");
-        input.setText("");
-        output.setText("");
+        plugboardView.setText("");
+        inputView.setText("");
+        outputView.setText("");
     }
 
     /**
@@ -214,63 +217,62 @@ public class MainActivity extends Activity
         Character[] charArray = new Character[26];
         for(int i=0; i<26; i++) {charArray[i] = (char) (65+i);}
 
-        rotor1 = (Spinner) findViewById(R.id.rotor1);
+        rotor1View = (Spinner) findViewById(R.id.rotor1);
         ArrayAdapter<CharSequence> rotor1Adapter = ArrayAdapter.createFromResource(this,
                 R.array.enigma_rotors, android.R.layout.simple_spinner_item);
         rotor1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor1.setAdapter(rotor1Adapter);
+        rotor1View.setAdapter(rotor1Adapter);
 
 
-        rotor2 = (Spinner) findViewById(R.id.rotor2);
+        rotor2View = (Spinner) findViewById(R.id.rotor2);
         ArrayAdapter<CharSequence> rotor2Adapter = ArrayAdapter.createFromResource(this,
                 R.array.enigma_rotors, android.R.layout.simple_spinner_item);
         rotor2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor2.setAdapter(rotor2Adapter);
+        rotor2View.setAdapter(rotor2Adapter);
 
-        rotor3 = (Spinner) findViewById(R.id.rotor3);
+        rotor3View = (Spinner) findViewById(R.id.rotor3);
         ArrayAdapter<CharSequence> rotor3Adapter = ArrayAdapter.createFromResource(this,
                 R.array.enigma_rotors, android.R.layout.simple_spinner_item);
         rotor3Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor3.setAdapter(rotor3Adapter);
+        rotor3View.setAdapter(rotor3Adapter);
 
-        reflector = (Spinner) findViewById(R.id.reflector);
+        reflectorView = (Spinner) findViewById(R.id.reflector);
         ArrayAdapter<CharSequence> relfectorAdapter = ArrayAdapter.createFromResource(this,
                 R.array.enigma_reflectors, android.R.layout.simple_spinner_item);
         relfectorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        reflector.setAdapter(relfectorAdapter);
+        reflectorView.setAdapter(relfectorAdapter);
 
-        rotor1Position = (Spinner) findViewById(R.id.rotor1position);
+        rotor1PositionView = (Spinner) findViewById(R.id.rotor1position);
         ArrayAdapter<Character> rotor1PositionAdapter = new ArrayAdapter<>(this.getApplicationContext(),
                 android.R.layout.simple_spinner_item,charArray);
         rotor1PositionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor1Position.setAdapter(rotor1PositionAdapter);
+        rotor1PositionView.setAdapter(rotor1PositionAdapter);
 
-        rotor2Position = (Spinner) findViewById(R.id.rotor2position);
+        rotor2PositionView = (Spinner) findViewById(R.id.rotor2position);
         ArrayAdapter<Character> rotor2PositionAdapter = new ArrayAdapter<>(this.getApplicationContext(),
                 android.R.layout.simple_spinner_item,charArray);
         rotor2PositionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor2Position.setAdapter(rotor2PositionAdapter);
+        rotor2PositionView.setAdapter(rotor2PositionAdapter);
 
-        rotor3Position = (Spinner) findViewById(R.id.rotor3position);
+        rotor3PositionView = (Spinner) findViewById(R.id.rotor3position);
         ArrayAdapter<Character> rotor3PositionAdapter = new ArrayAdapter<>(this.getApplicationContext(),
                 android.R.layout.simple_spinner_item,charArray);
         rotor3PositionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor3Position.setAdapter(rotor3PositionAdapter);
+        rotor3PositionView.setAdapter(rotor3PositionAdapter);
 
-        plugboard = (EditText) findViewById(R.id.plugboard);
-        plugboard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        plugboardView = (EditText) findViewById(R.id.plugboard);
+        plugboardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                {
-                    plugboard.setText(plugboard.getText().toString().toUpperCase());
+                if (!hasFocus) {
+                    plugboardView.setText(plugboardView.getText().toString().toUpperCase());
                 }
             }
         });
-        input = (EditText) findViewById(R.id.input);
-        output = (EditText) findViewById(R.id.output);
+        inputView = (EditText) findViewById(R.id.input);
+        outputView = (EditText) findViewById(R.id.output);
 
-        input.requestFocus();
+        inputView.requestFocus();
     }
 
     /**
@@ -279,40 +281,40 @@ public class MainActivity extends Activity
      */
     public void updateSpinner(int[] c)
     {
-        rotor1.setSelection(c[0] - 1);
-        rotor2.setSelection(c[1] - 1);
-        rotor3.setSelection(c[2] - 1);
-        rotor1Position.setSelection(c[4]);
-        rotor2Position.setSelection(c[5]);
-        rotor3Position.setSelection(c[6]);
+        rotor1View.setSelection(c[0] - 1);
+        rotor2View.setSelection(c[1] - 1);
+        rotor3View.setSelection(c[2] - 1);
+        rotor1PositionView.setSelection(c[4]);
+        rotor2PositionView.setSelection(c[5]);
+        rotor3PositionView.setSelection(c[6]);
     }
 
     /**
      * Show the dialog where the user can pick the ringsettings and set them if the user doesn't
      * abort.
      */
-    public void showRingsettingsDialog()
+    public void showRingSettingsDialog()
     {
-        View ringsettingsView = View.inflate(this, R.layout.dialog_ringsettings, null);
+        View ringSettingsView = View.inflate(this, R.layout.dialog_ringsettings, null);
 
         Integer[] ringArray = new Integer[26];
         for(int i=1; i<=26; i++) {ringArray[i-1] = i;}
 
-        final Spinner ring1 = (Spinner) ringsettingsView.findViewById(R.id.rotor1ring);
+        final Spinner ring1 = (Spinner) ringSettingsView.findViewById(R.id.rotor1ring);
         ArrayAdapter<Integer> ring1Adapter = new ArrayAdapter<>(this.getApplicationContext(),
                 android.R.layout.simple_spinner_item,ringArray);
         ring1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ring1.setAdapter(ring1Adapter);
         ring1.setSelection(ringSettings[0]);
 
-        final Spinner ring2 = (Spinner) ringsettingsView.findViewById(R.id.rotor2ring);
+        final Spinner ring2 = (Spinner) ringSettingsView.findViewById(R.id.rotor2ring);
         ArrayAdapter<Integer> ring2Adapter = new ArrayAdapter<>(this.getApplicationContext(),
                 android.R.layout.simple_spinner_item,ringArray);
         ring2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ring2.setAdapter(ring2Adapter);
         ring2.setSelection(ringSettings[1]);
 
-        final Spinner ring3 = (Spinner) ringsettingsView.findViewById(R.id.rotor3ring);
+        final Spinner ring3 = (Spinner) ringSettingsView.findViewById(R.id.rotor3ring);
         ArrayAdapter<Integer> ring3Adapter = new ArrayAdapter<>(this.getApplicationContext(),
                 android.R.layout.simple_spinner_item,ringArray);
         ring3Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -321,7 +323,7 @@ public class MainActivity extends Activity
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_ringsetting);
-        builder.setView(ringsettingsView)
+        builder.setView(ringSettingsView)
                 .setCancelable(true)
                 .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener()
                 {
@@ -379,8 +381,12 @@ public class MainActivity extends Activity
             {
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
                 this.prefAnomaly = sharedPrefs.getBoolean("prefAnomaly", true);
+                this.prefNumericLanguage = sharedPrefs.getString("prefNumericLanguage",getResources().
+                        getStringArray(R.array.pref_alias_numeric_spelling_language)[0]);
+                ;
                 break;
             }
+
         }
     }
 

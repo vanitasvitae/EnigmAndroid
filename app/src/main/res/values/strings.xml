@@ -25,10 +25,10 @@
     <string name="error_unable_to_plug_a_b">Unable to plug </string>
     <string name="error_plug_already_in_use">Error: One or more of these plugs are already in use:</string>
     <string name="error_no_text_to_send">Can\'t send empty text.</string>
-    <string name="title_ringsetting">Ringsettings</string>
+    <string name="title_ringsetting">Ring-Settings</string>
     <string name="dialog_positiv">OK</string>
     <string name="dialog_negativ">Cancel</string>
-    <string name="dialog_ringsettings_success">Set Ringsettings to</string>
+    <string name="dialog_ringsettings_success">Set Ring-Settings to</string>
     <string name="dialog_ringsettings_abort">No changes</string>
     <string name="message_reset">Enigma reset</string>
 

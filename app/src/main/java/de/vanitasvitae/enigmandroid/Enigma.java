@@ -1,12 +1,11 @@
 package de.vanitasvitae.enigmandroid;
 
-
 import de.vanitasvitae.enigmandroid.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.rotors.Rotor;
 
 /**
- * Enigma-machine
- *Copyright (C) 2015  Paul Schaub
+ * Main component of the Enigma machine
+ * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -35,13 +34,14 @@ public class Enigma
     //Slot for the reflector
     private Reflector reflector;
 
-    private boolean doAnomaly = false;
+    private boolean doAnomaly = false;  //Has the time come to handle an anomaly?
 
-    private boolean prefAnomaly;  //Do you want to simulate the anomaly?
+    private boolean prefAnomaly;  //Do you WANT to simulate the anomaly?
+    private InputPreparator inputPreparator;
 
     /**
      * Create new Enigma with standard configuration.
-     * Empty Plugboard, rotors I,II,III, Positions 0,0,0
+     * Empty Plugboard, reflector B, rotors I,II,III, Positions 0,0,0
      */
     public Enigma()
     {
@@ -55,11 +55,14 @@ public class Enigma
         this.r3 = Rotor.createRotorIII(0, 0);
         this.reflector = Reflector.createReflectorB();
         plugboard = new Plugboard();
-        prefAnomaly = true;
+        prefAnomaly = true; //TODO: Is this necessary?
     }
 
     /**
-     * Encrypt / Decrypt a given String
+     * Encrypt / Decrypt a given String w.
+     * w must be prepared using prepare(w) beforehand.
+     * Doing so changes the state of the rotors but not the state of the plugboard and the
+     * ringSettings
      *
      * @param w Text to decrypt/encrypt
      * @return encrypted/decrypted string
@@ -78,28 +81,30 @@ public class Enigma
     }
 
     /**
-     * Perform crypto on char.
-     * Beforehand rotate rotors. Also implement the rotor anomaly.
+     * Substitute char k by sending the signal through the enigma.
+     * This rotates the first rotor and eventually also the second/third beforehand.
+     * Also this method handles the anomaly in case it should happen
      *
      * @param k input char
-     * @return output char
+     * @return substituted output char
      */
     public char encryptChar(char k)
     {
         //Rotate rotors
         r1.rotate();
+        //Eventually turn next rotor (usual turnOver or anomaly)
         if (r1.isAtTurnoverPosition() || (this.doAnomaly && prefAnomaly))
         {
             r2.rotate();
-            //Handle Anomaly
+            //Set doAnomaly for next call of encryptChar
             this.doAnomaly = r2.doubleTurnAnomaly();
+            //Eventually rotate next rotor
             if (r2.isAtTurnoverPosition())
             {
                 r3.rotate();
             }
         }
-        int x = (int) k;
-        x = x - 65;    //Remove Unicode Offset (A=65 in Unicode.)
+        int x = ((int) k)-65;   //Cast to int and remove Unicode Offset (A=65 in Unicode.)
 
         //Encryption
         //forward direction
@@ -122,43 +127,21 @@ public class Enigma
         x = normalize(x - r1.getRotation());
         x = plugboard.encrypt(x);
 
-        return (char) (x + 65);     //Add Offset
-    }
-
-    public int normalize(int input)
-    {
-        return (26+input)%26;
+        return (char) (x + 65);     //Add Offset again and cast back to char
     }
 
     /**
-     * Prepare String for encryption via enigma
-     * Replace . , ! ? : with X
-     * Remove all other chars that are not A..Z
-     *
-     * @param word string
-     * @return prepared string
+     * Normalize the input.
+     * Normalizing means keeping the input via modulo in the range from 0 to n-1, where n is equal
+     * to the size of the rotors (in this case fixed to 26, TODO?).
+     * This is necessary since java allows negative modulo values,
+     * which can break this implementation
+     * @param input input signal
+     * @return "normalized" input signal
      */
-    public static String prepare(String word)
+    public int normalize(int input)
     {
-        String input = word.toUpperCase();
-        String output = "";
-        for (char x : input.toCharArray())
-        {
-            if (x >= 65 && x <= 90)  //If x in [A..Z]
-            {
-                output = output + x;      //Append to String
-            }
-            //if x is special symbol
-            else
-            {
-                if (x == '.' || x == ',' || x == '!' || x == '?' || x == ':')
-                {
-                    //replace x with X and encrypt
-                    output = output + 'X';
-                }
-            }
-        }
-        return output;
+        return (26+input)%26;
     }
 
     /**
@@ -198,6 +181,10 @@ public class Enigma
         }
     }
 
+    /**
+     * Set the plugboard
+     * @param p Plugboard
+     */
     public void setPlugboard(Plugboard p)
     {
         this.plugboard = p;
@@ -226,6 +213,28 @@ public class Enigma
         return configuration;
     }
 
+    /**
+     * Set the inputPreparator
+     * @param preparator concrete InputPreparator
+     */
+    public void setInputPreparator(InputPreparator preparator)
+    {
+        this.inputPreparator = preparator;
+    }
+
+    /**
+     * Return the inputPreparator
+     * @return inputPreparator
+     */
+    public InputPreparator getInputPreparator()
+    {
+        return this.inputPreparator;
+    }
+
+    /**
+     * set prefAnomaly variable
+     * @param b boolean
+     */
     public void setPrefAnomaly(boolean b)
     {
         this.prefAnomaly = b;

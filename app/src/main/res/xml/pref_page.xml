@@ -7,6 +7,13 @@
                 android:title="@string/pref_title_simulate_anomaly"
                 android:summary="@string/pref_description_simulate_anomaly"
                 android:defaultValue="true" />
+            <ListPreference
+                android:key="prefNumericLanguage"
+                android:title="@string/pref_title_numeric_spelling_language"
+                android:summary="@string/pref_description_numeric_spelling_language"
+                android:entries="@array/pref_list_numeric_spelling_language"
+                android:entryValues="@array/pref_alias_numeric_spelling_language"
+                android:defaultValue="de" />
     </PreferenceCategory>
 
 </PreferenceScreen>
