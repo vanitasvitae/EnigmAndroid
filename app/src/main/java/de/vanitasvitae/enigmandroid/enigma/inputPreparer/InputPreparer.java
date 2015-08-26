@@ -1,9 +1,7 @@
-package de.vanitasvitae.enigmandroid;
-
-import java.text.Normalizer;
+package de.vanitasvitae.enigmandroid.enigma.inputPreparer;
 
 /**
- * Preparator class that prepares input text to only consist of [A..Z]
+ * Preparer class that prepares input text to only consist of [A..Z]
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -21,11 +19,11 @@ import java.text.Normalizer;
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  * @author vanitasvitae
  */
-public abstract class InputPreparator
+public abstract class InputPreparer
 {
     /**
      * Prepare the input String in a way that it only contains letters from [A..Z].
-     * Replace special characters and spell numbers.
+     * Replace special characters, remove spaces and spell numbers.
      * @param input String
      * @return prepared String
      */
@@ -46,7 +44,7 @@ public abstract class InputPreparator
                 output = output + replaceNumber(x);
             }
             //x is special symbol
-            else
+            else if (x != ' ')
             {
                 output = output + 'X';
             }
@@ -62,24 +60,25 @@ public abstract class InputPreparator
     public abstract String replaceNumber(char input);
 
     /**
-     * Factory method that creates a specific InputPreparator
-     * @param language language alias that specifies the language (de,en)
-     * @return concrete InputPreparator
+     * Factory method that creates a specific InputPreparer
+     * @param language language alias that specifies the language (de,fr,en)
+     * @return concrete InputPreparer
      */
-    public static InputPreparator createInputPreparator(String language)
+    public static InputPreparer createInputPreparer(String language)
     {
         switch (language)
         {
-            case "de": return new InputPreparatorGerman();
-            default: return new InputPreparatorEnglish();
+            case "de": return new InputPreparerGerman();
+            case "fr": return new InputPreparerFrench();
+            default: return new InputPreparerEnglish();
         }
     }
 }
 
 /**
- * Concrete implementation of a german InputPreparator
+ * Concrete implementation of a german InputPreparer
  */
-class InputPreparatorGerman extends InputPreparator
+class InputPreparerGerman extends InputPreparer
 {
     @Override
     public String replaceNumber(char input) {
@@ -100,9 +99,9 @@ class InputPreparatorGerman extends InputPreparator
 }
 
 /**
- * Concrete implementation of an english InputPreparator
+ * Concrete implementation of an english InputPreparer
  */
-class InputPreparatorEnglish extends InputPreparator
+class InputPreparerEnglish extends InputPreparer
 {
     @Override
     public String replaceNumber(char input)
@@ -118,6 +117,30 @@ class InputPreparatorEnglish extends InputPreparator
             case '7': return "SEVEN";
             case '8': return "EIGHT";
             default: return "NINE";
+        }
+    }
+}
+
+/**
+ * Concrete implementation of a french InputPreparer
+ */
+class InputPreparerFrench extends InputPreparer
+{
+
+    @Override
+    public String replaceNumber(char input)
+    {
+        switch (input) {
+            case '0': return "ZERO";
+            case '1': return "UN";
+            case '2': return "DEUX";
+            case '3': return "TROIS";
+            case '4': return "QUATRE";
+            case '5': return "CINQ";
+            case '6': return "SIX";
+            case '7': return "SEPT";
+            case '8': return "HUIT";
+            default: return "NEUF";
         }
     }
 }

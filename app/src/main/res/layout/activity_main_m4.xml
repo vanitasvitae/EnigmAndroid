@@ -16,25 +16,30 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:text="@string/hint_reflector"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_thin_rotor"/>
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:text="@string/hint_rotor3"/>
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:text="@string/hint_rotor2"/>
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:text="@string/hint_rotor1"/>
     </LinearLayout>
@@ -47,25 +52,31 @@
 
         <Spinner
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:id="@+id/reflector">
         </Spinner>
         <Spinner
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
+            android:layout_height="wrap_content"
+            android:id="@+id/thin_rotor">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:id="@+id/rotor3">
         </Spinner>
         <Spinner
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:id="@+id/rotor2">
         </Spinner>
         <Spinner
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_height="wrap_content"
             android:id="@+id/rotor1">
         </Spinner>
@@ -78,10 +89,11 @@
         android:layout_below="@+id/lin_lay_1"
         android:id="@+id/lin_lay_names_2">
 
-        <Space
+        <TextView
             android:layout_width="0dp"
-            android:layout_weight=".125"
-            android:layout_height="wrap_content" />
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_thin_rotor_position"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight=".25"
@@ -99,10 +111,6 @@
             android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:text="@string/hint_rotor1_position"/>
-        <Space
-            android:layout_width="0dp"
-            android:layout_weight=".125"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -112,10 +120,12 @@
         android:id="@+id/lin_lay_2"
         android:layout_below="@+id/lin_lay_names_2">
 
-        <Space
+        <Spinner
             android:layout_width="0dp"
-            android:layout_weight=".125"
-            android:layout_height="wrap_content" />
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:id="@+id/thin_rotor_position">
+        </Spinner>
         <Spinner
             android:layout_width="0dp"
             android:layout_weight=".25"
@@ -134,10 +144,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/rotor1position">
         </Spinner>
-        <Space
-            android:layout_width="0dp"
-            android:layout_weight=".125"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <EditText
@@ -159,7 +165,7 @@
             android:layout_weight=".50"
             android:layout_height="match_parent"
             android:id="@+id/input"
-            android:inputType="textNoSuggestions"
+            android:inputType="textNoSuggestions|textMultiLine"
             android:hint="@string/hint_enigma_type_here" />
 
         <EditText

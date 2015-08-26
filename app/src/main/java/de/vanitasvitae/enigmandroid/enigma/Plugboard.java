@@ -1,9 +1,12 @@
-package de.vanitasvitae.enigmandroid;
+package de.vanitasvitae.enigmandroid.enigma;
 
 import android.app.Activity;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.R;
 
 /**
  * Plugboard of the enigma

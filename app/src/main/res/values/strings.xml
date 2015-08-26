@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="version" translatable="false">0.1.4-15.08.2015</string>
+    <string name="version" translatable="false">0.1.5-27.08.2015</string>
     <string name="app_name">EnigmAndroid</string>
     <string name="action_version">Version</string>
     <string name="action_reset">Reset</string>
@@ -16,10 +16,12 @@
     <string name="hint_rotor1">Rotor 1</string>
     <string name="hint_rotor2">Rotor 2</string>
     <string name="hint_rotor3">Rotor 3</string>
+    <string name="hint_thin_rotor">Rotor 4</string>
     <string name="hint_reflector">Reflector</string>
     <string name="hint_rotor1_position">Position\nRotor 1</string>
     <string name="hint_rotor2_position">Position\nRotor 2</string>
     <string name="hint_rotor3_position">Position\nRotor 3</string>
+    <string name="hint_thin_rotor_position">Position\nRotor 4</string>
     <string name="button_crypt">En-/Decrypt!</string>
     <string name="error_parsing_plugs">Error: Can\'t interpret plugboard input.</string>
     <string name="error_unable_to_plug_a_b">Unable to plug </string>
@@ -32,16 +34,35 @@
     <string name="dialog_ringsettings_abort">No changes</string>
     <string name="message_reset">Enigma reset</string>
 
-    <string-array name="enigma_rotors">
+    <string-array translatable="false" name="rotors_1_5">
         <item>I</item>
         <item>II</item>
         <item>III</item>
         <item>IV</item>
         <item>V</item>
     </string-array>
-    <string-array name="enigma_reflectors">
+    <string-array translatable="false" name="rotors_1_8">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+        <item>VI</item>
+        <item>VII</item>
+        <item>VIII</item>
+    </string-array>
+    <string-array translatable="false" name="reflectors_a_c">
         <item>A</item>
         <item>B</item>
         <item>C</item>
     </string-array>
+    <string-array translatable="false" name="reflectors_b_c">
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+    <string-array translatable="false" name="rotors_beta_gamma">
+        <item>\u03B2</item>
+        <item>\u03B3</item>
+    </string-array>
+
 </resources>

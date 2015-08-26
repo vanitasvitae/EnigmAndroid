@@ -1,0 +1,67 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ringsettings_layout_hint">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:text="@string/hint_thin_rotor"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:text="@string/hint_rotor3"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:text="@string/hint_rotor2"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:text="@string/hint_rotor1"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ringsettings_layout_hint"
+        android:id="@+id/ringsettings_layout">
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="wrap_content"
+            android:id="@+id/rotor4ring">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="wrap_content"
+            android:id="@+id/rotor3ring">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="wrap_content"
+            android:id="@+id/rotor2ring">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="wrap_content"
+            android:id="@+id/rotor1ring">
+        </Spinner>
+    </LinearLayout>
+</RelativeLayout>

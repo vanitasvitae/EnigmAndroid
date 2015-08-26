@@ -1,4 +1,4 @@
-package de.vanitasvitae.enigmandroid.rotors;
+package de.vanitasvitae.enigmandroid.enigma.rotors;
 
 /**
  * Reflector of the enigma machine.
@@ -43,33 +43,6 @@ public class Reflector
     }
 
     /**
-     * Creates a reflector of type A
-     * @return ReflectorA
-     */
-    public static Reflector createReflectorA()
-    {
-        return new ReflectorA();
-    }
-
-    /**
-     * Creates a reflector of type B
-     * @return ReflectorB
-     */
-    public static Reflector createReflectorB()
-    {
-        return new ReflectorB();
-    }
-
-    /**
-     * Creates a reflector of type C
-     * @return ReflectorC
-     */
-    public static Reflector createReflectorC()
-    {
-        return new ReflectorC();
-    }
-
-    /**
      * Factory method to create reflectors.
      * @param type type of the created reflector
      *             1 -> ReflectorA
@@ -81,9 +54,11 @@ public class Reflector
     {
         switch (type)
         {
-            case 1: return createReflectorA();
-            case 2: return createReflectorB();
-            default: return createReflectorC();
+            case 1: return new ReflectorA();
+            case 2: return new ReflectorB();
+            case 3: return new ReflectorC();
+            case 4: return new ReflectorThinB();
+            default: return new ReflectorThinC();
         }
     }
 
@@ -141,34 +116,70 @@ public class Reflector
 
     /**
      * Concrete implementation of ReflectorA
+     * Used in Enigma I
+     * AE  BJ  CM  DZ  FL  GY  HX  IV  KW  NR  OQ  PU  ST
      */
     private static class ReflectorA extends Reflector
     {
         public ReflectorA()
         {
-            super("A", 1, new Integer[]{4, 9, 12, 25, 0, 11, 24, 23, 21, 1, 22, 5, 2, 17, 16, 20, 14, 13, 19, 18, 15, 8, 10, 7, 6, 3});
+            super("A", 1, new Integer[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
         }
     }
 
     /**
      * Concrete implementation of ReflectorB
+     * Used in Enigma I, M3
+     * AY  BR  CU  DH  EQ  FS  GL  IP  JX  KN  MO  TZ  VW
      */
     private static class ReflectorB extends Reflector
     {
         public ReflectorB()
         {
-            super("B", 2, new Integer[]{24, 17, 20, 7, 16, 18, 11, 3, 15, 23, 13, 6, 14, 10, 12, 8, 4, 1, 5, 25, 2, 22, 21, 9, 0, 19});
+            super("B", 2, new Integer[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
         }
     }
 
     /**
      * Concrete implementation of ReflectorC
+     * Used in Enigma I, M3
+     * AF  BV  CP  DJ  EI  GO  HY  KR  LZ  MX  NW  QT  SU
      */
     private static class ReflectorC extends Reflector
     {
         public ReflectorC()
         {
-            super("C", 3, new Integer[]{5, 21, 15, 9, 8, 0, 14, 24, 4, 3, 17, 25, 23, 22, 6, 2, 19, 10, 20, 16, 18, 1, 13, 12, 7, 11});
+            super("C", 3, new Integer[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
+        }
+    }
+
+    /**
+     * Concrete implementation of thin reflector type b (not equal to normal type b!)
+     * When used with Rotor Beta on rotation 0, the pair was equivalent to normal reflector B
+     * S->Beta->ThinB->Beta'->X == X->UKWB->S
+     * Used in Enigma M4
+     * E N K Q A U Y W J I C O P B L M D X Z V F T H R G S
+     */
+    private static class ReflectorThinB extends Reflector
+    {
+        public ReflectorThinB()
+        {
+            super("B", 4, new Integer[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
+        }
+    }
+
+    /**
+     * Concrete implementation of thin reflector type c (not equal to normal type c!)
+     * When used with Rotor Gamma on rotation 0, the pair was equivalent to normal reflector C
+     * S->Gamma->ThinC->Gamma'->X == X->UKWC->S
+     * Used in Enigma M4
+     * R D O B J N T K V E H M L F C W Z A X G Y I P S U Q
+     */
+    private static class ReflectorThinC extends Reflector
+    {
+        public ReflectorThinC()
+        {
+            super("B", 5, new Integer[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
         }
     }
 

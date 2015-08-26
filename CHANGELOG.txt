@@ -1,10 +1,12 @@
 CHANGELOG ENIGMANDROID
 
 v0.1.5-not.yet.released<
-*added missing licenses to class files
-*Added proper documentation
-*Extended input interpretation (number spelling in different languages, any unknown special
-character now becomes 'X'
+*Added french number spelling
+*Added Enigma Models M3, M4
+*Added option to select different enigma models into options menu
+*Added developer class for simple rotor creation (not a feature in the app)
+*Fixed broken ring settings
+*Fixed false reset of ring settings when switching from/to landscape mode
 
 
 v0.1.4-15.08.2015<
@@ -12,6 +14,10 @@ v0.1.4-15.08.2015<
 *Fixed some layout issues
 *Fixed anomaly for step by step inputs
 *Added send/receive text functionality
+*added missing licenses to class files
+*Added proper documentation
+*Extended input interpretation (number spelling in different languages, any unknown special
+character now becomes 'X'
 
 v0.1.3-14.03.2015<
 *Added About Dialog with ChangeLog-Button

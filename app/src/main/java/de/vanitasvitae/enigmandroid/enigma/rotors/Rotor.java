@@ -1,4 +1,4 @@
-package de.vanitasvitae.enigmandroid.rotors;
+package de.vanitasvitae.enigmandroid.enigma.rotors;
 
 /**
  * Rotor super class and inner concrete implementations
@@ -30,7 +30,7 @@ public class Rotor
     protected int type;
     protected Integer[] connections;
     protected Integer[] reversedConnections;
-    protected int turnOverNotch;
+    protected Integer[] turnOverNotches;
 
     protected int ringSetting;
     protected int rotation;
@@ -47,18 +47,18 @@ public class Rotor
      * @param reversedConnections inverse wiring used to encrypt in the opposite direction
      *                            (connections[reversedConnections[i]] = i
      *                            for all i in 0..getRotorSize()-1.
-     * @param turnOverNotch Position of the turnover notch
+     * @param turnOverNotches Position(s) of the turnover notch(es)
      * @param ringSetting setting of the ring that holds the letters
      * @param rotation rotation of the rotor
      */
     protected Rotor(String name, int type, Integer[] connections, Integer[] reversedConnections,
-                    int turnOverNotch, int ringSetting, int rotation)
+                    Integer[] turnOverNotches, int ringSetting, int rotation)
     {
         this.name = name;
         this.type = type;
         this.connections = connections;
         this.reversedConnections = reversedConnections;
-        this.turnOverNotch = turnOverNotch;
+        this.turnOverNotches = turnOverNotches;
         this.ringSetting = ringSetting;
         this.rotation = rotation;
     }
@@ -66,7 +66,9 @@ public class Rotor
     /**
      * Factory method that creates a rotor accordingly to the type.
      * Also initialize the rotor with ringSetting and rotation.
-     * @param type type indicator (1..5)
+     * @param type type indicator (1..10)
+     *             1..8 -> I..VIII
+     *             9,10 -> Beta, Gamma
      * @param ringSetting setting of the outer ring (0..25)
      * @param rotation rotation of the rotor
      * @return Concrete rotor
@@ -75,77 +77,28 @@ public class Rotor
     {
         switch (type)
         {
-            case 1: return createRotorI(ringSetting, rotation);
-            case 2: return createRotorII(ringSetting, rotation);
-            case 3: return createRotorIII(ringSetting, rotation);
-            case 4: return createRotorIV(ringSetting, rotation);
-            default: return createRotorV(ringSetting, rotation);
+            case 1: return new RotorI(ringSetting, rotation);
+            case 2: return new RotorII(ringSetting, rotation);
+            case 3: return new RotorIII(ringSetting, rotation);
+            case 4: return new RotorIV(ringSetting, rotation);
+            case 5: return new RotorV(ringSetting, rotation);
+            case 6: return new RotorVI(ringSetting, rotation);
+            case 7: return new RotorVII(ringSetting, rotation);
+            case 8: return new RotorVIII(ringSetting, rotation);
+            case 9: return new RotorBeta(ringSetting, rotation);
+            default: return new RotorGamma(ringSetting, rotation);
         }
     }
 
     /**
-     * Create concrete Rotor of type 1 (I) initialized with ringSetting and rotation
-     * @param ringSetting setting of the outer ring
-     * @param rotation rotation of the rotor
-     * @return RotorI
-     */
-    public static Rotor createRotorI(int ringSetting, int rotation)
-    {
-        return new RotorI(ringSetting, rotation);
-    }
-
-    /**
-     * Create concrete Rotor of type 2 (II) initialized with ringSetting and rotation
-     * @param ringSetting setting of the outer ring
-     * @param rotation rotation of the rotor
-     * @return RotorI
-     */
-    public static Rotor createRotorII(int ringSetting, int rotation)
-    {
-        return new RotorII(ringSetting, rotation);
-    }
-
-    /**
-     * Create concrete Rotor of type 3 (III) initialized with ringSetting and rotation
-     * @param ringSetting setting of the outer ring
-     * @param rotation rotation of the rotor
-     * @return RotorI
-     */
-    public static Rotor createRotorIII(int ringSetting, int rotation)
-    {
-        return new RotorIII(ringSetting, rotation);
-    }
-
-    /**
-     * Create concrete Rotor of type 4 (IV) initialized with ringSetting and rotation
-     * @param ringSetting setting of the outer ring
-     * @param rotation rotation of the rotor
-     * @return RotorI
-     */
-    public static Rotor createRotorIV(int ringSetting, int rotation)
-    {
-        return new RotorIV(ringSetting, rotation);
-    }
-
-    /**
-     * Create concrete Rotor of type 5 (V) initialized with ringSetting and rotation
-     * @param ringSetting setting of the outer ring
-     * @param rotation rotation of the rotor
-     * @return RotorI
-     */
-    public static Rotor createRotorV(int ringSetting, int rotation)
-    {
-        return new RotorV(ringSetting, rotation);
-    }
-
-    /**
-     * Encrypt an input signal via the internal wiring in "forward" direction (using connections)
+     * Encrypt an input signal via the internal wiring in "forward" direction towards the reflector
+     * (using connections)
      * @param input signal
      * @return encrypted signal
      */
     public int encryptForward(int input)
     {
-        return this.connections[normalize(input)];
+        return this.connections[normalize(input)];// - this.ringSetting)];
     }
 
     /**
@@ -156,7 +109,7 @@ public class Rotor
      */
     public int encryptBackward(int input)
     {
-        return this.reversedConnections[normalize(input)];
+        return this.reversedConnections[normalize(input)];// + this.ringSetting)];
     }
 
     /**
@@ -175,7 +128,7 @@ public class Rotor
      */
     public int getRotation()
     {
-        return this.rotation - this.getRingSetting();
+        return this.rotation;
     }
 
     /**
@@ -192,7 +145,12 @@ public class Rotor
      */
     public boolean isAtTurnoverPosition()
     {
-        return this.rotation == this.turnOverNotch;
+        for(int x : getTurnOverNotches())
+        {
+            //if(x == this.rotation + this.ringSetting) return true;
+            if(x == this.rotation) return true;
+        }
+        return false;
     }
 
     /**
@@ -206,16 +164,20 @@ public class Rotor
      */
     public boolean doubleTurnAnomaly()
     {
-        return this.rotation == this.getTurnOver() - 1;
+        for(int x : getTurnOverNotches())
+        {
+            if(this.rotation == x-1) return true;
+        }
+        return false;
     }
 
     /**
-     * Returns the position of the turnover notch
-     * @return turnOverNotch
+     * Returns the positions of the turnover notches in a array
+     * @return turnOverNotches
      */
-    public int getTurnOver()
+    public Integer[] getTurnOverNotches()
     {
-        return this.turnOverNotch;
+        return this.turnOverNotches;
     }
 
     /**
@@ -261,6 +223,8 @@ public class Rotor
 
     /**
      * Concrete implementation of Rotor of type 1 (I)
+     * Used in Enigma I, M3, M4
+     * E K M F L G D Q V Z N T O W Y H X U S P A I B R C J
      */
     private static class RotorI extends Rotor
     {
@@ -269,12 +233,14 @@ public class Rotor
             super("I", 1,
                     new Integer[]{4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9},
                     new Integer[]{20, 22, 24, 6, 0, 3, 5, 15, 21, 25, 1, 4, 2, 10, 12, 19, 7, 23, 18, 11, 17, 8, 13, 16, 14, 9},
-                    17, ringSetting, rotation);
+                    new Integer[]{17}, ringSetting, rotation);
         }
     }
 
     /**
      * Concrete implementation of Rotor of type 2 (II)
+     * Used in Enigma I, M3, M4
+     * A J D K S I R U X B L H W T M C Q G Z N P Y F V O E
      */
     private static class RotorII extends Rotor
     {
@@ -283,12 +249,14 @@ public class Rotor
             super("II", 2,
                     new Integer[]{0, 9, 3, 10, 18, 8, 17, 20, 23, 1, 11, 7, 22, 19, 12, 2, 16, 6, 25, 13, 15, 24, 5, 21, 14, 4},
                     new Integer[]{0, 9, 15, 2, 25, 22, 17, 11, 5, 1, 3, 10, 14, 19, 24, 20, 16, 6, 4, 13, 7, 23, 12, 8, 21, 18},
-                    5, ringSetting, rotation);
+                    new Integer[]{5}, ringSetting, rotation);
         }
     }
 
     /**
      * Concrete implementation of Rotor of type 3 (III)
+     * Used in Enigma I, M3, M4
+     * B D F H J L C P R T X V Z N Y E I W G A K M U S Q O
      */
     private static class RotorIII extends Rotor
     {
@@ -297,12 +265,14 @@ public class Rotor
             super("III", 3,
                     new Integer[]{1, 3, 5, 7, 9, 11, 2, 15, 17, 19, 23, 21, 25, 13, 24, 4, 8, 22, 6, 0, 10, 12, 20, 18, 16, 14},
                     new Integer[]{19, 0, 6, 1, 15, 2, 18, 3, 16, 4, 20, 5, 21, 13, 25, 7, 24, 8, 23, 9, 22, 11, 17, 10, 14, 12},
-                    22, ringSetting, rotation);
+                    new Integer[]{22}, ringSetting, rotation);
         }
     }
 
     /**
      * Concrete implementation of Rotor of type 4 (IV)
+     * Used in Enigma M3, M4
+     * E S O V P Z J A Y Q U I R H X L N F T G K D C M W B
      */
     private static class RotorIV extends Rotor
     {
@@ -311,12 +281,14 @@ public class Rotor
             super("IV", 4,
                     new Integer[]{4, 18, 14, 21, 15, 25, 9, 0, 24, 16, 20, 8, 17, 7, 23, 11, 13, 5, 19, 6, 10, 3, 2, 12, 22, 1},
                     new Integer[]{7, 25, 22, 21, 0, 17, 19, 13, 11, 6, 20, 15, 23, 16, 2, 4, 9, 12, 1, 18, 10, 3, 24, 14, 8, 5},
-                    10, ringSetting, rotation);
+                    new Integer[]{10}, ringSetting, rotation);
         }
     }
 
     /**
      * Concrete implementation of Rotor of type 5 (V)
+     * Used in Enigma M3, M4
+     * V Z B R G I T Y U P S D N H L X A W M J Q O F E C K
      */
     private static class RotorV extends Rotor
     {
@@ -325,7 +297,117 @@ public class Rotor
             super("V", 5,
                     new Integer[]{21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13, 7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10},
                     new Integer[]{16, 2, 24, 11, 23, 22, 4, 13, 5, 19, 25, 14, 18, 12, 21, 9, 20, 3, 10, 6, 8, 0, 17, 15, 7, 1},
-                    0, ringSetting, rotation);
+                    new Integer[]{0}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Concrete implementation of Rotor of type 6 (VI)
+     * Used in Enigma M3, M4
+     * J P G V O U M F Y Q B E N H Z R D K A S X L I C T W
+     */
+    private static class RotorVI extends Rotor
+    {
+        public RotorVI(int ringSetting, int rotation)
+        {
+            super("VI", 6,
+                    new Integer[]{9,15,6,21,14,20,12,5,24,16,1,4,13,7,25,17,3,10,0,18,23,11,8,2,19,22},
+                    new Integer[]{18,10,23,16,11,7,2,13,22,0,17,21,6,12,4,1,9,15,19,24,5,3,25,20,8,14},
+                    new Integer[]{0,13}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Concrete implementation of Rotor of type 7 (VII)
+     * Used in Enigma M3, M4
+     * N Z J H G R C X M Y S W B O U F A I V L P E K Q D T
+     */
+    private static class RotorVII extends Rotor
+    {
+        public RotorVII(int ringSetting, int rotation)
+        {
+            super("VII", 7,
+                    new Integer[]{13,25,9,7,6,17,2,23,12,24,18,22,1,14,20,5,0,8,21,11,15,4,10,16,3,19},
+                    new Integer[]{16,12,6,24,21,15,4,3,17,2,22,19,8,0,13,20,23,5,10,25,14,18,11,7,9,1},
+                    new Integer[]{0,13}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Concrete implementation of Rotor of type 8 (VIII)
+     * Used in Enigma M3, M4
+     * F K Q H T L X O C B J S P D Z R A M E W N I U Y G V
+     */
+    private static class RotorVIII extends Rotor
+    {
+        public RotorVIII(int ringSetting, int rotation)
+        {
+            super("VIII", 8,
+                    new Integer[]{5,10,16,7,19,11,23,14,2,1,9,18,15,3,25,17,0,12,4,22,13,8,20,24,6,21},
+                    new Integer[]{16,9,8,13,18,0,24,3,21,10,1,5,17,20,7,12,2,15,11,4,22,25,19,6,23,14},
+                    new Integer[]{0,13}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Concrete implementation of Rotor of type beta (Griechenwalze Beta)
+     * Beta was used as a "thin" rotor in the M4. It was thinner than a "normal" rotor, so it
+     * could be used together with one of the two thin reflectors as one rotor.
+     * When used together with ReflectorThinB, Beta was equivalent to Reflector B (if rotation == 0)
+     * That way the M4 was backwards compatible to the M3
+     * Used in M4
+     */
+    private static class RotorBeta extends Rotor
+    {
+        public RotorBeta(int ringSetting, int rotation)
+        {
+            super("Beta",9,
+                    new Integer[]{11,4,24,9,21,2,13,8,23,22,15,1,16,12,3,17,19,0,10,25,6,5,20,7,14,18},
+                    new Integer[]{17,11,5,14,1,21,20,23,7,3,18,0,13,6,24,10,12,15,25,16,22,4,9,8,2,19},
+                    new Integer[]{}, ringSetting, rotation);
+        }
+        @Override
+        public void rotate()
+        {
+            //Thin rotors are fixed in position, so they dont rotate
+        }
+
+        @Override
+        public boolean doubleTurnAnomaly()
+        {
+            //Nope, no anomaly
+            return false;
+        }
+    }
+
+    /**
+     * Concrete implementation of Rotor of type gamma (Griechenwalze Gamma)
+     * Gamma was used as a "thin" rotor in the M4. It was thinner than a "normal" rotor, so it
+     * could be used together with one of the two thin reflectors as one rotor.
+     * When used together with ReflectorThinC, Gamma is equivalent to Reflector C
+     * (if rotation == 0). That way the M4 was backwards compatible to the M3
+     * Used in M4
+     */
+    private static class RotorGamma extends Rotor
+    {
+        public RotorGamma(int ringSetting, int rotation)
+        {
+            super("Gamma",10,
+                    new Integer[]{5,18,14,10,0,13,20,4,17,7,12,1,19,8,24,2,22,11,16,15,25,23,21,6,9,3},
+                    new Integer[]{4,11,15,25,7,0,23,9,13,24,3,17,10,5,2,19,18,8,1,12,6,22,16,21,14,20},
+                    new Integer[]{}, ringSetting, rotation);
+        }
+        @Override
+        public void rotate()
+        {
+            //Thin rotors are fixed in position, so they don't rotate
+        }
+
+        @Override
+        public boolean doubleTurnAnomaly()
+        {
+            //Thin rotors don't do such weird stuff, they're normal just like you and me.
+            return false;
         }
     }
 }
