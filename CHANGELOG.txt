@@ -1,6 +1,10 @@
 CHANGELOG ENIGMANDROID
+v0.1.6-not-yet-released
+*Updated CHANGELOG (oops)
+*TODO:Fix about dialog (outdated manual)
+*
 
-v0.1.5-not.yet.released<
+v0.1.5-27.08.2015<
 *Added french number spelling
 *Added Enigma Models M3, M4
 *Added option to select different enigma models into options menu
