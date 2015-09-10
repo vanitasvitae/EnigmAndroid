@@ -13,9 +13,10 @@
     </string>
 
     <string name="title_section_how_to_use">How to use</string>
-    <string name="section_how_to_use">To encrypt/decrpyt a message, you can type it into the input field.
-        Afterwards you can select a reflector and the three rotors. Also select their initial positions.
-        Then you can set pairs on the plugboard. Therefore you just type the pairs separated by commas (e.g. \"ab,cd\").
+    <string name="section_how_to_use">In the beginning, choose a model of the enigma machine to work with.
+        You can do this in the settings. To encrypt/decrpyt a message, you can type it into the input field.
+        Afterwards you can - depending on the chosen model - select a reflector and the some rotors. Also select their initial positions.
+        Then you may set pairs on the plugboard or on the pluggable reflector. Therefore you just type the pairs separated by commas (e.g. \"ab,cd\").
         Notice that you can\'t plug a letter twice.
         Optionally you can set custom ring settings. Open the options menu and select \"Ringsettings\".
         When you are ready press \"En-/Decrypt!\".</string>

@@ -22,5 +22,14 @@
             android:entryValues="@array/pref_alias_numeric_spelling_language"
             android:defaultValue="de" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_appearance">
+        <ListPreference
+            android:key="prefMessageFormatting"
+            android:title="@string/pref_title_message_formatting"
+            android:summary="@string/pref_description_message_formatting"
+            android:entries="@array/pref_list_message_formatting"
+            android:entryValues="@array/pref_alias_message_formatting"
+            android:defaultValue="5"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

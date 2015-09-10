@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="version" translatable="false">0.1.5-27.08.2015</string>
+    <string name="version" translatable="false">0.1.6-10.09.2015</string>
     <string name="app_name">EnigmAndroid</string>
     <string name="action_version">Version</string>
     <string name="action_reset">Reset</string>
@@ -21,7 +21,9 @@
     <string name="hint_rotor1_position">Position\nRotor 1</string>
     <string name="hint_rotor2_position">Position\nRotor 2</string>
     <string name="hint_rotor3_position">Position\nRotor 3</string>
+    <string name="hint_reflector_position">Position\nReflector</string>
     <string name="hint_thin_rotor_position">Position\nRotor 4</string>
+    <string name="hint_enigma_reflector_wiring">Wiring Reflector</string>
     <string name="button_crypt">En-/Decrypt!</string>
     <string name="error_parsing_plugs">Error: Can\'t interpret plugboard input.</string>
     <string name="error_unable_to_plug_a_b">Unable to plug </string>

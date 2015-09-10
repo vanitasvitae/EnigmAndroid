@@ -26,8 +26,8 @@ package de.vanitasvitae.enigmandroid.enigma.rotors;
  */
 public class Rotor
 {
-    protected String name;
-    protected int type;
+    protected String type;
+    protected int number;
     protected Integer[] connections;
     protected Integer[] reversedConnections;
     protected Integer[] turnOverNotches;
@@ -41,21 +41,20 @@ public class Rotor
      * Note that connections and reversedConnections MUST be of the same size and that
      * neither connections nor reversedConnections respectively MUST have any number between
      * 0 and connections.length-1 only once (ie they represent permutations)
-     * @param name phonetic name of the rotor (usually I,II,...V)
-     * @param type type indicator (I -> 1,...,V -> 5)
+     * @param type type indicator
      * @param connections wiring of the rotor as Integer array
-     * @param reversedConnections inverse wiring used to encrypt in the opposite direction
+     * @param reversedConnections inverse wiring used to encryptString in the opposite direction
      *                            (connections[reversedConnections[i]] = i
      *                            for all i in 0..getRotorSize()-1.
      * @param turnOverNotches Position(s) of the turnover notch(es)
      * @param ringSetting setting of the ring that holds the letters
      * @param rotation rotation of the rotor
      */
-    protected Rotor(String name, int type, Integer[] connections, Integer[] reversedConnections,
+    protected Rotor(String type, int number, Integer[] connections, Integer[] reversedConnections,
                     Integer[] turnOverNotches, int ringSetting, int rotation)
     {
-        this.name = name;
         this.type = type;
+        this.number = number;
         this.connections = connections;
         this.reversedConnections = reversedConnections;
         this.turnOverNotches = turnOverNotches;
@@ -69,24 +68,31 @@ public class Rotor
      * @param type type indicator (1..10)
      *             1..8 -> I..VIII
      *             9,10 -> Beta, Gamma
+     *             11..13 -> DI..DIII
      * @param ringSetting setting of the outer ring (0..25)
      * @param rotation rotation of the rotor
      * @return Concrete rotor
      */
-    public static Rotor createRotor(int type, int ringSetting, int rotation)
+    public static Rotor createRotor(int type, int rotation, int ringSetting)
     {
         switch (type)
         {
-            case 1: return new RotorI(ringSetting, rotation);
-            case 2: return new RotorII(ringSetting, rotation);
-            case 3: return new RotorIII(ringSetting, rotation);
-            case 4: return new RotorIV(ringSetting, rotation);
-            case 5: return new RotorV(ringSetting, rotation);
-            case 6: return new RotorVI(ringSetting, rotation);
-            case 7: return new RotorVII(ringSetting, rotation);
-            case 8: return new RotorVIII(ringSetting, rotation);
-            case 9: return new RotorBeta(ringSetting, rotation);
-            default: return new RotorGamma(ringSetting, rotation);
+            case 0: return new EntryWheelD();
+            case 1: return new RotorI(rotation, ringSetting);
+            case 2: return new RotorII(rotation, ringSetting);
+            case 3: return new RotorIII(rotation, ringSetting);
+            case 4: return new RotorIV(rotation, ringSetting);
+            case 5: return new RotorV(rotation, ringSetting);
+            case 6: return new RotorVI(rotation, ringSetting);
+            case 7: return new RotorVII(rotation, ringSetting);
+            case 8: return new RotorVIII(rotation, ringSetting);
+            case 9: return new RotorBeta(rotation, ringSetting);
+            case 10: return new RotorGamma(rotation, ringSetting);
+            case 11: return new RotorDI(rotation, ringSetting);
+            case 12: return new RotorDII(rotation, ringSetting);
+            case 13: return new RotorDIII(rotation, ringSetting);
+
+            default: return new RotorI(rotation, ringSetting);
         }
     }
 
@@ -98,7 +104,7 @@ public class Rotor
      */
     public int encryptForward(int input)
     {
-        return this.connections[normalize(input)];// - this.ringSetting)];
+        return this.connections[normalize(input)];
     }
 
     /**
@@ -109,16 +115,21 @@ public class Rotor
      */
     public int encryptBackward(int input)
     {
-        return this.reversedConnections[normalize(input)];// + this.ringSetting)];
+        return this.reversedConnections[normalize(input)];
     }
 
     /**
      * Return the type indicator (usually 1..5)
      * @return type indicator
      */
-    public int getType()
+    public String getType()
     {
         return this.type;
+    }
+
+    public int getNumber()
+    {
+        return this.number;
     }
 
     /**
@@ -189,14 +200,6 @@ public class Rotor
         return this.ringSetting;
     }
 
-    /**
-     * Returns the phonetic name of the rotor
-     * @return name
-     */
-    public String getName()
-    {
-        return this.name;
-    }
 
     /**
      * Returns the size (ie the number of wires/size of the connections array)
@@ -228,7 +231,7 @@ public class Rotor
      */
     private static class RotorI extends Rotor
     {
-        public RotorI(int ringSetting, int rotation)
+        public RotorI(int rotation, int ringSetting)
         {
             super("I", 1,
                     new Integer[]{4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9},
@@ -244,7 +247,7 @@ public class Rotor
      */
     private static class RotorII extends Rotor
     {
-        public RotorII(int ringSetting, int rotation)
+        public RotorII(int rotation, int ringSetting)
         {
             super("II", 2,
                     new Integer[]{0, 9, 3, 10, 18, 8, 17, 20, 23, 1, 11, 7, 22, 19, 12, 2, 16, 6, 25, 13, 15, 24, 5, 21, 14, 4},
@@ -260,7 +263,7 @@ public class Rotor
      */
     private static class RotorIII extends Rotor
     {
-        public RotorIII(int ringSetting, int rotation)
+        public RotorIII(int rotation, int ringSetting)
         {
             super("III", 3,
                     new Integer[]{1, 3, 5, 7, 9, 11, 2, 15, 17, 19, 23, 21, 25, 13, 24, 4, 8, 22, 6, 0, 10, 12, 20, 18, 16, 14},
@@ -276,7 +279,7 @@ public class Rotor
      */
     private static class RotorIV extends Rotor
     {
-        public RotorIV(int ringSetting, int rotation)
+        public RotorIV(int rotation, int ringSetting)
         {
             super("IV", 4,
                     new Integer[]{4, 18, 14, 21, 15, 25, 9, 0, 24, 16, 20, 8, 17, 7, 23, 11, 13, 5, 19, 6, 10, 3, 2, 12, 22, 1},
@@ -292,7 +295,7 @@ public class Rotor
      */
     private static class RotorV extends Rotor
     {
-        public RotorV(int ringSetting, int rotation)
+        public RotorV(int rotation, int ringSetting)
         {
             super("V", 5,
                     new Integer[]{21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13, 7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10},
@@ -308,7 +311,7 @@ public class Rotor
      */
     private static class RotorVI extends Rotor
     {
-        public RotorVI(int ringSetting, int rotation)
+        public RotorVI(int rotation, int ringSetting)
         {
             super("VI", 6,
                     new Integer[]{9,15,6,21,14,20,12,5,24,16,1,4,13,7,25,17,3,10,0,18,23,11,8,2,19,22},
@@ -324,7 +327,7 @@ public class Rotor
      */
     private static class RotorVII extends Rotor
     {
-        public RotorVII(int ringSetting, int rotation)
+        public RotorVII(int rotation, int ringSetting)
         {
             super("VII", 7,
                     new Integer[]{13,25,9,7,6,17,2,23,12,24,18,22,1,14,20,5,0,8,21,11,15,4,10,16,3,19},
@@ -340,7 +343,7 @@ public class Rotor
      */
     private static class RotorVIII extends Rotor
     {
-        public RotorVIII(int ringSetting, int rotation)
+        public RotorVIII(int rotation, int ringSetting)
         {
             super("VIII", 8,
                     new Integer[]{5,10,16,7,19,11,23,14,2,1,9,18,15,3,25,17,0,12,4,22,13,8,20,24,6,21},
@@ -359,9 +362,9 @@ public class Rotor
      */
     private static class RotorBeta extends Rotor
     {
-        public RotorBeta(int ringSetting, int rotation)
+        public RotorBeta(int rotation, int ringSetting)
         {
-            super("Beta",9,
+            super("Beta", 9,
                     new Integer[]{11,4,24,9,21,2,13,8,23,22,15,1,16,12,3,17,19,0,10,25,6,5,20,7,14,18},
                     new Integer[]{17,11,5,14,1,21,20,23,7,3,18,0,13,6,24,10,12,15,25,16,22,4,9,8,2,19},
                     new Integer[]{}, ringSetting, rotation);
@@ -390,9 +393,9 @@ public class Rotor
      */
     private static class RotorGamma extends Rotor
     {
-        public RotorGamma(int ringSetting, int rotation)
+        public RotorGamma(int rotation, int ringSetting)
         {
-            super("Gamma",10,
+            super("Gamma", 10,
                     new Integer[]{5,18,14,10,0,13,20,4,17,7,12,1,19,8,24,2,22,11,16,15,25,23,21,6,9,3},
                     new Integer[]{4,11,15,25,7,0,23,9,13,24,3,17,10,5,2,19,18,8,1,12,6,22,16,21,14,20},
                     new Integer[]{}, ringSetting, rotation);
@@ -408,6 +411,77 @@ public class Rotor
         {
             //Thin rotors don't do such weird stuff, they're normal just like you and me.
             return false;
+        }
+    }
+
+    private static class EntryWheelD extends Rotor
+    {
+        public EntryWheelD()
+        {
+            super("ETW-D", 0,
+                    new Integer[]{9,22,20,11,2,12,13,14,7,15,16,25,24,23,8,17,0,3,10,4,6,21,1,19,18,5},
+                    new Integer[]{16,22,4,17,19,25,20,8,14,0,18,3,5,6,7,9,10,15,24,23,2,21,1,13,12,11},
+                    new Integer[]{}, 0, 0);
+        }
+        @Override
+        public void rotate()
+        {
+            //EntryWheel doesn't rotate
+        }
+
+        @Override
+        public boolean doubleTurnAnomaly()
+        {
+            //\forall s \in States : nope
+            return false;
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type D
+     * L P G S Z M H A E O Q K V X R F Y B U T N I C J D W
+     * Turnover Z
+     */
+    private static class RotorDI extends Rotor
+    {
+        public RotorDI(int rotation, int ringSetting)
+        {
+            super("D-I", 11,
+                    new Integer[]{11,15,6,18,25,12,7,0,4,14,16,10,21,23,17,5,24,1,20,19,13,8,2,9,3,22},
+                    new Integer[]{7,17,22,24,8,15,2,6,21,23,11,0,5,20,9,1,10,14,3,19,18,12,25,13,16,4},
+                    new Integer[]{25}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type D
+     * S L V G B T F X J Q O H E W I R Z Y A M K P C N D U
+     * Turnover F
+     */
+    private static class RotorDII extends Rotor
+    {
+        public RotorDII(int rotation, int ringSetting)
+        {
+            super("D-II", 12,
+                    new Integer[]{18,11,21,6,1,19,5,23,9,16,14,7,4,22,8,17,25,24,0,12,10,15,2,13,3,20},
+                    new Integer[]{18,4,22,24,12,6,3,11,14,8,20,1,19,23,10,21,9,15,0,5,25,2,13,7,17,16},
+                    new Integer[]{5}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type D
+     * C J G D P S H K T U R A W Z X F M Y N Q O B V L I E
+     * Turnover O
+     */
+    private static class RotorDIII extends Rotor
+    {
+        public RotorDIII(int rotation, int ringSetting)
+        {
+            super("D-III", 13,
+                    new Integer[]{2,9,6,3,15,18,7,10,19,20,17,0,22,25,23,5,12,24,13,16,14,1,21,11,8,4},
+                    new Integer[]{11,21,0,3,25,15,2,6,24,1,7,23,16,18,20,4,19,10,5,8,9,22,12,14,17,13},
+                    new Integer[]{14}, ringSetting, rotation);
         }
     }
 }

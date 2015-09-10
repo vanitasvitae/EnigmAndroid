@@ -1,7 +1,5 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import android.util.Log;
-
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -33,43 +31,10 @@ public class Enigma_M3 extends Enigma_I
     @Override
     public void initialize()
     {
-        this.setPlugboard(new Plugboard());
-        //I,II,III, B, 0,0,0, 0,0,0
-        this.setConfiguration(new int[]{1,2,3,2,0,0,0,0,0,0});
-    }
-    @Override
-    public boolean setRotor(int pos, int type, int ringSetting, int rotation)
-    {
-        if(pos >= 1 && pos <= 3) {
-            if (type >= 1 && type <= 8) {
-                Rotor rotor = Rotor.createRotor(type, ringSetting, rotation);
-                switch (pos) {
-                    case 1:
-                        rotor1 = rotor;
-                        break;
-                    case 2:
-                        rotor2 = rotor;
-                        break;
-                    default:
-                        rotor3 = rotor;
-                        break;
-                }
-                return true;
-            }
-        }
-        Log.d("EnigmAndroid/M3/setRot", "Error: Type " + type + " at position " + pos);
-        return false;
-    }
-
-    @Override
-    public boolean setReflector(int type)
-    {
-        if(type >= 2 && type <= 3)
-        {
-            reflector = Reflector.createReflector(type);
-            return true;
-        }
-        Log.d("EnigmAndroid/M3/setRef", "Error: Can't set type "+type);
-        return false;
+        this.plugboard = new Plugboard();
+        this.rotor1 = Rotor.createRotor(1, 0, 0);
+        this.rotor2 = Rotor.createRotor(2, 0, 0);
+        this.rotor3 = Rotor.createRotor(3, 0, 0);
+        this.reflector = Reflector.createReflector(2);
     }
 }

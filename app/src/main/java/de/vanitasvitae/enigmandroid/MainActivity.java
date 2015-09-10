@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import de.vanitasvitae.enigmandroid.enigma.Plugboard;
 import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 import de.vanitasvitae.enigmandroid.layout.LayoutContainer;
 
@@ -47,6 +46,7 @@ public class MainActivity extends Activity
     protected String prefMachineType;
     protected boolean prefAnomaly;
     protected String prefNumericLanguage;
+    protected String prefMessageFormatting;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -71,7 +71,7 @@ public class MainActivity extends Activity
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null)
                 {
-                    layoutContainer.getInputView().setText(sharedText);
+                    layoutContainer.getInput().setRawText(sharedText);
                 }
             }
         }
@@ -86,11 +86,17 @@ public class MainActivity extends Activity
     {
         switch (prefMachineType)
         {
-            case "M4":
-                this.setContentView(R.layout.activity_main_m4);
+            case "I":
+                this.setContentView(R.layout.activity_main_i_m3);
                 break;
             case "M3":
                 this.setContentView(R.layout.activity_main_i_m3);
+                break;
+            case "M4":
+                this.setContentView(R.layout.activity_main_m4);
+                break;
+            case "D":
+                this.setContentView(R.layout.activity_main_d);
                 break;
             default:
                 this.setContentView(R.layout.activity_main_i_m3);
@@ -106,6 +112,8 @@ public class MainActivity extends Activity
         this.setPrefAnomaly(sharedPreferences.getBoolean("prefAnomaly", true));
         this.setPrefNumericLanguage(sharedPreferences.getString("prefNumericLanguage", getResources().
                 getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
+        this.setPrefMessageFormatting(sharedPreferences.getString("prefMessageFormatting", getResources().
+                getStringArray(R.array.pref_alias_message_formatting)[0]));
     }
 
     public void setPrefMachineType(String type)
@@ -116,22 +124,22 @@ public class MainActivity extends Activity
             String savedInput = "";
             if(layoutContainer != null)
             {
-                savedInput = layoutContainer.getInputView().getText().toString();
+                savedInput = layoutContainer.getInput().getText();
             }
             updateContentView();
             layoutContainer = LayoutContainer.createLayoutContainer(prefMachineType);
-            layoutContainer.getInputView().setText(savedInput);
+            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer(prefNumericLanguage));
+            layoutContainer.getInput().setText(savedInput);
         }
     }
 
     public String getPrefMachineType()
     {
         if(prefMachineType != null) return prefMachineType;
-        else
-        {
-            updatePreferenceValues();
-            return prefMachineType;
-        }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.prefMachineType = sharedPreferences.getString("prefMachineType", getResources().
+                    getStringArray(R.array.pref_list_machine_type)[0]);
+        return prefMachineType;
     }
 
     public void setPrefAnomaly(boolean anomaly)
@@ -139,7 +147,7 @@ public class MainActivity extends Activity
         if(prefAnomaly !=anomaly)
         {
             prefAnomaly = anomaly;
-            layoutContainer.getEnigma().setPrefAnomaly(anomaly);
+            if(layoutContainer != null) layoutContainer.getEnigma().setPrefAnomaly(anomaly);
         }
     }
 
@@ -153,18 +161,35 @@ public class MainActivity extends Activity
         if(prefNumericLanguage == null || !prefNumericLanguage.equals(lang))
         {
             prefNumericLanguage = lang;
-            layoutContainer.getEnigma().setInputPreparer(InputPreparer.createInputPreparer(lang));
+            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer(lang));
         }
     }
 
     public String getPrefNumericLanguage()
     {
         if(prefNumericLanguage != null) return prefNumericLanguage;
-        else
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.prefNumericLanguage = sharedPreferences.getString("prefNumericLanguage", getResources().
+                getStringArray(R.array.pref_alias_numeric_spelling_language)[0]);
+        return prefNumericLanguage;
+    }
+
+    public void setPrefMessageFormatting(String messageFormatting)
+    {
+        if(prefMessageFormatting == null || !prefMessageFormatting.equals(messageFormatting))
         {
-            updatePreferenceValues();
-            return prefNumericLanguage;
+            prefMessageFormatting = messageFormatting;
+            layoutContainer.setEditTextAdapter(messageFormatting);
         }
+    }
+
+    public String getPrefMessageFormatting()
+    {
+        if(prefMessageFormatting != null) return prefMessageFormatting;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.prefMessageFormatting = sharedPreferences.getString("prefMessageFormatting", getResources().
+                getStringArray(R.array.pref_alias_message_formatting)[0]);
+        return prefMessageFormatting;
     }
 
     @Override
@@ -183,7 +208,7 @@ public class MainActivity extends Activity
         int id = item.getItemId();
         if (id == R.id.action_reset)
         {
-            layoutContainer.reset();
+            layoutContainer.resetLayout();
             Toast.makeText(getApplicationContext(), R.string.message_reset,
                     Toast.LENGTH_SHORT).show();
             return true;
@@ -205,7 +230,7 @@ public class MainActivity extends Activity
         }
         else if (id == R.id.action_send)
         {
-            if(layoutContainer.getOutputView().getText().length() == 0)
+            if(layoutContainer.getOutput().getText().length() == 0)
             {
                 Toast.makeText(this, R.string.error_no_text_to_send, Toast.LENGTH_SHORT).show();
             }
@@ -213,7 +238,7 @@ public class MainActivity extends Activity
             {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, layoutContainer.getOutputView().getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, layoutContainer.getOutput().getModifiedText());
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
             }
@@ -229,15 +254,7 @@ public class MainActivity extends Activity
      */
     public void doCrypto(View v)
     {
-        if(layoutContainer.getInputView().getText().length()!=0) {
-            layoutContainer.getEnigma().setConfiguration(layoutContainer.createConfiguration());
-            layoutContainer.getEnigma().setPlugboard(new Plugboard(layoutContainer.createPlugboardConfiguration()));
-            String m = layoutContainer.getInputView().getText().toString();
-            m = layoutContainer.getEnigma().getInputPreparer().prepareString(m);
-            layoutContainer.getInputView().setText(m);
-            layoutContainer.getOutputView().setText(layoutContainer.getEnigma().encrypt(m));
-            layoutContainer.updateLayout();
-        }
+        layoutContainer.doCrypto();
     }
 
     /**
@@ -285,8 +302,10 @@ public class MainActivity extends Activity
                 this.setPrefMachineType(sharedPrefs.getString("prefMachineType", getResources()
                         .getStringArray(R.array.pref_list_machine_type)[0]));
                 this.setPrefAnomaly(sharedPrefs.getBoolean("prefAnomaly", true));
-                this.setPrefNumericLanguage(this.prefNumericLanguage = sharedPrefs.getString("prefNumericLanguage", getResources().
+                this.setPrefNumericLanguage(sharedPrefs.getString("prefNumericLanguage", getResources().
                         getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
+                this.setPrefMessageFormatting(sharedPrefs.getString("prefMessageFormatting",
+                        getResources().getStringArray(R.array.pref_alias_message_formatting)[0]));
                 break;
             }
 

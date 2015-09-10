@@ -1,4 +1,3 @@
-package de.vanitasvitae.enigmandroid.enigma.util;
 
 /**
  * Used to create wiring arrays from strings
@@ -26,10 +25,30 @@ public class RotorMaker
     public static void main(String[] args)
     {
         if(args.length == l) makeRotor(args);
-        else if(args.length == 1) makeRotor(prepare(args[0]));
+        else if(args.length == 1)
+        {
+            if(args[0].length() > 2)
+                makeRotor(prepare(args[0]));
+            else intToChar(Integer.valueOf(args[0]));
+        }
         else System.out.println("wrong input format!");
     }
 
+    public static char intToChar(int x)
+    {
+        char o = (char) (x+65);
+        System.out.println(o);
+        return o;
+    }
+
+    public static int charToNumber(char x)
+    {
+        x = Character.toUpperCase(x);
+        int i = (int) x;
+        i = i-65;
+        System.out.println(i);
+        return i;
+    }
     public static void makeRotor(String input)
     {
         makeRotor(prepare(input));

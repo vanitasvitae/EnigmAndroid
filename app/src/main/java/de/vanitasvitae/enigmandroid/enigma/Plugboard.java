@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
@@ -51,7 +53,7 @@ public class Plugboard
      *
      * @param configuration two dimensional array of plugs
      */
-    public void setConfiguration(int[][] configuration)
+    public boolean setConfiguration(int[][] configuration)
     {
         if(configuration != null) {
             boolean validConfiguration = true;
@@ -62,9 +64,18 @@ public class Plugboard
                     break;
                 }
             }
-            if (!validConfiguration) plugs = new Integer[26];
+            if (!validConfiguration)
+            {
+                plugs = new Integer[26];
+                return false;
+            }
+            return true;
         }
-        else plugs = new Integer[26];
+        else
+        {
+            plugs = new Integer[26];
+            return false;
+        }
     }
 
     /**
@@ -116,7 +127,28 @@ public class Plugboard
             }
             return parsedConfiguration;
         }
+    }
 
+    public String getConfigurationString()
+    {
+        String out = "";
+        Set<Integer> remaining = new HashSet<>();
+        for(int i=0; i<26; i++)
+        {
+            remaining.add(i);
+        }
+        while(!remaining.isEmpty())
+        {
+            Integer x = remaining.iterator().next();
+            if(!x.equals(encrypt(x)))
+            {
+                out = out + (char) (x+65) + (char) (encrypt(x)+65) +",";
+                remaining.remove(encrypt(x));
+            }
+            remaining.remove(x);
+        }
+        if(out.length() != 0) out = out.substring(0,out.length()-1);
+        return out;
     }
 
     /**
@@ -136,12 +168,15 @@ public class Plugboard
                             +" "+(char)(a+65)+","+(char) (b+65),Toast.LENGTH_LONG).show();
             return false;
         }
-        if(plugs[a] != null || plugs[b] != null)
+        if((plugs[a] != null || plugs[b] != null))
         {
-            Toast.makeText(activity.getApplication().getApplicationContext(),
-                    activity.getResources().getText(R.string.error_plug_already_in_use).toString()
-                            +" "+(char) (a+65)+","+(char)(b +65), Toast.LENGTH_SHORT).show();
-            return false;
+            if (!plugs[a].equals(b) || !plugs[b].equals(a)) {
+                Toast.makeText(activity.getApplication().getApplicationContext(),
+                        activity.getResources().getText(R.string.error_plug_already_in_use).toString()
+                                + " " + (char) (a + 65) + "," + (char) (b + 65), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
         }
         else
         {
@@ -153,7 +188,7 @@ public class Plugboard
 
     /**
      * Encrypt input via plugboard connections
-     * @param input input symbol to encrypt
+     * @param input input symbol to encryptString
      * @return encrypted symbol
      */
     public int encrypt(int input)

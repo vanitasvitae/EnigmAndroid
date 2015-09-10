@@ -3,7 +3,11 @@ package de.vanitasvitae.enigmandroid.layout;
 import android.widget.EditText;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
+import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
+import de.vanitasvitae.enigmandroid.enigma.inputPreparer.EditTextAdapter;
+import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 
 /**
  * Abstract LayoutContainer for Enigma machines
@@ -27,52 +31,97 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma;
  */
 public abstract class LayoutContainer
 {
-    protected MainActivity main;
-    protected Enigma enigma;
-
     protected EditText inputView;
     protected EditText outputView;
 
-    protected int[] ringSettings;
+    protected EditTextAdapter input;
+    protected EditTextAdapter output;
+
+    protected InputPreparer inputPreparer;
+    protected MainActivity main;
+
+    protected EnigmaStateBundle state;
+
+    public abstract Enigma getEnigma();
+    protected abstract void initializeLayout();
+    public abstract void resetLayout();
+    protected abstract void setLayoutState(EnigmaStateBundle state);
+    protected abstract void refreshState();
+    public abstract void showRingSettingsDialog();
+    protected abstract boolean isValidConfiguration();
 
     public LayoutContainer()
     {
-        this.main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
+        main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
+        this.inputView = (EditText) main.findViewById(R.id.input);
+        this.outputView = (EditText) main.findViewById(R.id.output);
+        input = EditTextAdapter.createEditTextAdapter(inputView, main.getPrefMessageFormatting());
+        output = EditTextAdapter.createEditTextAdapter(outputView, main.getPrefMessageFormatting());
+        initializeLayout();
     }
 
-    abstract void initialize();
-    public abstract void reset();
-    public abstract void updateLayout();
-    public abstract int[] createConfiguration();
-    public abstract int[][] createPlugboardConfiguration();
-    public abstract void showRingSettingsDialog();
-
-    public Enigma getEnigma()
+    public void doCrypto()
     {
-        return enigma;
-    }
-
-    public EditText getInputView()
-    {
-        return this.inputView;
-    }
-
-    public EditText getOutputView()
-    {
-        return this.outputView;
-    }
-
-    public static LayoutContainer createLayoutContainer(String type)
-    {
-        switch (type)
+        //TODO:
+        if(inputView.getText().length()!=0)
         {
-            case "M4":
-                return new LayoutContainer_M4();
-            case "M3":
-                return new LayoutContainer_M3();
-            default:
-                return new LayoutContainer_I();
+            getEnigma().setState(getState());
+            String message = inputView.getText().toString();
+            message = inputPreparer.prepareString(message);
+            input.setText(message);
+            if(isValidConfiguration()) {
+                output.setText(getEnigma().encryptString(message));
+                setLayoutState(getEnigma().getState());
+            }
         }
+    }
+
+    public EnigmaStateBundle getState()
+    {
+        refreshState();
+        return state;
+    }
+
+    public EditTextAdapter getInput()
+    {
+        return this.input;
+    }
+
+    public EditTextAdapter getOutput()
+    {
+        return this.output;
+    }
+
+    public static LayoutContainer createLayoutContainer(String enigmaType)
+    {
+        switch (enigmaType)
+        {
+            case "I": return new LayoutContainer_I();
+            case "M3": return new LayoutContainer_M3();
+            case "M4": return new LayoutContainer_M4();
+            case "D": return new LayoutContainer_D();
+            default: return new LayoutContainer_I();
+        }
+    }
+
+    public void setInputPreparer(InputPreparer inputPreparer)
+    {
+        this.inputPreparer = inputPreparer;
+    }
+
+    public void setEditTextAdapter(String type)
+    {
+        String in = input.getText();
+        String out = output.getText();
+        input = EditTextAdapter.createEditTextAdapter(inputView, type);
+        input.setText(in);
+        output = EditTextAdapter.createEditTextAdapter(outputView, type);
+        output.setText(out);
+    }
+
+    public InputPreparer getInputPreparer()
+    {
+        return this.inputPreparer;
     }
 }
 

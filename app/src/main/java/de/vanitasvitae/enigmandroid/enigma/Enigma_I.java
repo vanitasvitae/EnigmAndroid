@@ -24,7 +24,8 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  * @author vanitasvitae
  */
-public class Enigma_I extends Enigma {
+public class Enigma_I extends Enigma
+{
     protected Rotor rotor1;
     protected Rotor rotor2;
     protected Rotor rotor3;
@@ -33,16 +34,20 @@ public class Enigma_I extends Enigma {
 
     protected Plugboard plugboard;
 
-    public Enigma_I() {
+    public Enigma_I()
+    {
+        super();
         machineType = "I";
     }
 
     @Override
     public void initialize()
     {
-        this.setPlugboard(new Plugboard());
-        //I,II,III, A, 0,0,0, 0,0,0
-        this.setConfiguration(new int[]{1,2,3,1,0,0,0,0,0,0});
+        this.plugboard= new Plugboard();
+        this.rotor1 = Rotor.createRotor(1, 0, 0);
+        this.rotor2 = Rotor.createRotor(2, 0, 0);
+        this.rotor3 = Rotor.createRotor(3, 0, 0);
+        this.reflector = Reflector.createReflector(1);
     }
 
     @Override
@@ -68,104 +73,59 @@ public class Enigma_I extends Enigma {
         //Encryption
         //forward direction
         x = plugboard.encrypt(x);
-        x = normalize(x + rotor1.getRotation() - rotor1.getRingSetting());
+        x = rotor1.normalize(x + rotor1.getRotation() - rotor1.getRingSetting());
         x = rotor1.encryptForward(x);
-        x = normalize(x - rotor1.getRotation() + rotor1.getRingSetting() + rotor2.getRotation() - rotor2.getRingSetting());
+        x = rotor1.normalize(x - rotor1.getRotation() + rotor1.getRingSetting() + rotor2.getRotation() - rotor2.getRingSetting());
         x = rotor2.encryptForward(x);
-        x = normalize(x - rotor2.getRotation() + rotor2.getRingSetting() + rotor3.getRotation() - rotor3.getRingSetting());
+        x = rotor1.normalize(x - rotor2.getRotation() + rotor2.getRingSetting() + rotor3.getRotation() - rotor3.getRingSetting());
         x = rotor3.encryptForward(x);
-        x = normalize(x - rotor3.getRotation() + rotor3.getRingSetting());
+        x = rotor1.normalize(x - rotor3.getRotation() + rotor3.getRingSetting());
        //TODO: CHECK
         //backward direction
         x = reflector.encrypt(x);
-        x = normalize(x + rotor3.getRotation() - rotor3.getRingSetting());
+        x = rotor1.normalize(x + rotor3.getRotation() - rotor3.getRingSetting());
         x = rotor3.encryptBackward(x);
-        x = normalize(x + rotor2.getRotation() - rotor2.getRingSetting() - rotor3.getRotation() + rotor3.getRingSetting());
+        x = rotor1.normalize(x + rotor2.getRotation() - rotor2.getRingSetting() - rotor3.getRotation() + rotor3.getRingSetting());
         x = rotor2.encryptBackward(x);
-        x = normalize(x + rotor1.getRotation() - rotor1.getRingSetting() - rotor2.getRotation() + rotor2.getRingSetting());
+        x = rotor1.normalize(x + rotor1.getRotation() - rotor1.getRingSetting() - rotor2.getRotation() + rotor2.getRingSetting());
         x = rotor1.encryptBackward(x);
-        x = normalize(x - rotor1.getRotation() + rotor1.getRingSetting());
+        x = rotor1.normalize(x - rotor1.getRotation() + rotor1.getRingSetting());
         x = plugboard.encrypt(x);
         return (char) (x + 65);     //Add Offset again, cast back to char and return
     }
 
     @Override
-    public int normalize(int input) {
-        return (input+26) % 26;
+    public void setState(EnigmaStateBundle state)
+    {
+        plugboard.setConfiguration(Plugboard.parseConfigurationString(
+                state.getConfigurationPlugboard()));
+        rotor1 = Rotor.createRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
+        rotor2 = Rotor.createRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
+        rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
+        reflector = Reflector.createReflector(state.getTypeReflector());
     }
 
     @Override
-    public void setPlugboard(Plugboard p)
+    public EnigmaStateBundle getState()
     {
-        this.plugboard = p;
-    }
+        EnigmaStateBundle state = new EnigmaStateBundle();
 
-    @Override
-    public int[] getConfiguration()
-    {
-        int[] conf = new int[10];
-        conf[0] = rotor1.getType();
-        conf[1] = rotor2.getType();
-        conf[2] = rotor3.getType();
-        conf[3] = reflector.getType();
-        conf[4] = rotor1.getRotation();
-        conf[5] = rotor2.getRotation();
-        conf[6] = rotor3.getRotation();
-        conf[7] = rotor1.getRingSetting();
-        conf[8] = rotor2.getRingSetting();
-        conf[9] = rotor3.getRingSetting();
-        return conf;
-    }
+        state.setConfigurationPlugboard(plugboard.getConfigurationString());
 
-    @Override
-    /**
-     * conf:
-     * 0..2 -> rotor1..rotor3 type
-     * 3 -> reflector type
-     * 4..6 -> rotor1..rotor3 rotation
-     * 7..9 -> rotor1..rotor3 ringSetting
-     */
-    public void setConfiguration(int[] conf)
-    {
-        this.setRotor(1,conf[0],conf[7],conf[4]);
-        this.setRotor(2,conf[1],conf[8],conf[5]);
-        this.setRotor(3,conf[2],conf[9],conf[6]);
-        this.setReflector(conf[3]);
-    }
+        state.setTypeRotor1(rotor1.getNumber());
+        state.setTypeRotor2(rotor2.getNumber());
+        state.setTypeRotor3(rotor3.getNumber());
 
-    @Override
-    public boolean setRotor(int pos, int type, int ringSetting, int rotation)
-    {
-        if(pos >= 1 && pos <= 3) {
-            if (type >= 1 && type <= 5) {
-                Rotor rotor = Rotor.createRotor(type, ringSetting, rotation);
-                switch (pos) {
-                    case 1:
-                        rotor1 = rotor;
-                        break;
-                    case 2:
-                        rotor2 = rotor;
-                        break;
-                    default:
-                        rotor3 = rotor;
-                        break;
-                }
-                return true;
-            }
-        }
-        Log.d("EnigmAndroid/M3/setRot", "Error: Type " + type + " at position " + pos);
-        return false;
-    }
+        state.setTypeReflector(reflector.getNumber());
 
-    @Override
-    public boolean setReflector(int type)
-    {
-        if(type >= 1 && type <= 3)
-        {
-            reflector = Reflector.createReflector(type);
-            return true;
-        }
-        Log.d("EnigmAndroid/I/setRef", "Error: Can't set type "+type);
-        return false;
+        state.setRotationRotor1(rotor1.getRotation());
+        state.setRotationRotor2(rotor2.getRotation());
+        state.setRotationRotor3(rotor3.getRotation());
+
+        state.setRingSettingRotor1(rotor1.getRingSetting());
+        state.setRingSettingRotor2(rotor2.getRingSetting());
+        state.setRingSettingRotor3(rotor3.getRingSetting());
+
+        return state;
     }
 }

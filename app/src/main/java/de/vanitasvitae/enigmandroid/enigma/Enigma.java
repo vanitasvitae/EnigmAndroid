@@ -1,8 +1,5 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import de.vanitasvitae.enigmandroid.MainActivity;
-import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
-
 /**
  * Main component of the Enigma machine
  * This is the mostly abstract base of any enigma machine.
@@ -28,7 +25,11 @@ public abstract class Enigma
     protected static String machineType;
     protected boolean doAnomaly = false;  //Has the time come to handle an anomaly?
     protected boolean prefAnomaly;  //Do you WANT to simulate the anomaly?
-    protected InputPreparer inputPreparer;
+
+    public Enigma()
+    {
+        initialize();
+    }
 
     /**
      * Set the enigma to an initial state
@@ -36,33 +37,15 @@ public abstract class Enigma
     public abstract void initialize();
 
     /**
-     * Set the reflector of the enigma machine to one of type type.
-     * @param type type indicator of the reflector
-     * @return success (not every reflector fits in every machine)
-     */
-    public abstract  boolean setReflector(int type);
-
-    /**
-     * Set the rotor on position pos to a rotor of type type with ring-setting ringSetting and
-     * rotation rotation.
-     * @param pos position of the rotor
-     * @param type type indicator
-     * @param ringSetting ringSetting
-     * @param rotation rotation
-     * @return success
-     */
-    public abstract boolean setRotor(int pos, int type, int ringSetting, int rotation);
-
-    /**
      * Encrypt / Decrypt a given String w.
      * w must be prepared using prepare(w) beforehand.
      * Doing so changes the state of the rotors but not the state of the plugboard and the
      * ringSettings
      *
-     * @param w Text to decrypt/encrypt
+     * @param w Text to decrypt/encryptString
      * @return encrypted/decrypted string
      */
-    public String encrypt(String w)
+    public String encryptString(String w)
     {
         //output string
         String output = "";
@@ -93,60 +76,16 @@ public abstract class Enigma
     public abstract char encryptChar(char k);
 
     /**
-     * Normalize the input.
-     * Normalizing means keeping the input via modulo in the range from 0 to n-1, where n is equal
-     * to the size of the rotors.
-     * This is necessary since java allows negative modulo values,
-     * which can break this implementation
-     * @param input input signal
-     * @return "normalized" input signal
+     * Set the state of the enigma
+     * @param state new state
      */
-    public abstract int normalize(int input);
+    public abstract void setState(EnigmaStateBundle state);
 
     /**
-     * Set config of the enigma
-     *
-     * @param conf configuration
+     * Return an object representing the current state of the enigma
+     * @return state
      */
-    public abstract void setConfiguration(int[] conf);
-
-    /**
-     * Set the plugboard
-     * @param p Plugboard
-     */
-    public abstract void setPlugboard(Plugboard p);
-
-    /**
-     * Return the configuration, the enigma machine is in right NOW
-     *
-     * @return array containing configuration
-     */
-    public abstract int[] getConfiguration();
-
-    /**
-     * Set the inputPreparer
-     * @param preparer concrete InputPreparer
-     */
-    public void setInputPreparer(InputPreparer preparer)
-    {
-        this.inputPreparer = preparer;
-    }
-
-
-
-    /**
-     * Return the inputPreparer
-     * @return inputPreparer
-     */
-    public InputPreparer getInputPreparer()
-    {
-        if(inputPreparer == null)
-        {
-            MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
-            inputPreparer = InputPreparer.createInputPreparer(main.getPrefNumericLanguage());
-        }
-        return this.inputPreparer;
-    }
+    public abstract EnigmaStateBundle getState();
 
     /**
      * set prefAnomaly variable
@@ -165,4 +104,5 @@ public abstract class Enigma
     {
         return machineType;
     }
+
 }

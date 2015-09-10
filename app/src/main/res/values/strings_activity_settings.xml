@@ -1,22 +1,19 @@
 <resources>
     <string name="title_activity_settings">Settings</string>
 
-
     <string name="pref_header_simulation">Simulation</string>
-
     <string name="pref_title_machine_type">Enigma Model</string>
     <string name="pref_description_machine_type">Which model do you want to simulate?</string>
     <string-array translatable="false" name="pref_list_machine_type">
         <item>I</item>
         <item>M3</item>
         <item>M4</item>
+        <item>D</item>
     </string-array>
-
     <string name="pref_title_simulate_anomaly">Simulate Anomaly</string>
     <string name="pref_description_simulate_anomaly">The double step anomaly causes the middle rotor
         to rotate twice, if it is one step before its turnover point.
     </string>
-
     <string name="pref_title_numeric_spelling_language">Number spelling language</string>
     <string name="pref_description_numeric_spelling_language">Language, in which numbers are spelled.</string>
     <string-array name="pref_list_numeric_spelling_language">
@@ -24,11 +21,22 @@
         <item>French</item>
         <item>English</item>
     </string-array>
-
     <string-array translatable="false" name="pref_alias_numeric_spelling_language">
         <item>de</item>
         <item>fr</item>
         <item>en</item>
+    </string-array>
+
+    <string name="pref_header_appearance">Appearance</string>
+    <string name="pref_title_message_formatting">Message Formatting</string>
+    <string name="pref_description_message_formatting">Do you want to split the message up into blocks?</string>
+    <string-array name="pref_list_message_formatting">
+        <item>No blocks</item>
+        <item>Blocks of 5</item>
+    </string-array>
+    <string-array translatable="false" name="pref_alias_message_formatting">
+        <item>no</item>
+        <item>5</item>
     </string-array>
 
 </resources>

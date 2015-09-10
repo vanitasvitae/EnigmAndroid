@@ -1,8 +1,11 @@
 package de.vanitasvitae.enigmandroid.layout;
 
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.R;
+import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_M3;
 
 /**
@@ -27,16 +30,27 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_M3;
  */
 public class LayoutContainer_M3 extends LayoutContainer_I
 {
+    private Enigma_M3 enigma;
+
     public LayoutContainer_M3()
     {
         super();
         main.setTitle("M3 - EnigmAndroid");
-        this.enigma = new Enigma_M3();
+        this.resetLayout();
     }
 
     @Override
-    void initialize()
+    protected void initializeLayout()
     {
+        this.rotor1View = (Spinner) main.findViewById(R.id.rotor1);
+        this.rotor2View = (Spinner) main.findViewById(R.id.rotor2);
+        this.rotor3View = (Spinner) main.findViewById(R.id.rotor3);
+        this.rotor1PositionView = (Spinner) main.findViewById(R.id.rotor1position);
+        this.rotor2PositionView = (Spinner) main.findViewById(R.id.rotor2position);
+        this.rotor3PositionView = (Spinner) main.findViewById(R.id.rotor3position);
+        this.reflectorView = (Spinner) main.findViewById(R.id.reflector);
+        this.plugboardView = (EditText) main.findViewById(R.id.plugboard);
+
         Character[] rotorPositionArray = new Character[26];
         for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /**Fill with A..Z*/}
 
@@ -76,40 +90,44 @@ public class LayoutContainer_M3 extends LayoutContainer_I
     }
 
     @Override
-    public void updateLayout()
+    public void resetLayout()
     {
-        int[] conf = enigma.getConfiguration();
-        rotor1View.setSelection(conf[0]-1);
-        rotor2View.setSelection(conf[1]-1);
-        rotor3View.setSelection(conf[2]-1);
-        reflectorView.setSelection(conf[3]-2);      //B=2 -> 0
-        rotor1PositionView.setSelection(conf[4]);
-        rotor2PositionView.setSelection(conf[5]);
-        rotor3PositionView.setSelection(conf[6]);
-        ringSettings[0] = conf[7];
-        ringSettings[1] = conf[8];
-        ringSettings[2] = conf[9];
+        enigma = new Enigma_M3();
+        setLayoutState(enigma.getState());
+        outputView.setText("");
+        inputView.setText("");
     }
 
     @Override
-    public int[] createConfiguration()
+    protected void setLayoutState(EnigmaStateBundle state)
     {
-        int[] conf = new int[10];
-        //Rotors 1..3
-        conf[0] = rotor1View.getSelectedItemPosition() + 1;
-        conf[1] = rotor2View.getSelectedItemPosition() + 1;
-        conf[2] = rotor3View.getSelectedItemPosition() + 1;
-        //Reflector
-        conf[3] = reflectorView.getSelectedItemPosition() + 2;  //M3 has no B
+        this.state = state;
+        this.rotor1View.setSelection(state.getTypeRotor1()-1);
+        this.rotor2View.setSelection(state.getTypeRotor2() - 1);
+        this.rotor3View.setSelection(state.getTypeRotor3() - 1);
+        this.reflectorView.setSelection(state.getTypeReflector() - 2);
+        this.rotor1PositionView.setSelection(state.getRotationRotor1());
+        this.rotor2PositionView.setSelection(state.getRotationRotor2());
+        this.rotor3PositionView.setSelection(state.getRotationRotor3());
+        this.plugboardView.setText(state.getConfigurationPlugboard());
+    }
 
-        conf[4] = rotor1PositionView.getSelectedItemPosition();
-        conf[5] = rotor2PositionView.getSelectedItemPosition();
-        conf[6] = rotor3PositionView.getSelectedItemPosition();
+    @Override
+    protected void refreshState()
+    {
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition()+1);
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition()+1);
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition()+1);
+        state.setTypeReflector(reflectorView.getSelectedItemPosition()+2);
+        state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
+        state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
+        state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
+        state.setConfigurationPlugboard(plugboardView.getText().toString());
+    }
 
-        conf[7] = ringSettings[0];
-        conf[8] = ringSettings[1];
-        conf[9] = ringSettings[2];
-
-        return conf;
+    @Override
+    public Enigma_M3 getEnigma()
+    {
+        return this.enigma;
     }
 }

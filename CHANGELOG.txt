@@ -1,8 +1,14 @@
 CHANGELOG ENIGMANDROID
-v0.1.6-not-yet-released
-*Updated CHANGELOG (oops)
+v0.1.7-not-yet-released
 *TODO:Fix about dialog (outdated manual)
-*
+*TODO: Add Enigma Z (find Rotor wiring reference somewhere)
+
+v0.1.6-10.09.2015<
+*Updated CHANGELOG (oops)
+*Added Enigma D
+*Added rotor names to ringSettingsDialog
+*Rewrote major parts of the app once again :)
+*Added option to break messages up into blocks
 
 v0.1.5-27.08.2015<
 *Added french number spelling
