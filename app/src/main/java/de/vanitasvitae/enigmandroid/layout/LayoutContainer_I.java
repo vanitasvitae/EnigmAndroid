@@ -104,8 +104,8 @@ public class LayoutContainer_I extends LayoutContainer
     {
         enigma = new Enigma_I();
         setLayoutState(enigma.getState());
-        outputView.setText("");
-        inputView.setText("");
+        output.setText("");
+        input.setText("");
     }
 
     @Override
@@ -143,7 +143,8 @@ public class LayoutContainer_I extends LayoutContainer
     @Override
     public void showRingSettingsDialog()
     {
-        new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRot().createRingSettingsDialog(state);
+        new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRot().
+                createRingSettingsDialog(state);
     }
 
     @Override

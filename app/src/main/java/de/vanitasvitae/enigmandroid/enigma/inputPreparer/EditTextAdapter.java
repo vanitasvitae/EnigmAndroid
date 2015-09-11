@@ -22,7 +22,9 @@ public abstract class EditTextAdapter
      */
     public String getText()
     {
-        return content;
+        if(editText.getText().length() != 0)
+            return content;
+        else return content = "";
     }
 
     public String getModifiedText()

@@ -98,6 +98,9 @@ public class MainActivity extends Activity
             case "D":
                 this.setContentView(R.layout.activity_main_d);
                 break;
+            case "K":
+                this.setContentView(R.layout.activity_main_k);
+                break;
             default:
                 this.setContentView(R.layout.activity_main_i_m3);
                 break;

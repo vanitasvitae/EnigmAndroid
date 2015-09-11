@@ -36,6 +36,11 @@
     <string name="dialog_ringsettings_abort">No changes</string>
     <string name="message_reset">Enigma reset</string>
 
+    <string-array translatable="false" name="rotors_1_3">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+    </string-array>
     <string-array translatable="false" name="rotors_1_5">
         <item>I</item>
         <item>II</item>

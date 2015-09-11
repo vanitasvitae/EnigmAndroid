@@ -85,8 +85,8 @@ public class LayoutContainer_D extends LayoutContainer
     {
         enigma = new Enigma_D();
         setLayoutState(enigma.getState());
-        outputView.setText("");
-        inputView.setText("");
+        output.setText("");
+        input.setText("");
     }
 
     @Override

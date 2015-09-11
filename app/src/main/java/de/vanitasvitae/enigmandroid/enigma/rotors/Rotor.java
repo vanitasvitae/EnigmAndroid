@@ -77,7 +77,7 @@ public class Rotor
     {
         switch (type)
         {
-            case 0: return new EntryWheelD();
+            case 0: return new EntryWheelDK();
             case 1: return new RotorI(rotation, ringSetting);
             case 2: return new RotorII(rotation, ringSetting);
             case 3: return new RotorIII(rotation, ringSetting);
@@ -91,6 +91,9 @@ public class Rotor
             case 11: return new RotorDI(rotation, ringSetting);
             case 12: return new RotorDII(rotation, ringSetting);
             case 13: return new RotorDIII(rotation, ringSetting);
+            case 14: return new RotorKI(rotation, ringSetting);
+            case 15: return new RotorKII(rotation, ringSetting);
+            case 16: return new RotorKIII(rotation, ringSetting);
 
             default: return new RotorI(rotation, ringSetting);
         }
@@ -414,9 +417,13 @@ public class Rotor
         }
     }
 
-    private static class EntryWheelD extends Rotor
+    /**
+     * EntryWheel as used in the Enigma models D, K
+     * Q W E R T Z U I O A S D F G H J K P Y X C V B N M L
+     */
+    private static class EntryWheelDK extends Rotor
     {
-        public EntryWheelD()
+        public EntryWheelDK()
         {
             super("ETW-D", 0,
                     new Integer[]{9,22,20,11,2,12,13,14,7,15,16,25,24,23,8,17,0,3,10,4,6,21,1,19,18,5},
@@ -481,6 +488,54 @@ public class Rotor
             super("D-III", 13,
                     new Integer[]{2,9,6,3,15,18,7,10,19,20,17,0,22,25,23,5,12,24,13,16,14,1,21,11,8,4},
                     new Integer[]{11,21,0,3,25,15,2,6,24,1,7,23,16,18,20,4,19,10,5,8,9,22,12,14,17,13},
+                    new Integer[]{14}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type K (Switzerland)
+     * P E Z U O H X S C V F M T B G L R I N Q J W A Y D K
+     * Turnover Z
+     */
+    private static class RotorKI extends Rotor
+    {
+        public RotorKI(int rotation, int ringSetting)
+        {
+            super("K-I", 14,
+                    new Integer[]{15,4,25,20,14,7,23,18,2,21,5,12,19,1,6,11,17,8,13,16,9,22,0,24,3,10},
+                    new Integer[]{22,13,8,24,1,10,14,5,17,20,25,15,11,18,4,0,19,16,7,12,3,9,21,6,23,2},
+                    new Integer[]{25}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type K (Switzerland)
+     * Z O U E S Y D K F W P C I Q X H M V B L G N J R A T
+     * Turnover F
+     */
+    private static class RotorKII extends Rotor
+    {
+        public RotorKII(int rotation, int ringSetting)
+        {
+            super("K-II", 15,
+                    new Integer[]{25,14,20,4,18,24,3,10,5,22,15,2,8,16,23,7,12,21,1,11,6,13,9,17,0,19},
+                    new Integer[]{24,18,11,6,3,8,20,15,12,22,7,19,16,21,1,10,13,23,4,25,2,17,9,14,5,0},
+                    new Integer[]{5}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type K (Switzerland)
+     * E H R V X G A O B Q U S I M Z F L Y N W K T P D J C
+     * Turnover O
+     */
+    private static class RotorKIII extends Rotor
+    {
+        public RotorKIII(int rotation, int ringSetting)
+        {
+            super("K-III", 16,
+                    new Integer[]{4,7,17,21,23,6,0,14,1,16,20,18,8,12,25,5,11,24,13,22,10,19,15,3,9,2},
+                    new Integer[]{6,8,25,23,0,15,5,1,12,24,20,16,13,18,7,22,9,2,11,21,10,3,19,4,17,14},
                     new Integer[]{14}, ringSetting, rotation);
         }
     }

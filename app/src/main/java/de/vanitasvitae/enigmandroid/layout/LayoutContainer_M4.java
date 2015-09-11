@@ -129,8 +129,8 @@ public class LayoutContainer_M4 extends LayoutContainer
     public void resetLayout() {
         enigma = new Enigma_M4();
         setLayoutState(enigma.getState());
-        outputView.setText("");
-        inputView.setText("");
+        output.setText("");
+        input.setText("");
     }
 
     @Override

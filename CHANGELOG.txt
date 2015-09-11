@@ -1,7 +1,10 @@
 CHANGELOG ENIGMANDROID
 v0.1.7-not-yet-released
-*TODO:Fix about dialog (outdated manual)
+*Fixed about dialog (outdated manual)
 *TODO: Add Enigma Z (find Rotor wiring reference somewhere)
+*TODO: Add Enigma K
+*TODO: Rewrite InputPreparer using  decorator pattern to allow user customization
+*
 
 v0.1.6-10.09.2015<
 *Updated CHANGELOG (oops)

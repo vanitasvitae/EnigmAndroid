@@ -1,5 +1,6 @@
 package de.vanitasvitae.enigmandroid.enigma.rotors;
 
+import java.sql.Ref;
 import java.util.ArrayList;
 
 import de.vanitasvitae.enigmandroid.enigma.Plugboard;
@@ -68,12 +69,14 @@ public class Reflector
     /**
      * Factory method to create reflectors.
      * @param type type of the created reflector
-     *             "A" -> ReflectorA
-     *             "B" -> ReflectorB
-     *             "C" -> ReflectorC
-     *             "ThinB" -> ReflectorThinB
-     *             "ThinC" -> ReflectorThinC
-     *             "ReflectorD" -> ReflectorEnigmaD
+     *             1 -> ReflectorA
+     *             2 -> ReflectorB
+     *             3 -> ReflectorC
+     *             4 -> ReflectorThinB
+     *             5 -> ReflectorThinC
+     *             6 -> ReflectorEnigmaD
+     *             7 -> ReflectorK
+     *             7 -> ReflectorT
      *             default -> ReflectorB
      * @return Reflector
      */
@@ -86,7 +89,9 @@ public class Reflector
             case 3: return new ReflectorC();
             case 4: return new ReflectorThinB();
             case 5: return new ReflectorThinC();
-            case 6: return new ReflectorEnigmaD();
+            case 6: return new ReflectorEnigmaDKD();
+            case 7: return new ReflectorEnigmaK();
+            case 8: return new ReflectorEnigmaT();
             default: return new ReflectorB();
         }
     }
@@ -209,24 +214,24 @@ public class Reflector
     }
 
     /**
-     * Plugable Reflector of the Enigma machine of type D
+     * Pluggable Reflector of the Enigma machine of type D and KD
      * Standard wiring: AI,BM,CE,DT,FG,HR,JY,KS,LQ,NZ,OX,PW,UV
      * Has additional ringSetting and can rotate
      */
-    public static class ReflectorEnigmaD extends Reflector
+    public static class ReflectorEnigmaDKD extends Reflector
     {
         public static final String defaultWiring = "AI,BM,CE,DT,FG,HR,JY,KS,LQ,NZ,OX,PW,UV";
         private Plugboard connections;
         private int ringSetting;
         private int rotation;
-        public ReflectorEnigmaD()
+        public ReflectorEnigmaDKD()
         {
             super("Ref-D", 6, null);
             connections = new Plugboard();
             reset();
         }
 
-        public ReflectorEnigmaD(int[][] conf)
+        public ReflectorEnigmaDKD(int[][] conf)
         {
             super("Ref-D", 6, null);
             connections = new Plugboard(conf);
@@ -311,6 +316,25 @@ public class Reflector
             }
             if(missing.size() == 0) return null;
             return missing;
+        }
+    }
+
+    private static class ReflectorEnigmaK extends Reflector
+    {
+        public ReflectorEnigmaK()
+        {
+            super("Ref-K", 7, new Integer[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
+        }
+    }
+    /**
+     * Reflector as used in the Enigma type T (Tirpitz)
+     * G E K P B T A U M O C N I L J D X Z Y F H W V Q S R
+     */
+    private static class ReflectorEnigmaT extends Reflector
+    {
+        public ReflectorEnigmaT()
+        {
+            super("Ref-T", 8, new Integer[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
         }
     }
 

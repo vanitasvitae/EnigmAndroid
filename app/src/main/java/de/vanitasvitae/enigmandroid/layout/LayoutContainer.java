@@ -100,6 +100,7 @@ public abstract class LayoutContainer
             case "M3": return new LayoutContainer_M3();
             case "M4": return new LayoutContainer_M4();
             case "D": return new LayoutContainer_D();
+            case "K": return new LayoutContainer_K();
             default: return new LayoutContainer_I();
         }
     }
