@@ -1,5 +1,5 @@
 CHANGELOG ENIGMANDROID
-v0.1.7-not-yet-released
+v0.1.7-15.09.2015<
 *Added Enigma K
 *Added Enigma T
 *Created Plugboard-/pluggable Reflector-Setting-Dialog
