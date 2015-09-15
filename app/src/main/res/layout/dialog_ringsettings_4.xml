@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rotor4ring">
             </Spinner>
+
         <Spinner
             android:layout_width="0dp"
             android:layout_weight="33"
@@ -65,4 +66,5 @@
             android:id="@+id/rotor1ring">
         </Spinner>
     </LinearLayout>
+
 </RelativeLayout>

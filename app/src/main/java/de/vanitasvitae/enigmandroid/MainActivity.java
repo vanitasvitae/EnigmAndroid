@@ -9,10 +9,13 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 import de.vanitasvitae.enigmandroid.layout.LayoutContainer;
@@ -52,6 +55,7 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d("Activity","OnCreate!");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.prefMachineType = sharedPreferences.getString("prefMachineType", getResources().
                 getStringArray(R.array.pref_list_machine_type)[0]);
@@ -77,9 +81,69 @@ public class MainActivity extends Activity
         }
     }
 
+    /**
+     * Unfortunately we have to overwrite this, because on orientation changes the LayoutContainer
+     * will reset and we would lose information about plugboard, reflector-wiring and ring settings.
+     * These info are we saving here.
+     * TODO: Find more elegant solution
+     * @param outState state
+     */
+    @Override
+    protected void onSaveInstanceState (Bundle outState)
+    {
+        ArrayList<Integer> plugboard = new ArrayList<>();
+        if(layoutContainer.getState().getConfigurationPlugboard() != null) {
+            for (int i : layoutContainer.getState().getConfigurationPlugboard()) plugboard.add(i);
+        }
+        outState.putIntegerArrayList("plugboard",plugboard);
+
+        ArrayList<Integer> reflector = new ArrayList<>();
+        if(layoutContainer.getState().getConfigurationReflector() != null) {
+            for (int i : layoutContainer.getState().getConfigurationReflector()) reflector.add(i);
+        }
+        outState.putIntegerArrayList("reflector", reflector);
+
+        outState.putInt("ring1", layoutContainer.getState().getRingSettingRotor1());
+        outState.putInt("ring2", layoutContainer.getState().getRingSettingRotor2());
+        outState.putInt("ring3", layoutContainer.getState().getRingSettingRotor3());
+        outState.putInt("ring4", layoutContainer.getState().getRingSettingRotor4());
+        outState.putInt("ringR", layoutContainer.getState().getRingSettingReflector());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Here we get back values previously saved int onSaveInstanceState
+     * @param savedInstanceState state
+     */
+    @Override
+    protected void onRestoreInstanceState (Bundle savedInstanceState)
+    {
+        ArrayList<Integer> plugboard = savedInstanceState.getIntegerArrayList("plugboard");
+        if(plugboard != null && plugboard.size() != 0) {
+            int[] p = new int[plugboard.size()];
+            for (int i = 0; i < plugboard.size(); i++) p[i] = plugboard.get(i);
+            layoutContainer.getState().setConfigurationPlugboard(p);
+        }
+
+        ArrayList<Integer> reflector = savedInstanceState.getIntegerArrayList("reflector");
+        if(reflector != null && reflector.size() != 0) {
+            int[] r = new int[reflector.size()];
+            for (int i = 0; i < reflector.size(); i++) r[i] = reflector.get(i);
+            layoutContainer.getState().setConfigurationReflector(r);
+        }
+
+        layoutContainer.getState().setRingSettingRotor1(savedInstanceState.getInt("ring1"));
+        layoutContainer.getState().setRingSettingRotor2(savedInstanceState.getInt("ring2"));
+        layoutContainer.getState().setRingSettingRotor3(savedInstanceState.getInt("ring3"));
+        layoutContainer.getState().setRingSettingRotor4(savedInstanceState.getInt("ring4"));
+        layoutContainer.getState().setRingSettingReflector(savedInstanceState.getInt("ringR"));
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        this.updateContentView();
     }
 
     private void updateContentView()
@@ -99,7 +163,10 @@ public class MainActivity extends Activity
                 this.setContentView(R.layout.activity_main_d);
                 break;
             case "K":
-                this.setContentView(R.layout.activity_main_k);
+                this.setContentView(R.layout.activity_main_k_t);
+                break;
+            case "T":
+                this.setContentView(R.layout.activity_main_k_t);
                 break;
             default:
                 this.setContentView(R.layout.activity_main_i_m3);

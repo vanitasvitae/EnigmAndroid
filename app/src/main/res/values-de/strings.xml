@@ -29,10 +29,15 @@
     <string name="error_plug_already_in_use">Fehler: Einer oder mehrere dieser Stecker sind bereits in Benutzung: </string>
     <string name="error_no_text_to_send">Nachricht ist leer.</string>
     <string name="title_ringsetting">Ringstellungen</string>
+    <string name="title_plugboard_dialog">Steckbrett-\nverbindungen</string>
+    <string name="title_reflector_dialog">Verkabelung Umkehrwalze</string>
     <string name="dialog_positiv">OK</string>
     <string name="dialog_negativ">Abbrechen</string>
+    <string name="dialog_clear">Löschen</string>
     <string name="dialog_ringsettings_success">Setze Ringe auf</string>
-    <string name="dialog_ringsettings_abort">Keine Änderungen</string>
+    <string name="dialog_reflector_set">Umkehrwalze verkabelt.</string>
+    <string name="dialog_plugboard_set">Steckbrett gesteckert.</string>
+    <string name="dialog_abort">Keine Änderungen</string>
     <string name="message_reset">Enigma zurückgesetzt</string>
 
 </resources>

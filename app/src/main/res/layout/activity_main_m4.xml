@@ -146,18 +146,10 @@
         </Spinner>
     </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="30pt"
-        android:id="@+id/plugboard"
-        android:inputType="textNoSuggestions"
-        android:hint="@string/hint_enigma_plugboard"
-        android:layout_below="@+id/lin_lay_2"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/plugboard"
+        android:layout_below="@+id/lin_lay_2"
         android:layout_above="@+id/buttons_lay"
         android:id="@+id/text_layer">
         <EditText
@@ -184,12 +176,19 @@
         android:id="@+id/buttons_lay"
         android:layout_alignParentBottom="true">
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_plugboard"
+            android:text="@string/title_plugboard_dialog"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="50"
             android:layout_height="wrap_content"
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
             android:text="@string/button_crypt"
-            android:background="@drawable/button"
+            android:background="@drawable/button_orange"
             />
         </LinearLayout>
 

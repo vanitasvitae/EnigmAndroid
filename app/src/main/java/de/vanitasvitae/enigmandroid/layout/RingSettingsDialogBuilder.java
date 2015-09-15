@@ -153,7 +153,7 @@ public abstract class RingSettingsDialogBuilder
                     .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-                            Toast.makeText(main, R.string.dialog_ringsettings_abort,
+                            Toast.makeText(main, R.string.dialog_abort,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }).show();
@@ -277,7 +277,7 @@ public abstract class RingSettingsDialogBuilder
                     .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-                            Toast.makeText(main, R.string.dialog_ringsettings_abort,
+                            Toast.makeText(main, R.string.dialog_abort,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }).show();

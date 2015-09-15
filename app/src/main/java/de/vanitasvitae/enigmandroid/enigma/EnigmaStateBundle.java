@@ -55,9 +55,9 @@ public class EnigmaStateBundle{
     private int rotationReflector;
     private int ringSettingReflector;
 
-    private String configurationPlugboard;
+    private int[] configurationPlugboard;
 
-    private String configurationReflector;
+    private int[] configurationReflector;
 
     public int getTypeRotor1() {
         return typeRotor1;
@@ -267,19 +267,19 @@ public class EnigmaStateBundle{
         this.typeEntryWheel = typeEntryWheel;
     }
 
-    public String getConfigurationPlugboard() {
+    public int[] getConfigurationPlugboard() {
         return configurationPlugboard;
     }
 
-    public void setConfigurationPlugboard(String configurationPlugboard) {
+    public void setConfigurationPlugboard(int[] configurationPlugboard) {
         this.configurationPlugboard = configurationPlugboard;
     }
 
-    public String getConfigurationReflector() {
+    public int[] getConfigurationReflector() {
         return configurationReflector;
     }
 
-    public void setConfigurationReflector(String configurationReflector) {
+    public void setConfigurationReflector(int[] configurationReflector) {
         this.configurationReflector = configurationReflector;
     }
 

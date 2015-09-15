@@ -141,10 +141,4 @@ public class LayoutContainer_K extends LayoutContainer
         new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRotRef().
                 createRingSettingsDialog(state);
     }
-
-    @Override
-    protected boolean isValidConfiguration()
-    {
-        return true;
-    }
 }

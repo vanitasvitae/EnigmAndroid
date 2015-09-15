@@ -29,6 +29,26 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/hint_rotor1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_reflector_position"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_rotor3_position"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_rotor2_position"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_rotor1_position"/>
     </LinearLayout>
 
     <LinearLayout
@@ -56,44 +76,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/rotor1">
         </Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lin_lay_1"
-        android:id="@+id/lin_lay_names_2">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/hint_reflector_position"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/hint_rotor3_position"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/hint_rotor2_position"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/hint_rotor1_position"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/lin_lay_2"
-        android:layout_below="@+id/lin_lay_names_2">
-
         <Spinner
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -123,7 +105,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lin_lay_2"
+        android:layout_below="@+id/lin_lay_1"
         android:layout_above="@+id/buttons_lay"
         android:id="@+id/text_layer">
         <EditText
@@ -155,7 +137,7 @@
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
             android:text="@string/button_crypt"
-            android:background="@drawable/button"
+            android:background="@drawable/button_orange"
             />
         </LinearLayout>
 

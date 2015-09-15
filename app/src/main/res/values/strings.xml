@@ -30,10 +30,15 @@
     <string name="error_plug_already_in_use">Error: One or more of these plugs are already in use:</string>
     <string name="error_no_text_to_send">Can\'t send empty text.</string>
     <string name="title_ringsetting">Ring-Settings</string>
+    <string name="title_plugboard_dialog">Plugboard Settings</string>
+    <string name="title_reflector_dialog">Reflector Wiring</string>
     <string name="dialog_positiv">OK</string>
     <string name="dialog_negativ">Cancel</string>
+    <string name="dialog_clear">Clear</string>
     <string name="dialog_ringsettings_success">Set Ring-Settings to</string>
-    <string name="dialog_ringsettings_abort">No changes</string>
+    <string name="dialog_reflector_set">Rewired Reflector.</string>
+    <string name="dialog_plugboard_set">Plugged Plugboard.</string>
+    <string name="dialog_abort">No changes</string>
     <string name="message_reset">Enigma reset</string>
 
     <string-array translatable="false" name="rotors_1_3">

@@ -48,8 +48,17 @@ public abstract class LayoutContainer
     protected abstract void setLayoutState(EnigmaStateBundle state);
     protected abstract void refreshState();
     public abstract void showRingSettingsDialog();
-    protected abstract boolean isValidConfiguration();
 
+    public LayoutContainer(EnigmaStateBundle state)
+    {
+        main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
+        this.inputView = (EditText) main.findViewById(R.id.input);
+        this.outputView = (EditText) main.findViewById(R.id.output);
+        input = EditTextAdapter.createEditTextAdapter(inputView, main.getPrefMessageFormatting());
+        output = EditTextAdapter.createEditTextAdapter(outputView, main.getPrefMessageFormatting());
+        initializeLayout();
+        this.state = state;
+    }
     public LayoutContainer()
     {
         main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
@@ -62,17 +71,14 @@ public abstract class LayoutContainer
 
     public void doCrypto()
     {
-        //TODO:
         if(inputView.getText().length()!=0)
         {
             getEnigma().setState(getState());
             String message = inputView.getText().toString();
             message = inputPreparer.prepareString(message);
             input.setText(message);
-            if(isValidConfiguration()) {
-                output.setText(getEnigma().encryptString(message));
-                setLayoutState(getEnigma().getState());
-            }
+            output.setText(getEnigma().encryptString(message));
+            setLayoutState(getEnigma().getState());
         }
     }
 
@@ -80,6 +86,11 @@ public abstract class LayoutContainer
     {
         refreshState();
         return state;
+    }
+
+    public void setState(EnigmaStateBundle state)
+    {
+        this.state = state;
     }
 
     public EditTextAdapter getInput()
@@ -94,15 +105,22 @@ public abstract class LayoutContainer
 
     public static LayoutContainer createLayoutContainer(String enigmaType)
     {
-        switch (enigmaType)
-        {
-            case "I": return new LayoutContainer_I();
-            case "M3": return new LayoutContainer_M3();
-            case "M4": return new LayoutContainer_M4();
-            case "D": return new LayoutContainer_D();
-            case "K": return new LayoutContainer_K();
-            default: return new LayoutContainer_I();
-        }
+            switch (enigmaType) {
+                case "I":
+                    return new LayoutContainer_I();
+                case "M3":
+                    return new LayoutContainer_M3();
+                case "M4":
+                    return new LayoutContainer_M4();
+                case "D":
+                    return new LayoutContainer_D();
+                case "K":
+                    return new LayoutContainer_K();
+                case "T":
+                    return new LayoutContainer_T();
+                default:
+                    return new LayoutContainer_I();
+            }
     }
 
     public void setInputPreparer(InputPreparer inputPreparer)
@@ -118,11 +136,6 @@ public abstract class LayoutContainer
         input.setText(in);
         output = EditTextAdapter.createEditTextAdapter(outputView, type);
         output.setText(out);
-    }
-
-    public InputPreparer getInputPreparer()
-    {
-        return this.inputPreparer;
     }
 }
 

@@ -1,5 +1,7 @@
 package de.vanitasvitae.enigmandroid.enigma.rotors;
 
+import android.util.Log;
+
 /**
  * Rotor super class and inner concrete implementations
  * The rotors were the key feature of the enigma used to scramble up input signals into
@@ -78,6 +80,7 @@ public class Rotor
         switch (type)
         {
             case 0: return new EntryWheelDK();
+
             case 1: return new RotorI(rotation, ringSetting);
             case 2: return new RotorII(rotation, ringSetting);
             case 3: return new RotorIII(rotation, ringSetting);
@@ -86,14 +89,27 @@ public class Rotor
             case 6: return new RotorVI(rotation, ringSetting);
             case 7: return new RotorVII(rotation, ringSetting);
             case 8: return new RotorVIII(rotation, ringSetting);
+
             case 9: return new RotorBeta(rotation, ringSetting);
             case 10: return new RotorGamma(rotation, ringSetting);
+
             case 11: return new RotorDI(rotation, ringSetting);
             case 12: return new RotorDII(rotation, ringSetting);
             case 13: return new RotorDIII(rotation, ringSetting);
+
             case 14: return new RotorKI(rotation, ringSetting);
             case 15: return new RotorKII(rotation, ringSetting);
             case 16: return new RotorKIII(rotation, ringSetting);
+
+            case 17: return new EntryWheelT();
+            case 18: return new RotorTI(rotation, ringSetting);
+            case 19: return new RotorTII(rotation, ringSetting);
+            case 20: return new RotorTIII(rotation, ringSetting);
+            case 21: return new RotorTIV(rotation, ringSetting);
+            case 22: return new RotorTV(rotation, ringSetting);
+            case 23: return new RotorTVI(rotation, ringSetting);
+            case 24: return new RotorTVII(rotation, ringSetting);
+            case 25: return new RotorTVIII(rotation, ringSetting);
 
             default: return new RotorI(rotation, ringSetting);
         }
@@ -107,6 +123,7 @@ public class Rotor
      */
     public int encryptForward(int input)
     {
+        Log.d(this.getType(),"in "+(char)(input+65)+", out "+(char) (this.connections[input]+65));
         return this.connections[normalize(input)];
     }
 
@@ -224,7 +241,7 @@ public class Rotor
      */
     public int normalize(int input)
     {
-        return (input + this.getRotorSize()) % this.getRotorSize();
+        return (input+this.getRotorSize())%this.getRotorSize();
     }
 
     /**
@@ -537,6 +554,159 @@ public class Rotor
                     new Integer[]{4,7,17,21,23,6,0,14,1,16,20,18,8,12,25,5,11,24,13,22,10,19,15,3,9,2},
                     new Integer[]{6,8,25,23,0,15,5,1,12,24,20,16,13,18,7,22,9,2,11,21,10,3,19,4,17,14},
                     new Integer[]{14}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * EntryWheel as used only in the Enigma Type T Tirpitz
+     * K Z R O U Q H Y A I G B L W V S T D X F P N M C J E
+     */
+    private static class EntryWheelT extends Rotor
+    {
+        public EntryWheelT()
+        {
+            super("T-ETW", 17,
+                    new Integer[]{8,11,23,17,25,19,10,6,9,24,0,12,22,21,3,20,5,2,15,16,4,14,13,18,7,1},
+                    new Integer[]{10,25,17,14,20,16,7,24,0,8,6,1,11,22,21,18,19,3,23,5,15,13,12,2,9,4},
+                    new Integer[]{}, 0, 0);
+        }
+        @Override
+        public void rotate()
+        {
+            //EntryWheel doesn't rotate
+        }
+
+        @Override
+        public boolean doubleTurnAnomaly()
+        {
+            //\forall s \in States : nope
+            return false;
+        }
+    }
+    /**
+     * Rotor I as used in the Enigma Type T Tirpitz
+     * K P T Y U E L O C V G R F Q D A N J M B S W H Z X I
+     * Turnover X A F L R
+     */
+    private static class RotorTI extends Rotor
+    {
+        public RotorTI(int rotation, int ringSetting)
+        {
+            super("T-I", 18,
+                    new Integer[]{10,15,19,24,20,4,11,14,2,21,6,17,5,16,3,0,13,9,12,1,18,22,7,25,23,8},
+                    new Integer[]{15,19,8,14,5,12,10,22,25,17,0,6,18,16,7,1,13,11,20,2,4,9,21,24,3,23},
+                    new Integer[]{23,0,5,11,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type T Tirpitz
+     * U P H Z L W E Q M T D J X C A K S O I G V B Y F N R
+     * Turnover X A G M S
+     */
+    private static class RotorTII extends Rotor
+    {
+        public RotorTII(int rotation, int ringSetting)
+        {
+            super("T-II", 19,
+                    new Integer[]{20,15,7,25,11,22,4,16,12,19,3,9,23,2,0,10,18,14,8,6,21,1,24,5,13,17},
+                    new Integer[]{14,21,13,10,6,23,19,2,18,11,15,4,8,24,17,1,7,25,16,9,0,20,5,12,22,3},
+                    new Integer[]{23,0,6,12,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type T Tirpitz
+     * Q U D L Y R F E K O N V Z A X W H M G P J B S I C T
+     * Turnover X A F L R
+     */
+    private static class RotorTIII extends Rotor
+    {
+        public RotorTIII(int rotation, int ringSetting) {
+            super("T-III", 20,
+                    new Integer[]{16,20,3,11,24,17,5,4,10,14,13,21,25,0,23,22,7,12,6,15,9,1,18,8,2,19},
+                    new Integer[]{13,21,24,2,7,6,18,16,23,20,8,3,17,10,9,19,0,5,22,25,1,11,15,14,4,12},
+                    new Integer[]{23,0,5,11,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor IV as used in the Enigma Type T Tirpitz
+     * C I W T B K X N R E S P F L Y D A G V H Q U O J Z M
+     * Turnover X A G M S
+     */
+    private static class RotorTIV extends Rotor
+    {
+        public RotorTIV(int rotation, int ringSetting)
+        {
+            super("T-IV", 21,
+                    new Integer[]{2,8,22,19,1,10,23,13,17,4,18,15,5,11,24,3,0,6,21,7,16,20,14,9,25,12},
+                    new Integer[]{16,4,0,15,9,12,17,19,1,23,5,13,25,7,22,11,20,8,10,3,21,18,2,6,14,24},
+                    new Integer[]{23,0,6,12,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor V as used in the Enigma Type T Tirpitz
+     * U A X G I S N J B V E R D Y L F Z W T P C K O H M Q
+     * Turnover Z D G L S
+     */
+    private static class RotorTV extends Rotor
+    {
+        public RotorTV(int rotation, int ringSetting)
+        {
+            super("T-V", 22,
+                    new Integer[]{20,0,23,6,8,18,13,9,1,21,4,17,3,24,11,5,25,22,19,15,2,10,14,7,12,16},
+                    new Integer[]{1,8,20,12,10,15,3,23,4,7,21,14,24,6,22,19,25,11,5,18,0,9,17,2,13,16},
+                    new Integer[]{25,3,6,11,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor VI as used in the Enigma Type T Tirpitz
+     * X F U Z G A L V H C N Y S E W Q T D M R B K P I O J
+     * Turnover Y F J N R
+     */
+    private static class RotorTVI extends Rotor
+    {
+        public RotorTVI(int rotation, int ringSetting)
+        {
+            super("T-VI", 23,
+                    new Integer[]{23,5,20,25,6,0,11,21,7,2,13,24,18,4,22,16,19,3,12,17,1,10,15,8,14,9},
+                    new Integer[]{5,20,9,17,13,1,4,8,23,25,21,6,18,10,24,22,15,19,12,16,2,7,14,0,11,3},
+                    new Integer[]{24,5,9,13,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor VII as used in the Enigma Type T Tirpitz
+     * B J V F T X P L N A Y O Z I K W G D Q E R U C H S M
+     * Turnover Z D G L S
+     */
+    private static class RotorTVII extends Rotor
+    {
+        public RotorTVII(int rotation, int ringSetting)
+        {
+            super("T-VII", 24,
+                    new Integer[]{1,9,21,5,19,23,15,11,13,0,24,14,25,8,10,22,6,3,16,4,17,20,2,7,18,12},
+                    new Integer[]{9,0,22,17,19,3,16,23,13,1,14,7,25,8,11,6,18,20,24,4,21,2,15,5,10,12},
+                    new Integer[]{25,3,6,11,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor VIII as used in the Enigma Type T Tirpitz
+     * Y M T P N Z H W K O D A J X E L U Q V G C B I S F R
+     * Turnover Y F J N R
+     */
+    private static class RotorTVIII extends Rotor
+    {
+        public RotorTVIII(int rotation, int ringSetting)
+        {
+            super("T-VIII", 25,
+                    new Integer[]{24,12,19,15,13,25,7,22,10,14,3,0,9,23,4,11,20,16,21,6,2,1,8,18,5,17},
+                    new Integer[]{11,21,20,10,14,24,19,6,22,12,8,15,1,4,9,3,17,25,23,2,16,18,7,13,0,5},
+                    new Integer[]{24,5,9,13,17}, ringSetting, rotation);
         }
     }
 }

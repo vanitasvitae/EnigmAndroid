@@ -1,13 +1,14 @@
 CHANGELOG ENIGMANDROID
 v0.1.7-not-yet-released
 *Added Enigma K
+*Added Enigma T
+*Created Plugboard-/pluggable Reflector-Setting-Dialog
 *TODO: Add Enigma Z (Probably wont happen due to lack of information :/)
-*TODO: Add Enigma T
 *TODO: Add Enigma G
 *TODO: Add Enigma R
-*TODO: Rewrite Rotor-/Reflector creation
+*TODO: Rework Rotor-/Reflector creation
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
-*TODO: Rewrite InputPreparer using  decorator pattern to allow user customization
+*TODO: Rework InputPreparer using  decorator pattern to allow user customization
 *
 
 v0.1.6-10.09.2015<
@@ -15,7 +16,7 @@ v0.1.6-10.09.2015<
 *Updated CHANGELOG (oops)
 *Added Enigma D
 *Added rotor names to ringSettingsDialog
-*Rewrote major parts of the app once again :)
+*Reworked major parts of the app once again :)
 *Added option to break messages up into blocks
 
 v0.1.5-27.08.2015<
@@ -28,7 +29,7 @@ v0.1.5-27.08.2015<
 
 
 v0.1.4-15.08.2015<
-*Rewrite of the core implementation to follow some principals of Software Engineering
+*Reworked the core implementation to follow some principals of Software Engineering
 *Fixed some layout issues
 *Fixed anomaly for step by step inputs
 *Added send/receive text functionality

@@ -1,7 +1,5 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import android.util.Log;
-
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -80,7 +78,6 @@ public class Enigma_I extends Enigma
         x = rotor1.normalize(x - rotor2.getRotation() + rotor2.getRingSetting() + rotor3.getRotation() - rotor3.getRingSetting());
         x = rotor3.encryptForward(x);
         x = rotor1.normalize(x - rotor3.getRotation() + rotor3.getRingSetting());
-       //TODO: CHECK
         //backward direction
         x = reflector.encrypt(x);
         x = rotor1.normalize(x + rotor3.getRotation() - rotor3.getRingSetting());
@@ -97,8 +94,7 @@ public class Enigma_I extends Enigma
     @Override
     public void setState(EnigmaStateBundle state)
     {
-        plugboard.setConfiguration(Plugboard.parseConfigurationString(
-                state.getConfigurationPlugboard()));
+        plugboard.setConfiguration(state.getConfigurationPlugboard());
         rotor1 = Rotor.createRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
         rotor2 = Rotor.createRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
         rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
@@ -110,7 +106,7 @@ public class Enigma_I extends Enigma
     {
         EnigmaStateBundle state = new EnigmaStateBundle();
 
-        state.setConfigurationPlugboard(plugboard.getConfigurationString());
+        state.setConfigurationPlugboard(plugboard.getConfiguration());
 
         state.setTypeRotor1(rotor1.getNumber());
         state.setTypeRotor2(rotor2.getNumber());

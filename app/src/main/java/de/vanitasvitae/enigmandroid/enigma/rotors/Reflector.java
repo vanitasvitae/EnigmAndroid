@@ -1,10 +1,5 @@
 package de.vanitasvitae.enigmandroid.enigma.rotors;
 
-import java.sql.Ref;
-import java.util.ArrayList;
-
-import de.vanitasvitae.enigmandroid.enigma.Plugboard;
-
 /**
  * Reflector of the enigma machine.
  * The reflector was used to reflect the scrambled signal at the end of the wiring back to
@@ -30,7 +25,9 @@ public class Reflector
 {
     protected String type;
     protected int number;
-    protected Integer[] connections;
+    protected int[] connections;
+    protected int rotation;
+    protected int ringSetting;
 
     /**
      * This constructor is not accessible from outside this class file.
@@ -39,7 +36,7 @@ public class Reflector
      * @param type type indicator of the reflector
      * @param connections wiring of the reflector as Integer array
      */
-    protected Reflector(String type, int number, Integer[] connections)
+    protected Reflector(String type, int number, int[] connections)
     {
         this.type = type;
         this.number = number;
@@ -48,22 +45,22 @@ public class Reflector
 
     public int getRotation()
     {
-        return 0;
+        return rotation;
     }
 
     public int getRingSetting()
     {
-        return 0;
+        return ringSetting;
     }
 
     public void setRotation(int rotation)
     {
-        //Nope, do it yourself by overriding
+        this.rotation = rotation;
     }
 
     public void setRingSetting(int ringSetting)
     {
-        //Nopedydope
+        this.ringSetting = ringSetting;
     }
 
     /**
@@ -153,7 +150,7 @@ public class Reflector
     {
         public ReflectorA()
         {
-            super("A", 1, new Integer[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
+            super("A", 1, new int[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
         }
     }
 
@@ -166,7 +163,7 @@ public class Reflector
     {
         public ReflectorB()
         {
-            super("B", 2, new Integer[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
+            super("B", 2, new int[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
         }
     }
 
@@ -179,7 +176,7 @@ public class Reflector
     {
         public ReflectorC()
         {
-            super("C", 3, new Integer[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
+            super("C", 3, new int[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
         }
     }
 
@@ -194,7 +191,7 @@ public class Reflector
     {
         public ReflectorThinB()
         {
-            super("ThinB", 4, new Integer[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
+            super("ThinB", 4, new int[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
         }
     }
 
@@ -209,7 +206,7 @@ public class Reflector
     {
         public ReflectorThinC()
         {
-            super("ThinC", 5, new Integer[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
+            super("ThinC", 5, new int[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
         }
     }
 
@@ -220,102 +217,20 @@ public class Reflector
      */
     public static class ReflectorEnigmaDKD extends Reflector
     {
-        public static final String defaultWiring = "AI,BM,CE,DT,FG,HR,JY,KS,LQ,NZ,OX,PW,UV";
-        private Plugboard connections;
-        private int ringSetting;
-        private int rotation;
+        public static final int[] defaultWiring = {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
         public ReflectorEnigmaDKD()
         {
-            super("Ref-D", 6, null);
-            connections = new Plugboard();
-            reset();
+            super("Ref-D", 6, defaultWiring);
         }
 
-        public ReflectorEnigmaDKD(int[][] conf)
+        public void setConfiguration(int[] conf)
         {
-            super("Ref-D", 6, null);
-            connections = new Plugboard(conf);
+            this.connections = conf;
         }
 
-        public void reset()
+        public int[] getConfiguration()
         {
-            connections.setConfiguration(Plugboard.parseConfigurationString(defaultWiring));
-        }
-
-        public boolean setWiring(String input)
-        {
-            if(input.replace(" ","").length() != 38)
-                return false;
-            return connections.setConfiguration(Plugboard.parseConfigurationString(input));
-        }
-
-        public String getConfiguration()
-        {
-            return connections.getConfigurationString();
-        }
-
-        @Override
-        public int getRingSetting()
-        {
-            return this.ringSetting;
-        }
-
-        @Override
-        public int getRotation()
-        {
-            return this.rotation;
-        }
-
-        @Override
-        public void setRingSetting(int ringSetting)
-        {
-            this.ringSetting = ringSetting;
-        }
-
-        @Override
-        public void setRotation(int rotation)
-        {
-            this.rotation = rotation;
-        }
-
-        @Override
-        public int encrypt(int input)
-        {
-            return this.connections.encrypt(input);
-        }
-
-        public boolean isValidConfiguration()
-        {
-            return getConfiguration().length() == 38;
-        }
-
-        public static ArrayList<Character> getDuplicatePlugs(String conf)
-        {
-            String s = conf.toUpperCase().replace(" ","").replace(",","");
-            ArrayList<Character> duplicates = new ArrayList<>();
-            for(int i=0; i<26; i++)
-            {
-                char c = (char) (i+65);
-                if(s.indexOf(c) == s.lastIndexOf(c)) duplicates.add(c);
-            }
-            if(duplicates.size() == 0) return null;
-            return duplicates;
-        }
-
-        public static ArrayList<Character> getMissingPlugs(String conf)
-        {
-            String s = conf.toUpperCase().replace(" ","").replace(",","");
-            ArrayList<Character> missing = new ArrayList<Character>();
-            for(int i=0; i<26; i++)
-            {
-                missing.add((char) (i + 65));
-            }
-            for(Character c : missing)
-            {
-                if(s.indexOf(c) != -1) missing.remove(c);
-            }
-            if(missing.size() == 0) return null;
-            return missing;
+            return this.connections;
         }
     }
 
@@ -323,7 +238,7 @@ public class Reflector
     {
         public ReflectorEnigmaK()
         {
-            super("Ref-K", 7, new Integer[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
+            super("Ref-K", 7, new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
         }
     }
     /**
@@ -334,7 +249,7 @@ public class Reflector
     {
         public ReflectorEnigmaT()
         {
-            super("Ref-T", 8, new Integer[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
+            super("Ref-T", 8, new int[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
         }
     }
 

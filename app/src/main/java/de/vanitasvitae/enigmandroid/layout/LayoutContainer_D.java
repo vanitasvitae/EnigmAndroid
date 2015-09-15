@@ -1,7 +1,8 @@
 package de.vanitasvitae.enigmandroid.layout;
 
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.R;
@@ -37,8 +38,6 @@ public class LayoutContainer_D extends LayoutContainer
     protected Spinner rotor3PositionView;
     protected Spinner reflectorPositionView;
 
-    protected EditText reflectorWiringView;
-
     public LayoutContainer_D()
     {
         super();
@@ -53,7 +52,13 @@ public class LayoutContainer_D extends LayoutContainer
         this.rotor2PositionView = (Spinner) main.findViewById(R.id.rotor2position);
         this.rotor3PositionView = (Spinner) main.findViewById(R.id.rotor3position);
         this.reflectorPositionView = (Spinner) main.findViewById(R.id.reflector_position);
-        this.reflectorWiringView = (EditText) main.findViewById(R.id.reflector_wiring);
+        Button reflectorWiring = (Button) main.findViewById(R.id.button_reflector);
+        reflectorWiring.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PluggableDialogBuilder(state).showDialogReflector();
+            }
+        });
 
         Character[] rotorPositionArray = new Character[26];
         for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /**Fill with A..Z*/}
@@ -97,7 +102,6 @@ public class LayoutContainer_D extends LayoutContainer
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
         this.reflectorPositionView.setSelection(state.getRotationReflector());
-        this.reflectorWiringView.setText(state.getConfigurationReflector());
     }
 
     @Override
@@ -107,7 +111,6 @@ public class LayoutContainer_D extends LayoutContainer
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
         state.setRotationReflector(reflectorPositionView.getSelectedItemPosition());
-        state.setConfigurationReflector(reflectorWiringView.getText().toString());
     }
 
     public Enigma_D getEnigma()
@@ -120,12 +123,5 @@ public class LayoutContainer_D extends LayoutContainer
     {
         new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRotRef().
                 createRingSettingsDialog(state);
-    }
-
-    @Override
-    protected boolean isValidConfiguration()
-    {
-        //if(Reflector.ReflectorEnigmaD.) //TODO:
-        return true;
     }
 }

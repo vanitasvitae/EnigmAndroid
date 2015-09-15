@@ -144,41 +144,13 @@
 
     </LinearLayout>
 
-    <!-- Plugboard and button-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttons_lay"
-        android:layout_below="@+id/lin_lay_1"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="75"
-            android:layout_height="match_parent"
-            android:id="@+id/plugboard"
-            android:hint="@string/hint_enigma_plugboard">
-
-        </EditText>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="25"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_crypt"
-            android:onClick="doCrypto"
-            android:text="@string/button_crypt"
-            android:background="@drawable/button"/>
-
-    </LinearLayout>
-
     <!-- Textboxes for input and output -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttons_lay"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/lin_lay_1"
+        android:layout_above="@id/buttons_lay"
         android:id="@+id/text_layer">
 
         <EditText
@@ -198,5 +170,29 @@
             android:hint="@string/hint_enigma_code"/>
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons_lay"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_plugboard"
+            android:text="@string/title_plugboard_dialog"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_crypt"
+            android:onClick="doCrypto"
+            android:text="@string/button_crypt"
+            android:background="@drawable/button_orange"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -76,7 +76,6 @@ public class Enigma_D extends Enigma {
         x = rotor1.normalize(x - rotor2.getRotation() + rotor2.getRingSetting() + rotor3.getRotation() - rotor3.getRingSetting());
         x = rotor3.encryptForward(x);
         x = rotor1.normalize(x - rotor3.getRotation() + rotor3.getRingSetting() + reflector.getRotation() - reflector.getRingSetting());
-       //TODO: CHECK
         //backward direction
         x = reflector.encrypt(x);
         x = rotor1.normalize(x + rotor3.getRotation() - rotor3.getRingSetting() - reflector.getRotation() + reflector.getRingSetting());
@@ -97,7 +96,8 @@ public class Enigma_D extends Enigma {
         this.rotor1 = Rotor.createRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
         this.rotor2 = Rotor.createRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
         this.rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
-        this.reflector = new Reflector.ReflectorEnigmaDKD(Plugboard.parseConfigurationString(state.getConfigurationReflector()));
+        this.reflector = new Reflector.ReflectorEnigmaDKD();
+        this.reflector.setConfiguration(state.getConfigurationReflector());
         this.reflector.setRotation(state.getRotationReflector());
         this.reflector.setRingSetting(state.getRingSettingReflector());
     }

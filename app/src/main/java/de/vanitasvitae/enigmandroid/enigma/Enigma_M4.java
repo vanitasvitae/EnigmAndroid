@@ -1,7 +1,5 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import android.util.Log;
-
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -125,7 +123,7 @@ public class Enigma_M4 extends Enigma
         rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
         rotor4 = Rotor.createRotor(state.getTypeRotor4(), state.getRotationRotor4(), state.getRingSettingRotor4());
         reflector = Reflector.createReflector(state.getTypeReflector());
-        plugboard.setConfiguration(Plugboard.parseConfigurationString(state.getConfigurationPlugboard()));
+        plugboard.setConfiguration(state.getConfigurationPlugboard());
 
     }
 
@@ -150,7 +148,7 @@ public class Enigma_M4 extends Enigma
 
         state.setTypeReflector(reflector.getNumber());
 
-        state.setConfigurationPlugboard(plugboard.getConfigurationString());
+        state.setConfigurationPlugboard(plugboard.getConfiguration());
 
         return state;
     }
