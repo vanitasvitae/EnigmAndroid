@@ -163,10 +163,14 @@ public class MainActivity extends Activity
                 this.setContentView(R.layout.activity_main_d);
                 break;
             case "K":
-                this.setContentView(R.layout.activity_main_k_t);
-                break;
+            case "KS":
+            case "KSA":
             case "T":
-                this.setContentView(R.layout.activity_main_k_t);
+            case "R":
+            case "G31":
+            case "G312":
+            case "G260":
+                this.setContentView(R.layout.activity_main_g_k_t);
                 break;
             default:
                 this.setContentView(R.layout.activity_main_i_m3);
@@ -217,7 +221,7 @@ public class MainActivity extends Activity
         if(prefAnomaly !=anomaly)
         {
             prefAnomaly = anomaly;
-            if(layoutContainer != null) layoutContainer.getEnigma().setPrefAnomaly(anomaly);
+            if(layoutContainer != null && layoutContainer.getEnigma() != null) layoutContainer.getEnigma().setPrefAnomaly(anomaly);
         }
     }
 

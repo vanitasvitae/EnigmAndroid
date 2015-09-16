@@ -116,8 +116,20 @@ public abstract class LayoutContainer
                     return new LayoutContainer_D();
                 case "K":
                     return new LayoutContainer_K();
+                case "KS":
+                    return new LayoutContainer_K_Swiss();
+                case "KSA":
+                    return new LayoutContainer_K_Swiss_Airforce();
                 case "T":
                     return new LayoutContainer_T();
+                case "R":
+                    return new LayoutContainer_R();
+                case "G31":
+                    return new LayoutContainer_G31();
+                case "G312":
+                    return new LayoutContainer_G312();
+                case "G260":
+                    return new LayoutContainer_G260();
                 default:
                     return new LayoutContainer_I();
             }

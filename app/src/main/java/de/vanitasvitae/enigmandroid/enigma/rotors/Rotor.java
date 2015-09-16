@@ -79,39 +79,63 @@ public class Rotor
     {
         switch (type)
         {
-            case 0: return new EntryWheelDK();
+            case 0: return new EntryWheel_QWERTZ();
 
-            case 1: return new RotorI(rotation, ringSetting);
-            case 2: return new RotorII(rotation, ringSetting);
-            case 3: return new RotorIII(rotation, ringSetting);
-            case 4: return new RotorIV(rotation, ringSetting);
-            case 5: return new RotorV(rotation, ringSetting);
-            case 6: return new RotorVI(rotation, ringSetting);
-            case 7: return new RotorVII(rotation, ringSetting);
-            case 8: return new RotorVIII(rotation, ringSetting);
+            case 1: return new Rotor_I(rotation, ringSetting);
+            case 2: return new Rotor_II(rotation, ringSetting);
+            case 3: return new Rotor_III(rotation, ringSetting);
+            case 4: return new Rotor_IV(rotation, ringSetting);
+            case 5: return new Rotor_V(rotation, ringSetting);
+            case 6: return new Rotor_VI(rotation, ringSetting);
+            case 7: return new Rotor_VII(rotation, ringSetting);
+            case 8: return new Rotor_VIII(rotation, ringSetting);
 
-            case 9: return new RotorBeta(rotation, ringSetting);
-            case 10: return new RotorGamma(rotation, ringSetting);
+            case 9: return new Rotor_M4_Beta(rotation, ringSetting);
+            case 10: return new Rotor_M4_Gamma(rotation, ringSetting);
 
-            case 11: return new RotorDI(rotation, ringSetting);
-            case 12: return new RotorDII(rotation, ringSetting);
-            case 13: return new RotorDIII(rotation, ringSetting);
+            case 11: return new Rotor_D_I(rotation, ringSetting);
+            case 12: return new Rotor_D_II(rotation, ringSetting);
+            case 13: return new Rotor_D_III(rotation, ringSetting);
 
-            case 14: return new RotorKI(rotation, ringSetting);
-            case 15: return new RotorKII(rotation, ringSetting);
-            case 16: return new RotorKIII(rotation, ringSetting);
+            case 14: return new Rotor_KSwiss_Standard_I(rotation, ringSetting);
+            case 15: return new Rotor_KSwiss_Standard_II(rotation, ringSetting);
+            case 16: return new Rotor_KSwiss_Standard_III(rotation, ringSetting);
 
-            case 17: return new EntryWheelT();
-            case 18: return new RotorTI(rotation, ringSetting);
-            case 19: return new RotorTII(rotation, ringSetting);
-            case 20: return new RotorTIII(rotation, ringSetting);
-            case 21: return new RotorTIV(rotation, ringSetting);
-            case 22: return new RotorTV(rotation, ringSetting);
-            case 23: return new RotorTVI(rotation, ringSetting);
-            case 24: return new RotorTVII(rotation, ringSetting);
-            case 25: return new RotorTVIII(rotation, ringSetting);
+            case 17: return new EntryWheel_T();
+            case 18: return new Rotor_T_I(rotation, ringSetting);
+            case 19: return new Rotor_T_II(rotation, ringSetting);
+            case 20: return new Rotor_T_III(rotation, ringSetting);
+            case 21: return new Rotor_T_IV(rotation, ringSetting);
+            case 22: return new Rotor_T_V(rotation, ringSetting);
+            case 23: return new Rotor_T_VI(rotation, ringSetting);
+            case 24: return new Rotor_T_VII(rotation, ringSetting);
+            case 25: return new Rotor_T_VIII(rotation, ringSetting);
 
-            default: return new RotorI(rotation, ringSetting);
+            case 26: return new Rotor_G312_I(rotation, ringSetting);
+            case 27: return new Rotor_G312_II(rotation, ringSetting);
+            case 28: return new Rotor_G312_III(rotation, ringSetting);
+
+            case 29: return new Rotor_G260_I(rotation, ringSetting);
+            case 30: return new Rotor_G260_II(rotation, ringSetting);
+            case 31: return new Rotor_G260_III(rotation, ringSetting);
+
+            case 32: return new Rotor_G31_I(rotation, ringSetting);
+            case 33: return new Rotor_G31_II(rotation, ringSetting);
+            case 34: return new Rotor_G31_III(rotation, ringSetting);
+
+            case 35: return new Rotor_K_I(rotation, ringSetting);
+            case 36: return new Rotor_K_II(rotation, ringSetting);
+            case 37: return new Rotor_K_III(rotation, ringSetting);
+
+            case 38: return new Rotor_K_Swiss_Airforce_I(rotation, ringSetting);
+            case 39: return new Rotor_K_Swiss_Airforce_II(rotation, ringSetting);
+            case 40: return new Rotor_K_Swiss_Airforce_III(rotation, ringSetting);
+
+            case 41: return new Rotor_R_I(rotation, ringSetting);
+            case 42: return new Rotor_R_II(rotation, ringSetting);
+            case 43: return new Rotor_R_III(rotation, ringSetting);
+
+            default: return new Rotor_I(rotation, ringSetting);
         }
     }
 
@@ -249,9 +273,9 @@ public class Rotor
      * Used in Enigma I, M3, M4
      * E K M F L G D Q V Z N T O W Y H X U S P A I B R C J
      */
-    private static class RotorI extends Rotor
+    private static class Rotor_I extends Rotor
     {
-        public RotorI(int rotation, int ringSetting)
+        public Rotor_I(int rotation, int ringSetting)
         {
             super("I", 1,
                     new Integer[]{4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9},
@@ -265,9 +289,9 @@ public class Rotor
      * Used in Enigma I, M3, M4
      * A J D K S I R U X B L H W T M C Q G Z N P Y F V O E
      */
-    private static class RotorII extends Rotor
+    private static class Rotor_II extends Rotor
     {
-        public RotorII(int rotation, int ringSetting)
+        public Rotor_II(int rotation, int ringSetting)
         {
             super("II", 2,
                     new Integer[]{0, 9, 3, 10, 18, 8, 17, 20, 23, 1, 11, 7, 22, 19, 12, 2, 16, 6, 25, 13, 15, 24, 5, 21, 14, 4},
@@ -281,9 +305,9 @@ public class Rotor
      * Used in Enigma I, M3, M4
      * B D F H J L C P R T X V Z N Y E I W G A K M U S Q O
      */
-    private static class RotorIII extends Rotor
+    private static class Rotor_III extends Rotor
     {
-        public RotorIII(int rotation, int ringSetting)
+        public Rotor_III(int rotation, int ringSetting)
         {
             super("III", 3,
                     new Integer[]{1, 3, 5, 7, 9, 11, 2, 15, 17, 19, 23, 21, 25, 13, 24, 4, 8, 22, 6, 0, 10, 12, 20, 18, 16, 14},
@@ -297,9 +321,9 @@ public class Rotor
      * Used in Enigma M3, M4
      * E S O V P Z J A Y Q U I R H X L N F T G K D C M W B
      */
-    private static class RotorIV extends Rotor
+    private static class Rotor_IV extends Rotor
     {
-        public RotorIV(int rotation, int ringSetting)
+        public Rotor_IV(int rotation, int ringSetting)
         {
             super("IV", 4,
                     new Integer[]{4, 18, 14, 21, 15, 25, 9, 0, 24, 16, 20, 8, 17, 7, 23, 11, 13, 5, 19, 6, 10, 3, 2, 12, 22, 1},
@@ -313,9 +337,9 @@ public class Rotor
      * Used in Enigma M3, M4
      * V Z B R G I T Y U P S D N H L X A W M J Q O F E C K
      */
-    private static class RotorV extends Rotor
+    private static class Rotor_V extends Rotor
     {
-        public RotorV(int rotation, int ringSetting)
+        public Rotor_V(int rotation, int ringSetting)
         {
             super("V", 5,
                     new Integer[]{21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13, 7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10},
@@ -329,9 +353,9 @@ public class Rotor
      * Used in Enigma M3, M4
      * J P G V O U M F Y Q B E N H Z R D K A S X L I C T W
      */
-    private static class RotorVI extends Rotor
+    private static class Rotor_VI extends Rotor
     {
-        public RotorVI(int rotation, int ringSetting)
+        public Rotor_VI(int rotation, int ringSetting)
         {
             super("VI", 6,
                     new Integer[]{9,15,6,21,14,20,12,5,24,16,1,4,13,7,25,17,3,10,0,18,23,11,8,2,19,22},
@@ -345,9 +369,9 @@ public class Rotor
      * Used in Enigma M3, M4
      * N Z J H G R C X M Y S W B O U F A I V L P E K Q D T
      */
-    private static class RotorVII extends Rotor
+    private static class Rotor_VII extends Rotor
     {
-        public RotorVII(int rotation, int ringSetting)
+        public Rotor_VII(int rotation, int ringSetting)
         {
             super("VII", 7,
                     new Integer[]{13,25,9,7,6,17,2,23,12,24,18,22,1,14,20,5,0,8,21,11,15,4,10,16,3,19},
@@ -361,9 +385,9 @@ public class Rotor
      * Used in Enigma M3, M4
      * F K Q H T L X O C B J S P D Z R A M E W N I U Y G V
      */
-    private static class RotorVIII extends Rotor
+    private static class Rotor_VIII extends Rotor
     {
-        public RotorVIII(int rotation, int ringSetting)
+        public Rotor_VIII(int rotation, int ringSetting)
         {
             super("VIII", 8,
                     new Integer[]{5,10,16,7,19,11,23,14,2,1,9,18,15,3,25,17,0,12,4,22,13,8,20,24,6,21},
@@ -380,9 +404,9 @@ public class Rotor
      * That way the M4 was backwards compatible to the M3
      * Used in M4
      */
-    private static class RotorBeta extends Rotor
+    private static class Rotor_M4_Beta extends Rotor
     {
-        public RotorBeta(int rotation, int ringSetting)
+        public Rotor_M4_Beta(int rotation, int ringSetting)
         {
             super("Beta", 9,
                     new Integer[]{11,4,24,9,21,2,13,8,23,22,15,1,16,12,3,17,19,0,10,25,6,5,20,7,14,18},
@@ -411,9 +435,9 @@ public class Rotor
      * (if rotation == 0). That way the M4 was backwards compatible to the M3
      * Used in M4
      */
-    private static class RotorGamma extends Rotor
+    private static class Rotor_M4_Gamma extends Rotor
     {
-        public RotorGamma(int rotation, int ringSetting)
+        public Rotor_M4_Gamma(int rotation, int ringSetting)
         {
             super("Gamma", 10,
                     new Integer[]{5,18,14,10,0,13,20,4,17,7,12,1,19,8,24,2,22,11,16,15,25,23,21,6,9,3},
@@ -435,12 +459,12 @@ public class Rotor
     }
 
     /**
-     * EntryWheel as used in the Enigma models D, K
+     * EntryWheel as used in the Enigma models D, K, G
      * Q W E R T Z U I O A S D F G H J K P Y X C V B N M L
      */
-    private static class EntryWheelDK extends Rotor
+    private static class EntryWheel_QWERTZ extends Rotor
     {
-        public EntryWheelDK()
+        public EntryWheel_QWERTZ()
         {
             super("ETW-D", 0,
                     new Integer[]{9,22,20,11,2,12,13,14,7,15,16,25,24,23,8,17,0,3,10,4,6,21,1,19,18,5},
@@ -466,9 +490,9 @@ public class Rotor
      * L P G S Z M H A E O Q K V X R F Y B U T N I C J D W
      * Turnover Z
      */
-    private static class RotorDI extends Rotor
+    private static class Rotor_D_I extends Rotor
     {
-        public RotorDI(int rotation, int ringSetting)
+        public Rotor_D_I(int rotation, int ringSetting)
         {
             super("D-I", 11,
                     new Integer[]{11,15,6,18,25,12,7,0,4,14,16,10,21,23,17,5,24,1,20,19,13,8,2,9,3,22},
@@ -482,9 +506,9 @@ public class Rotor
      * S L V G B T F X J Q O H E W I R Z Y A M K P C N D U
      * Turnover F
      */
-    private static class RotorDII extends Rotor
+    private static class Rotor_D_II extends Rotor
     {
-        public RotorDII(int rotation, int ringSetting)
+        public Rotor_D_II(int rotation, int ringSetting)
         {
             super("D-II", 12,
                     new Integer[]{18,11,21,6,1,19,5,23,9,16,14,7,4,22,8,17,25,24,0,12,10,15,2,13,3,20},
@@ -498,9 +522,9 @@ public class Rotor
      * C J G D P S H K T U R A W Z X F M Y N Q O B V L I E
      * Turnover O
      */
-    private static class RotorDIII extends Rotor
+    private static class Rotor_D_III extends Rotor
     {
-        public RotorDIII(int rotation, int ringSetting)
+        public Rotor_D_III(int rotation, int ringSetting)
         {
             super("D-III", 13,
                     new Integer[]{2,9,6,3,15,18,7,10,19,20,17,0,22,25,23,5,12,24,13,16,14,1,21,11,8,4},
@@ -514,11 +538,11 @@ public class Rotor
      * P E Z U O H X S C V F M T B G L R I N Q J W A Y D K
      * Turnover Z
      */
-    private static class RotorKI extends Rotor
+    private static class Rotor_KSwiss_Standard_I extends Rotor
     {
-        public RotorKI(int rotation, int ringSetting)
+        public Rotor_KSwiss_Standard_I(int rotation, int ringSetting)
         {
-            super("K-I", 14,
+            super("KS-I", 14,
                     new Integer[]{15,4,25,20,14,7,23,18,2,21,5,12,19,1,6,11,17,8,13,16,9,22,0,24,3,10},
                     new Integer[]{22,13,8,24,1,10,14,5,17,20,25,15,11,18,4,0,19,16,7,12,3,9,21,6,23,2},
                     new Integer[]{25}, ringSetting, rotation);
@@ -530,11 +554,11 @@ public class Rotor
      * Z O U E S Y D K F W P C I Q X H M V B L G N J R A T
      * Turnover F
      */
-    private static class RotorKII extends Rotor
+    private static class Rotor_KSwiss_Standard_II extends Rotor
     {
-        public RotorKII(int rotation, int ringSetting)
+        public Rotor_KSwiss_Standard_II(int rotation, int ringSetting)
         {
-            super("K-II", 15,
+            super("KS-II", 15,
                     new Integer[]{25,14,20,4,18,24,3,10,5,22,15,2,8,16,23,7,12,21,1,11,6,13,9,17,0,19},
                     new Integer[]{24,18,11,6,3,8,20,15,12,22,7,19,16,21,1,10,13,23,4,25,2,17,9,14,5,0},
                     new Integer[]{5}, ringSetting, rotation);
@@ -546,11 +570,11 @@ public class Rotor
      * E H R V X G A O B Q U S I M Z F L Y N W K T P D J C
      * Turnover O
      */
-    private static class RotorKIII extends Rotor
+    private static class Rotor_KSwiss_Standard_III extends Rotor
     {
-        public RotorKIII(int rotation, int ringSetting)
+        public Rotor_KSwiss_Standard_III(int rotation, int ringSetting)
         {
-            super("K-III", 16,
+            super("KS-III", 16,
                     new Integer[]{4,7,17,21,23,6,0,14,1,16,20,18,8,12,25,5,11,24,13,22,10,19,15,3,9,2},
                     new Integer[]{6,8,25,23,0,15,5,1,12,24,20,16,13,18,7,22,9,2,11,21,10,3,19,4,17,14},
                     new Integer[]{14}, ringSetting, rotation);
@@ -561,9 +585,9 @@ public class Rotor
      * EntryWheel as used only in the Enigma Type T Tirpitz
      * K Z R O U Q H Y A I G B L W V S T D X F P N M C J E
      */
-    private static class EntryWheelT extends Rotor
+    private static class EntryWheel_T extends Rotor
     {
-        public EntryWheelT()
+        public EntryWheel_T()
         {
             super("T-ETW", 17,
                     new Integer[]{8,11,23,17,25,19,10,6,9,24,0,12,22,21,3,20,5,2,15,16,4,14,13,18,7,1},
@@ -588,9 +612,9 @@ public class Rotor
      * K P T Y U E L O C V G R F Q D A N J M B S W H Z X I
      * Turnover X A F L R
      */
-    private static class RotorTI extends Rotor
+    private static class Rotor_T_I extends Rotor
     {
-        public RotorTI(int rotation, int ringSetting)
+        public Rotor_T_I(int rotation, int ringSetting)
         {
             super("T-I", 18,
                     new Integer[]{10,15,19,24,20,4,11,14,2,21,6,17,5,16,3,0,13,9,12,1,18,22,7,25,23,8},
@@ -604,9 +628,9 @@ public class Rotor
      * U P H Z L W E Q M T D J X C A K S O I G V B Y F N R
      * Turnover X A G M S
      */
-    private static class RotorTII extends Rotor
+    private static class Rotor_T_II extends Rotor
     {
-        public RotorTII(int rotation, int ringSetting)
+        public Rotor_T_II(int rotation, int ringSetting)
         {
             super("T-II", 19,
                     new Integer[]{20,15,7,25,11,22,4,16,12,19,3,9,23,2,0,10,18,14,8,6,21,1,24,5,13,17},
@@ -620,9 +644,9 @@ public class Rotor
      * Q U D L Y R F E K O N V Z A X W H M G P J B S I C T
      * Turnover X A F L R
      */
-    private static class RotorTIII extends Rotor
+    private static class Rotor_T_III extends Rotor
     {
-        public RotorTIII(int rotation, int ringSetting) {
+        public Rotor_T_III(int rotation, int ringSetting) {
             super("T-III", 20,
                     new Integer[]{16,20,3,11,24,17,5,4,10,14,13,21,25,0,23,22,7,12,6,15,9,1,18,8,2,19},
                     new Integer[]{13,21,24,2,7,6,18,16,23,20,8,3,17,10,9,19,0,5,22,25,1,11,15,14,4,12},
@@ -635,9 +659,9 @@ public class Rotor
      * C I W T B K X N R E S P F L Y D A G V H Q U O J Z M
      * Turnover X A G M S
      */
-    private static class RotorTIV extends Rotor
+    private static class Rotor_T_IV extends Rotor
     {
-        public RotorTIV(int rotation, int ringSetting)
+        public Rotor_T_IV(int rotation, int ringSetting)
         {
             super("T-IV", 21,
                     new Integer[]{2,8,22,19,1,10,23,13,17,4,18,15,5,11,24,3,0,6,21,7,16,20,14,9,25,12},
@@ -651,9 +675,9 @@ public class Rotor
      * U A X G I S N J B V E R D Y L F Z W T P C K O H M Q
      * Turnover Z D G L S
      */
-    private static class RotorTV extends Rotor
+    private static class Rotor_T_V extends Rotor
     {
-        public RotorTV(int rotation, int ringSetting)
+        public Rotor_T_V(int rotation, int ringSetting)
         {
             super("T-V", 22,
                     new Integer[]{20,0,23,6,8,18,13,9,1,21,4,17,3,24,11,5,25,22,19,15,2,10,14,7,12,16},
@@ -667,9 +691,9 @@ public class Rotor
      * X F U Z G A L V H C N Y S E W Q T D M R B K P I O J
      * Turnover Y F J N R
      */
-    private static class RotorTVI extends Rotor
+    private static class Rotor_T_VI extends Rotor
     {
-        public RotorTVI(int rotation, int ringSetting)
+        public Rotor_T_VI(int rotation, int ringSetting)
         {
             super("T-VI", 23,
                     new Integer[]{23,5,20,25,6,0,11,21,7,2,13,24,18,4,22,16,19,3,12,17,1,10,15,8,14,9},
@@ -683,9 +707,9 @@ public class Rotor
      * B J V F T X P L N A Y O Z I K W G D Q E R U C H S M
      * Turnover Z D G L S
      */
-    private static class RotorTVII extends Rotor
+    private static class Rotor_T_VII extends Rotor
     {
-        public RotorTVII(int rotation, int ringSetting)
+        public Rotor_T_VII(int rotation, int ringSetting)
         {
             super("T-VII", 24,
                     new Integer[]{1,9,21,5,19,23,15,11,13,0,24,14,25,8,10,22,6,3,16,4,17,20,2,7,18,12},
@@ -699,14 +723,300 @@ public class Rotor
      * Y M T P N Z H W K O D A J X E L U Q V G C B I S F R
      * Turnover Y F J N R
      */
-    private static class RotorTVIII extends Rotor
+    private static class Rotor_T_VIII extends Rotor
     {
-        public RotorTVIII(int rotation, int ringSetting)
+        public Rotor_T_VIII(int rotation, int ringSetting)
         {
             super("T-VIII", 25,
                     new Integer[]{24,12,19,15,13,25,7,22,10,14,3,0,9,23,4,11,20,16,21,6,2,1,8,18,5,17},
                     new Integer[]{11,21,20,10,14,24,19,6,22,12,8,15,1,4,9,3,17,25,23,2,16,18,7,13,0,5},
                     new Integer[]{24,5,9,13,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type G312 Abwehr
+     * D M T W S I L R U Y Q N K F E J C A Z B P G X O H V
+     * Turnover T V W X A B C D F G H J L M P Q R
+     */
+    private static class Rotor_G312_I extends Rotor
+    {
+        public Rotor_G312_I(int rotation, int ringSetting)
+        {
+            super("G312-I", 26,
+                    new Integer[]{3,12,19,22,18,8,11,17,20,24,16,13,10,5,4,9,2,0,25,1,15,6,23,14,7,21},
+                    new Integer[]{17,19,16,0,14,13,21,24,5,15,12,6,1,11,23,20,10,7,4,2,8,25,3,22,9,18},
+                    new Integer[]{19,21,22,23,0,1,2,3,5,6,7,9,11,12,15,16,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type G312 Abwehr
+     * H Q Z G P J T M O B L N C I F D Y A W V E U S R K X
+     * Turnover T U W Z A B D E G H I L N O R
+     */
+    private static class Rotor_G312_II extends Rotor
+    {
+        public Rotor_G312_II(int rotation, int ringSetting)
+        {
+            super("G312-II", 27,
+                    new Integer[]{7,16,25,6,15,9,19,12,14,1,11,13,2,8,5,3,24,0,22,21,4,20,18,17,10,23},
+                    new Integer[]{17,9,12,15,20,14,3,0,13,5,24,10,7,11,8,4,1,23,22,6,21,19,18,25,16,2},
+                    new Integer[]{19,20,22,25,0,1,3,4,6,7,8,11,13,14,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type G312 Abwehr
+     * U Q N T L S Z F M R E H D P X K I B V Y G J C W O A
+     * Turnover V X Y B F G I L N O S
+     */
+    private static class Rotor_G312_III extends Rotor
+    {
+        public Rotor_G312_III(int rotation, int ringSetting)
+        {
+            super("G312-III", 28,
+                    new Integer[]{20,16,13,19,11,18,25,5,12,17,4,7,3,15,23,10,8,1,21,24,6,9,2,22,14,0},
+                    new Integer[]{25,17,22,12,10,7,20,11,16,21,15,4,8,2,24,13,1,9,5,3,0,18,23,14,19,6},
+                    new Integer[]{21,23,24,1,5,6,8,11,13,14,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type G260 Abwehr
+     * R C S P B L K Q A U M H W Y T I F Z V G O J N E X D
+     * Turnover T V W X A B C D F G H J L M P Q R
+     */
+    private static class Rotor_G260_I extends Rotor
+    {
+        public Rotor_G260_I(int rotation, int ringSetting)
+        {
+            super("G260-I", 29,
+                    new Integer[]{17,2,18,15,1,11,10,16,0,20,12,7,22,24,19,8,5,25,21,6,14,9,13,4,23,3},
+                    new Integer[]{8,4,1,25,23,16,19,11,15,21,6,5,10,22,20,3,7,0,2,14,9,18,12,24,13,17},
+                    new Integer[]{19,21,22,23,0,1,2,3,5,6,7,9,11,12,15,16,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type G260 Abwehr
+     * W C M I B V P J X A R O S G N D L Z K E Y H U F Q T
+     * Turnover T U W Z A B D E G H I L N O R
+     */
+    private static class Rotor_G260_II extends Rotor
+    {
+        public Rotor_G260_II(int rotation, int ringSetting)
+        {
+            super("G260-II", 30,
+                    new Integer[]{22,2,12,8,1,21,15,9,23,0,17,14,18,6,13,3,11,25,10,4,24,7,20,5,16,19},
+                    new Integer[]{9,4,1,15,19,23,13,21,3,7,18,16,2,14,11,6,24,10,12,25,22,5,0,8,20,17},
+                    new Integer[]{19,20,22,25,0,1,3,4,6,7,8,11,13,14,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type G260 Abwehr
+     * F V D H Z E L S Q M A X O K Y I W P G C B U J T N R
+     * Turnover V X Y B F G I L N O S
+     */
+    private static class Rotor_G260_III extends Rotor
+    {
+        public Rotor_G260_III(int rotation, int ringSetting)
+        {
+            super("G260-III", 31,
+                    new Integer[]{5,21,3,7,25,4,11,18,16,12,0,23,14,10,24,8,22,15,6,2,1,20,9,19,13,17},
+                    new Integer[]{10,20,19,2,5,0,18,3,15,22,13,6,9,24,12,17,8,25,7,23,21,1,16,11,14,4},
+                    new Integer[]{21,23,24,1,5,6,8,11,13,14,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type G31 Abwehr
+     * L P G S Z M H A E O Q K V X R F Y B U T N I C J D W
+     * Turnover T V W X A B C D F G H J L M P Q R
+     */
+    private static class Rotor_G31_I extends Rotor
+    {
+        public Rotor_G31_I(int rotation, int ringSetting)
+        {
+            super("G31-I", 32,
+                    new Integer[]{11,15,6,18,25,12,7,0,4,14,16,10,21,23,17,5,24,1,20,19,13,8,2,9,3,22},
+                    new Integer[]{7,17,22,24,8,15,2,6,21,23,11,0,5,20,9,1,10,14,3,19,18,12,25,13,16,4},
+                    new Integer[]{19,21,22,23,0,1,2,3,5,6,7,9,11,12,15,16,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type G31 Abwehr
+     * S L V G B T F X J Q O H E W I R Z Y A M K P C N D U
+     * Turnover T U W Z A B D E G H I L N O R
+     */
+    private static class Rotor_G31_II extends Rotor
+    {
+        public Rotor_G31_II(int rotation, int ringSetting)
+        {
+            super("G31_II", 33,
+                    new Integer[]{18,11,21,6,1,19,5,23,9,16,14,7,4,22,8,17,25,24,0,12,10,15,2,13,3,20},
+                    new Integer[]{18,4,22,24,12,6,3,11,14,8,20,1,19,23,10,21,9,15,0,5,25,2,13,7,17,16},
+                    new Integer[]{19,20,22,25,0,1,3,4,6,7,8,11,13,14,17}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type G31 Abwehr
+     * C J G D P S H K T U R A W Z X F M Y N Q O B V L I E
+     * Turnover V X Y B F G I L N O S
+     */
+    private static class Rotor_G31_III extends Rotor
+    {
+        public Rotor_G31_III(int rotation, int ringSetting)
+        {
+            super("G31_III", 34,
+                    new Integer[]{2,9,6,3,15,18,7,10,19,20,17,0,22,25,23,5,12,24,13,16,14,1,21,11,8,4},
+                    new Integer[]{11,21,0,3,25,15,2,6,24,1,7,23,16,18,20,4,19,10,5,8,9,22,12,14,17,13},
+                    new Integer[]{21,23,24,1,5,6,8,11,13,14,18}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type K
+     * L P G S Z M H A E O Q K V X R F Y B U T N I C J D W
+     * Turnover Z
+     */
+    private static class Rotor_K_I extends Rotor
+    {
+        public Rotor_K_I(int rotation, int ringSetting)
+        {
+            super("K-I", 35,
+                    new Integer[]{11,15,6,18,25,12,7,0,4,14,16,10,21,23,17,5,24,1,20,19,13,8,2,9,3,22},
+                    new Integer[]{7,17,22,24,8,15,2,6,21,23,11,0,5,20,9,1,10,14,3,19,18,12,25,13,16,4},
+                    new Integer[]{25}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma type K
+     * S L V G B T F X J Q O H E W I R Z Y A M K P C N D U
+     * Turnover F
+     */
+    private static class Rotor_K_II extends Rotor
+    {
+        public Rotor_K_II(int rotation, int ringSetting)
+        {
+            super("K-II", 36,
+                    new Integer[]{18,11,21,6,1,19,5,23,9,16,14,7,4,22,8,17,25,24,0,12,10,15,2,13,3,20},
+                    new Integer[]{18,4,22,24,12,6,3,11,14,8,20,1,19,23,10,21,9,15,0,5,25,2,13,7,17,16},
+                    new Integer[]{5}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type K
+     * C J G D P S H K T U R A W Z X F M Y N Q O B V L I E
+     * Turnover O
+     */
+    private static class Rotor_K_III extends Rotor
+    {
+        public Rotor_K_III(int rotation, int ringSetting)
+        {
+            super("K-III", 37,
+                    new Integer[]{2,9,6,3,15,18,7,10,19,20,17,0,22,25,23,5,12,24,13,16,14,1,21,11,8,4},
+                    new Integer[]{11,21,0,3,25,15,2,6,24,1,7,23,16,18,20,4,19,10,5,8,9,22,12,14,17,13},
+                    new Integer[]{14}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type K (Swiss, Airforce)
+     * PEZUOHXSCVFMTBGLRINQJWAYDK
+     * Turnover Z
+     */
+    private static class Rotor_K_Swiss_Airforce_I extends Rotor
+    {
+        public Rotor_K_Swiss_Airforce_I(int rotation, int ringSetting)
+        {
+            super("KSA-I", 38,
+                    new Integer[]{15,4,25,20,14,7,23,18,2,21,5,12,19,1,6,11,17,8,13,16,9,22,0,24,3,10},
+                    new Integer[]{22,13,8,24,1,10,14,5,17,20,25,15,11,18,4,0,19,16,7,12,3,9,21,6,23,2},
+                    new Integer[]{25}, ringSetting, rotation);
+        }
+    }
+    /**
+     * Rotor II as used in the Enigma Type K (Swiss, Airforce)
+     * ZOUESYDKFWPCIQXHMVBLGNJRAT
+     * Turnover F
+     */
+    private static class Rotor_K_Swiss_Airforce_II extends Rotor
+    {
+        public Rotor_K_Swiss_Airforce_II(int rotation, int ringSetting)
+        {
+            super("KSA-II", 39,
+                    new Integer[]{25,14,20,4,18,24,3,10,5,22,15,2,8,16,23,7,12,21,1,11,6,13,9,17,0,19},
+                    new Integer[]{24,18,11,6,3,8,20,15,12,22,7,19,16,21,1,10,13,23,4,25,2,17,9,14,5,0},
+                    new Integer[]{5}, ringSetting, rotation);
+        }
+    }
+    /**
+     * Rotor III as used in the Enigma Type K (Swiss, Airforce)
+     * EHRVXGAOBQUSIMZFLYNWKTPDJC
+     * Turnover O
+     */
+    private static class Rotor_K_Swiss_Airforce_III extends Rotor
+    {
+        public Rotor_K_Swiss_Airforce_III(int rotation, int ringSetting)
+        {
+            super("KSA-III", 40,
+                    new Integer[]{4,7,17,21,23,6,0,14,1,16,20,18,8,12,25,5,11,24,13,22,10,19,15,3,9,2},
+                    new Integer[]{6,8,25,23,0,15,5,1,12,24,20,16,13,18,7,22,9,2,11,21,10,3,19,4,17,14},
+                    new Integer[]{14}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor I as used in the Enigma Type R (Rocket)
+     * JGDQOXUSCAMIFRVTPNEWKBLZYH
+     * Turnover O
+     */
+    private static class Rotor_R_I extends Rotor
+    {
+        public Rotor_R_I(int rotation, int ringSetting)
+        {
+            super("R-I", 41,
+                    new Integer[]{9,6,3,16,14,23,20,18,2,0,12,8,5,17,21,19,15,13,4,22,10,1,11,25,24,7},
+                    new Integer[]{9,21,8,2,18,12,1,25,11,0,20,22,10,17,4,16,3,13,7,15,6,14,19,5,24,23},
+                    new Integer[]{14}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor II as used in the Enigma Type R (Rocket)
+     * NTZPSFBOKMWRCJDIVLAEYUXHGQ
+     * Turnover F
+     */
+    private static class Rotor_R_II extends Rotor
+    {
+        public Rotor_R_II(int rotation, int ringSetting)
+        {
+            super("R-II", 42,
+                    new Integer[]{13,19,25,15,18,5,1,14,10,12,22,17,2,9,3,8,21,11,0,4,24,20,23,7,6,16},
+                    new Integer[]{18,6,12,14,19,5,24,23,15,13,8,17,9,0,7,3,25,11,4,1,21,16,10,22,20,2},
+                    new Integer[]{5}, ringSetting, rotation);
+        }
+    }
+
+    /**
+     * Rotor III as used in the Enigma Type R (Rocket)
+     * JVIUBHTCDYAKEQZPOSGXNRMWFL
+     * Turnover Z
+     */
+    private static class Rotor_R_III extends Rotor
+    {
+        public Rotor_R_III(int rotation, int ringSetting)
+        {
+            super("R-III", 43,
+                    new Integer[]{9,21,8,20,1,7,19,2,3,24,0,10,4,16,25,15,14,18,6,23,13,17,12,22,5,11},
+                    new Integer[]{10,4,7,8,12,24,18,5,2,0,11,25,22,20,16,15,13,21,17,6,3,1,23,19,9,14},
+                    new Integer[]{25}, ringSetting, rotation);
         }
     }
 }

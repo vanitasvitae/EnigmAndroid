@@ -8,7 +8,8 @@
     <string name="description_text">EnigmAndroid ist die Implementation einer Simulation der Enigma Maschine.
     Die Enigma Maschine ist eine in den 1920er Jahren entwickelte Verschlüsselungsmaschine,
     die unter anderem im zweiten Weltkrieg von der deutschen Wehrmacht eingesetzt wurde,
-    um geheime Nachrichten zu verschlüsseln. Dabei wird jeder einzelne Buchstabe elektronisch
+    um geheime Nachrichten zu verschlüsseln. Es gab mehrere verschiedene Enigmamodelle.
+    Zur Verschlüsselung wird jeder einzelne Buchstabe elektronisch
     durch eine Reihe von rotierbaren Walzen geleitet, sodass nach jedem Buchstaben ein anderes
     Verschlüsselungsalphabet genutzt wird (Polyalphabetische Substitution).
     Die Walzen konnte man aus einem Set von 5 Walzen wählen. Zusätzlich gab es ein Steckbrett, an dem
@@ -19,10 +20,10 @@
     <string name="section_how_to_use">Um einen Text mit EnigmAndroid zu ver- oder entschlüsseln, wählen Sie zunächst das entsprechende Maschinenmodell aus.
         Sie finden eine Liste, aus der Sie wählen können in den Einstellungen. Tippen Sie dann den Klar- oder Geheimtext in das Feld \"Hier tippen\".
         Wählen Sie anschließend je nach gewähltem Modell eine Umkehrwalze, sowie weitere Walzen aus. Legen Sie außerdem die Startpositionen der Walzen fest.
-        Zuletzt können Sie ggf. noch einige Steckerpaare auf dem Steckbrett festlegen, oder die Verkabelung der Umkehrwalze ändern. Tippen Sie dazu die
-        gewünschten Paare mit Komma getrennt in das entsprechende Textfeld (zb. \"ab,cd\").
-        Beachten Sie, dass Sie einen Stecker nicht doppelt nutzen dürfen.
-        Optional können Sie auch noch die Ringstellung definieren. Öffnen Sie dazu das Optionsmenü und wählen Sie den Punkt \"Ringstellung\".
+        Zuletzt können Sie ggf. noch einige Steckerpaare auf dem Steckbrett festlegen, oder die Verkabelung der Umkehrwalze ändern. Tippen Sie dazu den
+        jeweiligen Button an und verbinden Sie die gewünschten Steckerpaare, indem Sie im sich öffnenden Dialog nacheinander jeweils zwei
+        Stecker berühren. Falls sie eine Verbindung trennen möchten, klicken Sie einen der betroffenen Stecker doppelt an.
+        Optional können Sie außerdem auch noch die Ringstellung definieren. Öffnen Sie dazu das Optionsmenü und wählen Sie den Punkt \"Ringstellung\".
         Haben Sie alle Einstellungen getätigt klicken Sie auf den Button \"Ver-Entschlüsseln\".</string>
 
     <string name="title_section_developer">Entwickler</string>

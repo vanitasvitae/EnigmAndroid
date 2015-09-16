@@ -5,13 +5,34 @@
     <string name="pref_title_machine_type">Enigma Model</string>
     <string name="pref_description_machine_type">Which model do you want to simulate?</string>
     <string-array translatable="false" name="pref_list_machine_type">
+        <item>I (Heer, Luftwaffe)</item>
+        <item>M3 (Heer, Marine)</item>
+        <item>M4 (\"Shark\", Marine)</item>
+        <item>G31/A865 (Abwehr)</item>
+        <item>G312 (Abwehr)</item>
+        <item>G260 (Abwehr)</item>
+        <item>D (Kommerziell)</item>
+        <item>K</item>
+        <item>K (Swiss)</item>
+        <item>K (Swiss, Airforce)</item>
+        <item>R (\"Rocket\", Reichsbahn)</item>
+        <item>T (\"Tirpitz\", Japan)</item>
+    </string-array>
+    <string-array translatable="false" name="pref_alias_machine_type">
         <item>I</item>
         <item>M3</item>
         <item>M4</item>
+        <item>G31</item>
+        <item>G312</item>
+        <item>G260</item>
         <item>D</item>
         <item>K</item>
+        <item>KS</item>
+        <item>KSA</item>
+        <item>R</item>
         <item>T</item>
     </string-array>
+
     <string name="pref_title_simulate_anomaly">Simulate Anomaly</string>
     <string name="pref_description_simulate_anomaly">The double step anomaly causes the middle rotor
         to rotate twice, if it is one step before its turnover point.

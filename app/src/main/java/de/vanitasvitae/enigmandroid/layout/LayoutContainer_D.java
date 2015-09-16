@@ -10,7 +10,7 @@ import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_D;
 
 /**
- * Concrete LayoutContainer for the M3 layout.
+ * Concrete LayoutContainer for the D layout.
  * This class contains the layout and controls the layout elements such as spinners and stuff
  * Copyright (C) 2015  Paul Schaub
 

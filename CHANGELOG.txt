@@ -1,15 +1,23 @@
 CHANGELOG ENIGMANDROID
-v0.1.7-15.09.2015<
-*Added Enigma K
-*Added Enigma T
-*Created Plugboard-/pluggable Reflector-Setting-Dialog
+v0.1.8-not-yet-released<
+*Added Enigma G31
+*Added Enigma G312
+*Added Enigma G260
+*Replaced Enigma K with Enigma K, K (Swiss) and K (Swiss, Airforce)
+*Added Enigma R
+*Changed identifiers of enigma models
+*Changed landscape layout of enigma model d
+*Updated the about-dialog text.
 *TODO: Add Enigma Z (Probably wont happen due to lack of information :/)
-*TODO: Add Enigma G
-*TODO: Add Enigma R
 *TODO: Rework Rotor-/Reflector creation
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
 *TODO: Rework InputPreparer using  decorator pattern to allow user customization
 *
+
+v0.1.7-15.09.2015<
+*Added Enigma K
+*Added Enigma T
+*Created Plugboard-/pluggable Reflector-Setting-Dialog
 
 v0.1.6-10.09.2015<
 *Fixed about dialog (outdated manual)

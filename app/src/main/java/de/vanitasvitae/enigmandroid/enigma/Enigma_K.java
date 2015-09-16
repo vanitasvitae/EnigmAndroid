@@ -4,7 +4,7 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
- * Implementation of the Enigma machine of type K (Switzerland)
+ * Implementation of the Enigma machine of type K
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -40,9 +40,9 @@ public class Enigma_K extends Enigma
     public void initialize()
     {
         this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(14, 0, 0);
-        this.rotor2 = Rotor.createRotor(15, 0, 0);
-        this.rotor3 = Rotor.createRotor(16, 0, 0);
+        this.rotor1 = Rotor.createRotor(35, 0, 0);
+        this.rotor2 = Rotor.createRotor(36, 0, 0);
+        this.rotor3 = Rotor.createRotor(37, 0, 0);
         this.reflector = Reflector.createReflector(7);
     }
 

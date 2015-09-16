@@ -7,7 +7,7 @@
     <string name="title_about_dialog">About EnigmAndroid</string>
     <string name="description_text">EnigmAndroid is an implementation of a simulation of the Enigma Machine.
     The Enigma Machine is a cypher machine developed in the 1920s. It was used by the german Wehrmacht to
-    encipher secret messaged during the second world war. For enciphering text, every letter is passed through 3 mechanical rotors that rotate with every keypress.
+    encipher secret messaged during the second world war. There were multiple different Enigma models. For enciphering text, every letter is passed through 3-4 mechanical rotors that rotate with every keypress.
     That way the enigma achieves polyalphabetic substitution and the output appears random. The rotors could be chosen from a set of 5. Additionally there was a
     so called plugboard, where one could switch over pairs of letters.
     </string>
@@ -16,9 +16,10 @@
     <string name="section_how_to_use">In the beginning, choose a model of the enigma machine to work with.
         You can do this in the settings. To encrypt/decrpyt a message, you can type it into the input field.
         Afterwards you can - depending on the chosen model - select a reflector and the some rotors. Also select their initial positions.
-        Then you may set pairs on the plugboard or on the pluggable reflector. Therefore you just type the pairs separated by commas (e.g. \"ab,cd\").
-        Notice that you can\'t plug a letter twice.
-        Optionally you can set custom ring settings. Open the options menu and select \"Ringsettings\".
+        Then you may set pairs on the plugboard or on the pluggable reflector.
+        Therefore press the respective button and connect the characters you wish to connect by clicking them one after another.
+        If you want to disconnect two plugs, just touch one of the plugs twice.
+        Also you can optionally set custom ring settings. Open the options menu and select \"Ringsettings\".
         When you are ready press \"En-/Decrypt!\".</string>
 
     <string name="title_section_developer">Developer</string>

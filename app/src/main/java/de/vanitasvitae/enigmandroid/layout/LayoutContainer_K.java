@@ -7,6 +7,7 @@ import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_K;
+import de.vanitasvitae.enigmandroid.enigma.Enigma_K_Swiss_Standard;
 
 /**
  * LayoutContainer for the Enigma Model K
@@ -114,9 +115,9 @@ public class LayoutContainer_K extends LayoutContainer
     protected void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
-        this.rotor1View.setSelection(state.getTypeRotor1()-14);
-        this.rotor2View.setSelection(state.getTypeRotor2()-14);
-        this.rotor3View.setSelection(state.getTypeRotor3()-14);
+        this.rotor1View.setSelection(state.getTypeRotor1() - 35);
+        this.rotor2View.setSelection(state.getTypeRotor2() - 35);
+        this.rotor3View.setSelection(state.getTypeRotor3() - 35);
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -126,9 +127,9 @@ public class LayoutContainer_K extends LayoutContainer
     @Override
     protected void refreshState()
     {
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 14);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 14);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 14);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 35);
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 35);
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 35);
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

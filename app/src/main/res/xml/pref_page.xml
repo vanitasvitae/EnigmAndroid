@@ -7,7 +7,7 @@
             android:title="@string/pref_title_machine_type"
             android:summary="@string/pref_description_machine_type"
             android:entries="@array/pref_list_machine_type"
-            android:entryValues="@array/pref_list_machine_type"
+            android:entryValues="@array/pref_alias_machine_type"
             android:defaultValue="Enigma I"/>
         <CheckBoxPreference
             android:key="prefAnomaly"

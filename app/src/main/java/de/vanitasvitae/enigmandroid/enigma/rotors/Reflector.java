@@ -71,9 +71,12 @@ public class Reflector
      *             3 -> ReflectorC
      *             4 -> ReflectorThinB
      *             5 -> ReflectorThinC
-     *             6 -> ReflectorEnigmaD
-     *             7 -> ReflectorK
-     *             7 -> ReflectorT
+     *             6 -> ReflectorEnigma_D_KD_G31
+     *             7 -> Reflector_K
+     *             8 -> Reflector_T
+     *             9 -> Reflector_G312
+     *             10 -> Reflector_G260
+     *             11 -> Reflector_R
      *             default -> ReflectorB
      * @return Reflector
      */
@@ -86,9 +89,12 @@ public class Reflector
             case 3: return new ReflectorC();
             case 4: return new ReflectorThinB();
             case 5: return new ReflectorThinC();
-            case 6: return new ReflectorEnigmaDKD();
-            case 7: return new ReflectorEnigmaK();
-            case 8: return new ReflectorEnigmaT();
+            case 6: return new ReflectorEnigma_D_KD_G31();
+            case 7: return new ReflectorEnigma_K();
+            case 8: return new ReflectorEnigma_T();
+            case 9: return new Reflector_G312();
+            case 10: return new Reflector_G260();
+            case 11: return new Reflector_R();
             default: return new ReflectorB();
         }
     }
@@ -215,10 +221,10 @@ public class Reflector
      * Standard wiring: AI,BM,CE,DT,FG,HR,JY,KS,LQ,NZ,OX,PW,UV
      * Has additional ringSetting and can rotate
      */
-    public static class ReflectorEnigmaDKD extends Reflector
+    public static class ReflectorEnigma_D_KD_G31 extends Reflector
     {
         public static final int[] defaultWiring = {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
-        public ReflectorEnigmaDKD()
+        public ReflectorEnigma_D_KD_G31()
         {
             super("Ref-D", 6, defaultWiring);
         }
@@ -234,9 +240,13 @@ public class Reflector
         }
     }
 
-    private static class ReflectorEnigmaK extends Reflector
+    /**
+     * Reflector as used in various Enigma models of the K-Series
+     * I M E T C G F R A Y S Q B Z X W L H K D V U P O J N
+     */
+    private static class ReflectorEnigma_K extends Reflector
     {
-        public ReflectorEnigmaK()
+        public ReflectorEnigma_K()
         {
             super("Ref-K", 7, new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
         }
@@ -245,11 +255,46 @@ public class Reflector
      * Reflector as used in the Enigma type T (Tirpitz)
      * G E K P B T A U M O C N I L J D X Z Y F H W V Q S R
      */
-    private static class ReflectorEnigmaT extends Reflector
+    private static class ReflectorEnigma_T extends Reflector
     {
-        public ReflectorEnigmaT()
+        public ReflectorEnigma_T()
         {
             super("Ref-T", 8, new int[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
+        }
+    }
+
+    /**
+     * Reflector as used in the Enigma type G-312 Abwehr
+     * R U L Q M Z J S Y G O C E T K W D A H N B X P V I F
+     */
+    private static class Reflector_G312 extends Reflector
+    {
+        public Reflector_G312()
+        {
+            super("Ref-G312", 9, new int[]{17,20,11,16,12,25,9,18,24,6,14,2,4,19,10,22,3,0,7,13,1,23,15,21,8,5});
+        }
+    }
+
+    /**
+     * Reflector as used in the Enigma type G-260 Abwehr
+     * I M E T C G F R A Y S Q B Z X W L H K D V U P O J N
+     */
+    private static class Reflector_G260 extends Reflector
+    {
+        public Reflector_G260()
+        {
+            super("Ref-G260", 10, new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
+        }
+    }
+
+    /**
+     * Reflector as used in the Enigma Type R "Rocket" (Reichsbahn)
+     */
+    private static class Reflector_R extends Reflector
+    {
+        public Reflector_R()
+        {
+            super("Ref-R", 11, new int[]{16,24,7,14,6,13,4,2,21,15,20,25,19,5,3,9,0,23,22,12,10,8,18,17,1,11});
         }
     }
 

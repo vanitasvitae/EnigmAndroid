@@ -4,7 +4,7 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
- * Concrete implementation of an enigma machine of type I
+ * Implementation of the Enigma machine of type R ("Rocket", Reichsbahn)
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -22,28 +22,28 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  * @author vanitasvitae
  */
-public class Enigma_D extends Enigma {
+public class Enigma_R extends Enigma
+{
     protected Rotor entryWheel;
     protected Rotor rotor1;
     protected Rotor rotor2;
     protected Rotor rotor3;
 
-    protected Reflector.ReflectorEnigma_D_KD_G31 reflector;
+    protected Reflector reflector;
 
-    public Enigma_D()
+    public Enigma_R()
     {
         super();
-        machineType = "D";
+        machineType = "R";
     }
-
     @Override
     public void initialize()
     {
         this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(11, 0, 0);
-        this.rotor2 = Rotor.createRotor(12, 0, 0);
-        this.rotor3 = Rotor.createRotor(13, 0, 0);
-        this.reflector = new Reflector.ReflectorEnigma_D_KD_G31();
+        this.rotor1 = Rotor.createRotor(41, 0, 0);
+        this.rotor2 = Rotor.createRotor(42, 0, 0);
+        this.rotor3 = Rotor.createRotor(43, 0, 0);
+        this.reflector = Reflector.createReflector(11);
     }
 
     @Override
@@ -62,8 +62,7 @@ public class Enigma_D extends Enigma {
     }
 
     @Override
-    public char encryptChar(char k)
-    {
+    public char encryptChar(char k) {
         nextState();
         int x = ((int) k)-65;   //Cast to int and remove Unicode Offset (A=65 in Unicode.)
         //Encryption
@@ -96,15 +95,13 @@ public class Enigma_D extends Enigma {
         this.rotor1 = Rotor.createRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
         this.rotor2 = Rotor.createRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
         this.rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
-        this.reflector = new Reflector.ReflectorEnigma_D_KD_G31();
-        this.reflector.setConfiguration(state.getConfigurationReflector());
+        this.reflector = Reflector.createReflector(state.getTypeReflector());
         this.reflector.setRotation(state.getRotationReflector());
         this.reflector.setRingSetting(state.getRingSettingReflector());
     }
 
     @Override
-    public EnigmaStateBundle getState()
-    {
+    public EnigmaStateBundle getState() {
         EnigmaStateBundle state = new EnigmaStateBundle();
 
         state.setTypeRotor1(rotor1.getNumber());
@@ -122,7 +119,6 @@ public class Enigma_D extends Enigma {
         state.setTypeReflector(reflector.getNumber());
         state.setRotationReflector(reflector.getRotation());
         state.setRingSettingReflector(reflector.getRingSetting());
-        state.setConfigurationReflector(reflector.getConfiguration());
 
         return state;
     }

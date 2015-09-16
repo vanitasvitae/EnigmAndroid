@@ -6,10 +6,11 @@ import android.widget.Spinner;
 import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
-import de.vanitasvitae.enigmandroid.enigma.Enigma_T;
+import de.vanitasvitae.enigmandroid.enigma.Enigma_K;
+import de.vanitasvitae.enigmandroid.enigma.Enigma_K_Swiss_Standard;
 
 /**
- * LayoutContainer for the Enigma Model T
+ * LayoutContainer for the Enigma Model K
  * This class contains the layout and controls the layout elements such as spinners and stuff
  * Copyright (C) 2015  Paul Schaub
 
@@ -28,9 +29,9 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_T;
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  * @author vanitasvitae
  */
-public class LayoutContainer_T extends LayoutContainer
+public class LayoutContainer_K_Swiss extends LayoutContainer
 {
-    private Enigma_T enigma;
+    private Enigma_K_Swiss_Standard enigma;
 
     protected Spinner rotor1View;
     protected Spinner rotor2View;
@@ -41,10 +42,10 @@ public class LayoutContainer_T extends LayoutContainer
     protected Spinner rotor3PositionView;
     protected Spinner reflectorPositionView;
 
-    public LayoutContainer_T()
+    public LayoutContainer_K_Swiss()
     {
         super();
-        main.setTitle("T - EnigmAndroid");
+        main.setTitle("KS - EnigmAndroid");
         this.resetLayout();
     }
 
@@ -66,15 +67,15 @@ public class LayoutContainer_T extends LayoutContainer
         Character[] rotorPositionArray = new Character[26];
         for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /**Fill with A..Z*/}
 
-        ArrayAdapter<CharSequence> rotor1Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_8,
+        ArrayAdapter<CharSequence> rotor1Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_3,
                 android.R.layout.simple_spinner_item);
         rotor1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rotor1View.setAdapter(rotor1Adapter);
-        ArrayAdapter<CharSequence> rotor2Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_8,
+        ArrayAdapter<CharSequence> rotor2Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_3,
                 android.R.layout.simple_spinner_item);
         rotor2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rotor2View.setAdapter(rotor2Adapter);
-        ArrayAdapter<CharSequence> rotor3Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_8,
+        ArrayAdapter<CharSequence> rotor3Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_3,
                 android.R.layout.simple_spinner_item);
         rotor3Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rotor3View.setAdapter(rotor3Adapter);
@@ -104,7 +105,7 @@ public class LayoutContainer_T extends LayoutContainer
 
     @Override
     public void resetLayout() {
-        enigma = new Enigma_T();
+        enigma = new Enigma_K_Swiss_Standard();
         setLayoutState(enigma.getState());
         output.setText("");
         input.setText("");
@@ -114,10 +115,9 @@ public class LayoutContainer_T extends LayoutContainer
     protected void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
-        this.rotor1View.setSelection(state.getTypeRotor1() - 18);
-        this.rotor2View.setSelection(state.getTypeRotor2() - 18);
-        this.rotor3View.setSelection(state.getTypeRotor3() - 18);
-
+        this.rotor1View.setSelection(state.getTypeRotor1() - 14);
+        this.rotor2View.setSelection(state.getTypeRotor2() - 14);
+        this.rotor3View.setSelection(state.getTypeRotor3() - 14);
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -127,9 +127,9 @@ public class LayoutContainer_T extends LayoutContainer
     @Override
     protected void refreshState()
     {
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 18);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 18);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 18);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 14);
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 14);
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 14);
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
