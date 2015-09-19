@@ -8,11 +8,14 @@ v0.1.8-not-yet-released<
 *Changed identifiers of enigma models
 *Changed landscape layout of enigma model d
 *Updated the about-dialog text.
+*Shortened EnigmaStateBundle
+*Added different colors to the plugboard-/pluggable reflector dialog. This helps to differentiate connections.
 *TODO: Add Enigma Z (Probably wont happen due to lack of information :/)
 *TODO: Rework Rotor-/Reflector creation
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
 *TODO: Rework InputPreparer using  decorator pattern to allow user customization
-*
+*TODO: Button to set the Enigma into a random configuration
+*TODO: Enigma configuration from seed (text or qr code)
 
 v0.1.7-15.09.2015<
 *Added Enigma K

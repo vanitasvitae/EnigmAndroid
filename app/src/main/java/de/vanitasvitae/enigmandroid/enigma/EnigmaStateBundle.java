@@ -21,34 +21,24 @@ package de.vanitasvitae.enigmandroid.enigma;
  * @author vanitasvitae
  */
 public class EnigmaStateBundle{
+    private String machineType;
+
     private int typeEntryWheel;
 
     private int typeRotor1;
     private int typeRotor2;
     private int typeRotor3;
     private int typeRotor4;
-    private int typeRotor5;
-    private int typeRotor6;
-    private int typeRotor7;
-    private int typeRotor8;
 
     private int rotationRotor1;
     private int rotationRotor2;
     private int rotationRotor3;
     private int rotationRotor4;
-    private int rotationRotor5;
-    private int rotationRotor6;
-    private int rotationRotor7;
-    private int rotationRotor8;
 
     private int ringSettingRotor1;
     private int ringSettingRotor2;
     private int ringSettingRotor3;
     private int ringSettingRotor4;
-    private int ringSettingRotor5;
-    private int ringSettingRotor6;
-    private int ringSettingRotor7;
-    private int ringSettingRotor8;
 
     private int typeReflector;
 
@@ -58,6 +48,16 @@ public class EnigmaStateBundle{
     private int[] configurationPlugboard;
 
     private int[] configurationReflector;
+
+    public String getMachineType()
+    {
+        return this.machineType;
+    }
+
+    public void setMachineType(String type)
+    {
+        this.machineType = type;
+    }
 
     public int getTypeRotor1() {
         return typeRotor1;
@@ -89,38 +89,6 @@ public class EnigmaStateBundle{
 
     public void setTypeRotor4(int typeRotor4) {
         this.typeRotor4 = typeRotor4;
-    }
-
-    public int getTypeRotor5() {
-        return typeRotor5;
-    }
-
-    public void setTypeRotor5(int typeRotor5) {
-        this.typeRotor5 = typeRotor5;
-    }
-
-    public int getTypeRotor6() {
-        return typeRotor6;
-    }
-
-    public void setTypeRotor6(int typeRotor6) {
-        this.typeRotor6 = typeRotor6;
-    }
-
-    public int getTypeRotor7() {
-        return typeRotor7;
-    }
-
-    public void setTypeRotor7(int typeRotor7) {
-        this.typeRotor7 = typeRotor7;
-    }
-
-    public int getTypeRotor8() {
-        return typeRotor8;
-    }
-
-    public void setTypeRotor8(int typeRotor8) {
-        this.typeRotor8 = typeRotor8;
     }
 
     public int getRotationRotor1() {
@@ -155,38 +123,6 @@ public class EnigmaStateBundle{
         this.rotationRotor4 = rotationRotor4;
     }
 
-    public int getRotationRotor5() {
-        return rotationRotor5;
-    }
-
-    public void setRotationRotor5(int rotationRotor5) {
-        this.rotationRotor5 = rotationRotor5;
-    }
-
-    public int getRotationRotor6() {
-        return rotationRotor6;
-    }
-
-    public void setRotationRotor6(int rotationRotor6) {
-        this.rotationRotor6 = rotationRotor6;
-    }
-
-    public int getRotationRotor7() {
-        return rotationRotor7;
-    }
-
-    public void setRotationRotor7(int rotationRotor7) {
-        this.rotationRotor7 = rotationRotor7;
-    }
-
-    public int getRotationRotor8() {
-        return rotationRotor8;
-    }
-
-    public void setRotationRotor8(int rotationRotor8) {
-        this.rotationRotor8 = rotationRotor8;
-    }
-
     public int getRingSettingRotor1() {
         return ringSettingRotor1;
     }
@@ -217,38 +153,6 @@ public class EnigmaStateBundle{
 
     public void setRingSettingRotor4(int ringSettingRotor4) {
         this.ringSettingRotor4 = ringSettingRotor4;
-    }
-
-    public int getRingSettingRotor5() {
-        return ringSettingRotor5;
-    }
-
-    public void setRingSettingRotor5(int ringSettingRotor5) {
-        this.ringSettingRotor5 = ringSettingRotor5;
-    }
-
-    public int getRingSettingRotor6() {
-        return ringSettingRotor6;
-    }
-
-    public void setRingSettingRotor6(int ringSettingRotor6) {
-        this.ringSettingRotor6 = ringSettingRotor6;
-    }
-
-    public int getRingSettingRotor7() {
-        return ringSettingRotor7;
-    }
-
-    public void setRingSettingRotor7(int ringSettingRotor7) {
-        this.ringSettingRotor7 = ringSettingRotor7;
-    }
-
-    public int getRingSettingRotor8() {
-        return ringSettingRotor8;
-    }
-
-    public void setRingSettingRotor8(int ringSettingRotor8) {
-        this.ringSettingRotor8 = ringSettingRotor8;
     }
 
     public int getTypeReflector() {

@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
@@ -36,11 +40,12 @@ import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
  */
 public class PluggableDialogBuilder
 {
-    protected ArrayList<Button> buttons;
+    protected ArrayList<ButtonWrapper> buttons;
     protected View dialogView;
     protected MainActivity main;
     protected EnigmaStateBundle state;
-    protected Drawable defaultLayout;
+
+    protected HashSet<Integer> colors;
 
     protected int previouslyPressedButton = -1;
 
@@ -63,9 +68,7 @@ public class PluggableDialogBuilder
                     public void onClick(DialogInterface dialog, int id) {
                         int[] plugs = new int[26];
                         for (int i = 0; i < 26; i++) {
-                            int o = getConnectedButton(i);
-                            if (o == -1) plugs[i] = i;
-                            else plugs[i] = o;
+                            plugs[i] = buttons.get(i).getConnectedButton();
                         }
                         state.setConfigurationPlugboard(plugs);
                         Toast.makeText(main.getApplication(), R.string.dialog_plugboard_set, Toast.LENGTH_SHORT).show();
@@ -98,9 +101,7 @@ public class PluggableDialogBuilder
                     public void onClick(DialogInterface dialog, int id) {
                         int[] plugs = new int[26];
                         for (int i = 0; i < 26; i++) {
-                            int o = getConnectedButton(i);
-                            if (o == -1) plugs[i] = i;
-                            else plugs[i] = o;
+                            plugs[i] = buttons.get(i).getConnectedButton();
                         }
                         state.setConfigurationReflector(plugs);
                         Toast.makeText(main.getApplication(), R.string.dialog_reflector_set, Toast.LENGTH_SHORT).show();
@@ -126,40 +127,55 @@ public class PluggableDialogBuilder
         buttons = new ArrayList<>();
         dialogView = View.inflate(main, R.layout.dialog_plugs, null);
 
-        buttons.add((Button) dialogView.findViewById(R.id.A));
-        buttons.add((Button) dialogView.findViewById(R.id.B));
-        buttons.add((Button) dialogView.findViewById(R.id.C));
-        buttons.add((Button) dialogView.findViewById(R.id.D));
-        buttons.add((Button) dialogView.findViewById(R.id.E));
-        buttons.add((Button) dialogView.findViewById(R.id.F));
-        buttons.add((Button) dialogView.findViewById(R.id.G));
-        buttons.add((Button) dialogView.findViewById(R.id.H));
-        buttons.add((Button) dialogView.findViewById(R.id.I));
-        buttons.add((Button) dialogView.findViewById(R.id.J));
-        buttons.add((Button) dialogView.findViewById(R.id.K));
-        buttons.add((Button) dialogView.findViewById(R.id.L));
-        buttons.add((Button) dialogView.findViewById(R.id.M));
-        buttons.add((Button) dialogView.findViewById(R.id.N));
-        buttons.add((Button) dialogView.findViewById(R.id.O));
-        buttons.add((Button) dialogView.findViewById(R.id.P));
-        buttons.add((Button) dialogView.findViewById(R.id.Q));
-        buttons.add((Button) dialogView.findViewById(R.id.R));
-        buttons.add((Button) dialogView.findViewById(R.id.S));
-        buttons.add((Button) dialogView.findViewById(R.id.T));
-        buttons.add((Button) dialogView.findViewById(R.id.U));
-        buttons.add((Button) dialogView.findViewById(R.id.V));
-        buttons.add((Button) dialogView.findViewById(R.id.W));
-        buttons.add((Button) dialogView.findViewById(R.id.X));
-        buttons.add((Button) dialogView.findViewById(R.id.Y));
-        buttons.add((Button) dialogView.findViewById(R.id.Z));
-        this.defaultLayout = buttons.get(0).getBackground();
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.A),0));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.B),1));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.C),2));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.D),3));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.E),4));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.F),5));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.G),6));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.H),7));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.I),8));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.J),9));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.K),10));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.L),11));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.M),12));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.N),13));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.O),14));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.P),15));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.Q),16));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.R),17));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.S),18));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.T),19));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.U),20));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.V),21));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.W),22));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.X),23));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.Y),24));
+        buttons.add(new ButtonWrapper((Button) dialogView.findViewById(R.id.Z),25));
+
+        colors = new HashSet<>();
+        colors.add(R.drawable.button_orange);
+        colors.add(R.drawable.button_olive);
+        colors.add(R.drawable.button_blue);
+        colors.add(R.drawable.button_red);
+        colors.add(R.drawable.button_yellow);
+        colors.add(R.drawable.button_purple);
+        colors.add(R.drawable.button_green);
+        colors.add(R.drawable.button_cyan);
+        colors.add(R.drawable.button_berry);
+        colors.add(R.drawable.button_brown);
+        colors.add(R.drawable.button_pink);
+        colors.add(R.drawable.button_elder);
+        colors.add(R.drawable.button_black);
+        Log.d("Dialogtest", ""+R.drawable.button_red);
     }
 
     public void setButtonListeners()
     {
         for(int i=0; i<26; i++)
         {
-            Button b = buttons.get(i);
+            Button b = buttons.get(i).getButton();
             final int id = i;
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -184,72 +200,110 @@ public class PluggableDialogBuilder
     {
         for(int i=0; i<26; i++)
         {
-            int o = c[i];
-            if(i != o)
-                setPlug(i, o);
+            setPlug(i, c[i]);
         }
     }
 
     public void setPlug(int button1, int button2)
     {
-        if(button1 != button2)
+        if(button1 == button2)
         {
-            Button b1 = buttons.get(button1);
-            Button b2 = buttons.get(button2);
-
-            int other = getConnectedButton(button1);
-            if(other != -1) setButtonFree(other);
-            other = getConnectedButton(button2);
-            if(other != -1) setButtonFree(other);
-
-            b1.setText((char) (button1 + 65) + ":" + (char) (button2 + 65));
-            setButtonUsed(button1);
-            b2.setText((char) (button2 + 65) + ":" + (char) (button1 + 65));
-            setButtonUsed(button2);
+            setButtonFree(buttons.get(button1).getConnectedButton());
+            setButtonFree(button1);
         }
         else
         {
-            int other = getConnectedButton(button1);
-            if(other != -1) setButtonFree(other);
-            setButtonFree(button1);
+            ButtonWrapper b1 = buttons.get(button1);
+            ButtonWrapper b2 = buttons.get(button2);
+
+            if (b1.getConnectedButton() != button1) {
+                setButtonFree(b1.getConnectedButton());
+            }
+            if (b2.getConnectedButton() != button2) {
+                setButtonFree(b2.getConnectedButton());
+            }
+
+            b1.setConnectedButton(button2);
+            b2.setConnectedButton(button1);
+
+            int res;
+            Iterator<Integer> it = colors.iterator();
+            res = it.next();
+            if(res == 0) res = it.next();
+            colors.remove(res);
+
+            b1.setResourceID(res);
+            b2.setResourceID(res);
         }
     }
 
-    private int getConnectedButton(int button)
+    private void setButtonFree(int b)
     {
-        Button b = buttons.get(button);
-        char c = (b.getText().charAt(2));
-        if(c != ' ')
-        {
-            return ((int) c) - 65;
-        }
-        else return -1;
+        ButtonWrapper button = buttons.get(b);
+        int res = button.getResourceID();
+        if(res != R.drawable.button_grey)
+            colors.add(button.getResourceID());
+        button.setResourceID(R.drawable.button_grey);
+        button.setConnectedButton(b);
     }
 
     public void buttonPressed(int button)
     {
-        if(previouslyPressedButton == -1)
-        {
-            previouslyPressedButton = button;
-            setButtonUsed(button);
-        }
-        else
+        if(previouslyPressedButton != -1)
         {
             setPlug(previouslyPressedButton, button);
             previouslyPressedButton = -1;
         }
+        else
+        {
+            previouslyPressedButton = button;
+            buttons.get(button).setWaiting();
+        }
     }
 
-    private void setButtonUsed(int button)
+    private static class ButtonWrapper
     {
-        buttons.get(button).setBackgroundResource(R.drawable.button_orange);
-    }
-    private void setButtonFree(int button)
-    {
-        Button b = buttons.get(button);
-        b.setBackgroundResource(R.drawable.button_grey);
-        //b.setBackground(defaultLayout);
-        b.setText((char) (button+65) + ": ");
-    }
+        private Button button;
+        private int connectedButton;
+        private int resourceID;
+        private int index;
+        public ButtonWrapper(Button button, int index)
+        {
+            this.button = button;
+            this.index = index;
+            this.connectedButton = index;
+        }
 
+        public void setConnectedButton(int other)
+        {
+            this.connectedButton = other;
+            this.getButton().setText((char) (index + 65) + ":" + (char) (connectedButton + 65));
+        }
+
+        public int getConnectedButton()
+        {
+            return this.connectedButton;
+        }
+
+        public void setWaiting()
+        {
+            this.getButton().setText((char) (index + 65) + ": ");
+        }
+
+        public void setResourceID(int r)
+        {
+            button.setBackgroundResource(r);
+            this.resourceID = r;
+        }
+
+        public int getResourceID()
+        {
+            return this.resourceID;
+        }
+
+        public Button getButton()
+        {
+            return button;
+        }
+    }
 }
