@@ -32,7 +32,7 @@ public class LayoutContainer_G260 extends LayoutContainer
 {
     private Enigma_G260 enigma;
 
-    protected int offsetRot = 29;
+    protected int offsetRot = 60;
 
     protected Spinner rotor1View;
     protected Spinner rotor2View;

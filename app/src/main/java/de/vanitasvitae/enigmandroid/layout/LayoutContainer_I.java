@@ -117,10 +117,10 @@ public class LayoutContainer_I extends LayoutContainer
     protected void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
-        this.rotor1View.setSelection(state.getTypeRotor1() - 1);
-        this.rotor2View.setSelection(state.getTypeRotor2() - 1);
-        this.rotor3View.setSelection(state.getTypeRotor3() - 1);
-        this.reflectorView.setSelection(state.getTypeReflector() - 1);
+        this.rotor1View.setSelection(state.getTypeRotor1() - 10);
+        this.rotor2View.setSelection(state.getTypeRotor2() - 10);
+        this.rotor3View.setSelection(state.getTypeRotor3() - 10);
+        this.reflectorView.setSelection(state.getTypeReflector() - 10);
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -129,10 +129,10 @@ public class LayoutContainer_I extends LayoutContainer
     @Override
     protected void refreshState()
     {
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 1);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 1);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 1);
-        state.setTypeReflector(reflectorView.getSelectedItemPosition() + 1);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 10);
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 10);
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 10);
+        state.setTypeReflector(reflectorView.getSelectedItemPosition() + 10);
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

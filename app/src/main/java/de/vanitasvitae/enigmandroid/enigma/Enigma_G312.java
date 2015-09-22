@@ -1,5 +1,7 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import java.sql.Ref;
+
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -32,10 +34,10 @@ public class Enigma_G312 extends Enigma_G31
     @Override
     public void initialize()
     {
-        this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(26, 0, 0);
-        this.rotor2 = Rotor.createRotor(27, 0, 0);
-        this.rotor3 = Rotor.createRotor(28, 0, 0);
-        this.reflector = Reflector.createReflector(9);
+        this.entryWheel = Rotor.createRotor(1, 0, 0);
+        this.rotor1 = Rotor.createRotor(50, 0, 0);
+        this.rotor2 = Rotor.createRotor(51, 0, 0);
+        this.rotor3 = Rotor.createRotor(52, 0, 0);
+        this.reflector = Reflector.createReflector(50);
     }
 }

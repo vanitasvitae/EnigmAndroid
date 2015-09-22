@@ -42,10 +42,10 @@ public class Enigma_I extends Enigma
     public void initialize()
     {
         this.plugboard= new Plugboard();
-        this.rotor1 = Rotor.createRotor(1, 0, 0);
-        this.rotor2 = Rotor.createRotor(2, 0, 0);
-        this.rotor3 = Rotor.createRotor(3, 0, 0);
-        this.reflector = Reflector.createReflector(1);
+        this.rotor1 = Rotor.createRotor(10, 0, 0);
+        this.rotor2 = Rotor.createRotor(11, 0, 0);
+        this.rotor3 = Rotor.createRotor(12, 0, 0);
+        this.reflector = Reflector.createReflector(10);
     }
 
     @Override

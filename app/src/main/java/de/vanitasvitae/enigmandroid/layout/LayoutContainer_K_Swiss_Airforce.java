@@ -115,9 +115,9 @@ public class LayoutContainer_K_Swiss_Airforce extends LayoutContainer
     protected void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
-        this.rotor1View.setSelection(state.getTypeRotor1() - 38);
-        this.rotor2View.setSelection(state.getTypeRotor2() - 38);
-        this.rotor3View.setSelection(state.getTypeRotor3() - 38);
+        this.rotor1View.setSelection(state.getTypeRotor1() - 100);
+        this.rotor2View.setSelection(state.getTypeRotor2() - 100);
+        this.rotor3View.setSelection(state.getTypeRotor3() - 100);
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -127,9 +127,9 @@ public class LayoutContainer_K_Swiss_Airforce extends LayoutContainer
     @Override
     protected void refreshState()
     {
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 38);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 38);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 38);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 100);
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 100);
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 100);
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

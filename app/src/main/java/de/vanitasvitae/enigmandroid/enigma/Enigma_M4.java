@@ -43,11 +43,11 @@ public class Enigma_M4 extends Enigma
     public void initialize()
     {
         this.plugboard = new Plugboard();
-        this.rotor1 = Rotor.createRotor(1, 0, 0);
-        this.rotor2 = Rotor.createRotor(2, 0, 0);
-        this.rotor3 = Rotor.createRotor(3, 0, 0);
-        this.rotor4 = Rotor.createRotor(9, 0, 0);
-        this.reflector = Reflector.createReflector(4);
+        this.rotor1 = Rotor.createRotor(30, 0, 0);
+        this.rotor2 = Rotor.createRotor(31, 0, 0);
+        this.rotor3 = Rotor.createRotor(32, 0, 0);
+        this.rotor4 = Rotor.createRotor(38, 0, 0);
+        this.reflector = Reflector.createReflector(30);
         this.prefAnomaly = true;
     }
 

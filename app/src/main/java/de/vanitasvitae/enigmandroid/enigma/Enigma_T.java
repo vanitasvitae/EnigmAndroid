@@ -35,16 +35,16 @@ public class Enigma_T extends Enigma
     public Enigma_T()
     {
         super();
-        machineType = "K";
+        machineType = "T";
     }
 
     @Override
     public void initialize() {
-        this.entryWheel = Rotor.createRotor(17,0,0);
-        this.rotor1 = Rotor.createRotor(18, 0, 0);
-        this.rotor2 = Rotor.createRotor(19, 0, 0);
-        this.rotor3 = Rotor.createRotor(20, 0, 0);
-        this.reflector = Reflector.createReflector(8);
+        this.entryWheel = Rotor.createRotor(2,0,0);
+        this.rotor1 = Rotor.createRotor(120, 0, 0);
+        this.rotor2 = Rotor.createRotor(121, 0, 0);
+        this.rotor3 = Rotor.createRotor(122, 0, 0);
+        this.reflector = Reflector.createReflector(120);
     }
 
     @Override
@@ -68,35 +68,24 @@ public class Enigma_T extends Enigma
         int x = ((int) k)-65;   //Cast to int and remove Unicode Offset (A=65 in Unicode.)
         //Encryption
         //forward direction
-        String log = " in: " + (char) (x+65);
         x = entryWheel.encryptForward(x);
-        log = log + " ew: " + (char) (x+65);
         x = rotor1.normalize(x + rotor1.getRotation() - rotor1.getRingSetting());
         x = rotor1.encryptForward(x);
-        log = log + " r1: " + (char) (x+65);
         x = rotor1.normalize(x - rotor1.getRotation() + rotor1.getRingSetting() + rotor2.getRotation() - rotor2.getRingSetting());
         x = rotor2.encryptForward(x);
-        log = log + " r2: " + (char) (x+65);
         x = rotor1.normalize(x - rotor2.getRotation() + rotor2.getRingSetting() + rotor3.getRotation() - rotor3.getRingSetting());
         x = rotor3.encryptForward(x);
-        log = log + " r3: " + (char) (x+65);
         x = rotor1.normalize(x - rotor3.getRotation() + rotor3.getRingSetting() + reflector.getRotation() - reflector.getRingSetting());
         //backward direction
         x = reflector.encrypt(x);
-        log = log + " ref: " + (char) (x+65);
         x = rotor1.normalize(x + rotor3.getRotation() - rotor3.getRingSetting() - reflector.getRotation() + reflector.getRingSetting());
         x = rotor3.encryptBackward(x);
-        log = log + " r3: " + (char) (x+65);
         x = rotor1.normalize(x + rotor2.getRotation() - rotor2.getRingSetting() - rotor3.getRotation() + rotor3.getRingSetting());
         x = rotor2.encryptBackward(x);
-        log = log + " r2: " + (char) (x+65);
         x = rotor1.normalize(x + rotor1.getRotation() - rotor1.getRingSetting() - rotor2.getRotation() + rotor2.getRingSetting());
         x = rotor1.encryptBackward(x);
-        log = log + " r1: " + (char) (x+65);
         x = rotor1.normalize(x - rotor1.getRotation() + rotor1.getRingSetting());
         x = entryWheel.encryptBackward(x);
-        log = log + " ew/out: " + (char) (x+65);
-        Log.d("EnryptionLog",log);
         return (char) (x + 65);     //Add Offset again, cast back to char and return
     }
 

@@ -1,5 +1,7 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import android.util.Log;
+
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -39,21 +41,21 @@ public class Enigma_G31 extends Enigma
     @Override
     public void initialize()
     {
-        this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(32, 0, 0);
-        this.rotor2 = Rotor.createRotor(33, 0, 0);
-        this.rotor3 = Rotor.createRotor(34, 0, 0);
-        this.reflector = Reflector.createReflector(6);
+        this.entryWheel = Rotor.createRotor(1, 0, 0);
+        this.rotor1 = Rotor.createRotor(40, 0, 0);
+        this.rotor2 = Rotor.createRotor(41, 0, 0);
+        this.rotor3 = Rotor.createRotor(42, 0, 0);
+        this.reflector = Reflector.createReflector(40);
     }
 
     @Override
     public void nextState()
     {
+        Log.d("Anomaly",""+prefAnomaly+","+doAnomaly);
         rotor1.rotate();
-        if (rotor1.isAtTurnoverPosition() || (this.doAnomaly && prefAnomaly))
+        if (rotor1.isAtTurnoverPosition())
         {
             rotor2.rotate();
-            this.doAnomaly = rotor2.doubleTurnAnomaly();
             if (rotor2.isAtTurnoverPosition())
             {
                 rotor3.rotate();
@@ -107,6 +109,8 @@ public class Enigma_G31 extends Enigma
     @Override
     public EnigmaStateBundle getState() {
         EnigmaStateBundle state = new EnigmaStateBundle();
+
+        state.setTypeEntryWheel(entryWheel.getNumber());
 
         state.setTypeRotor1(rotor1.getNumber());
         state.setTypeRotor2(rotor2.getNumber());

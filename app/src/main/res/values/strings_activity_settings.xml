@@ -4,18 +4,18 @@
     <string name="pref_header_simulation">Simulation</string>
     <string name="pref_title_machine_type">Enigma Model</string>
     <string name="pref_description_machine_type">Which model do you want to simulate?</string>
-    <string-array translatable="false" name="pref_list_machine_type">
-        <item>I (Heer, Luftwaffe)</item>
-        <item>M3 (Heer, Marine)</item>
-        <item>M4 (\"Shark\", Marine)</item>
-        <item>G31/A865 (Abwehr)</item>
-        <item>G312 (Abwehr)</item>
-        <item>G260 (Abwehr)</item>
-        <item>D (Kommerziell)</item>
+    <string-array name="pref_list_machine_type">
+        <item>I (Army, Airforce)</item>
+        <item>M3 (Army, Navy)</item>
+        <item>M4 (\"Shark\", Navy)</item>
+        <item>G31/A865 (Defense)</item>
+        <item>G312 (Defense)</item>
+        <item>G260 (Defense)</item>
+        <item>D (Commercial)</item>
         <item>K</item>
         <item>K (Swiss)</item>
         <item>K (Swiss, Airforce)</item>
-        <item>R (\"Rocket\", Reichsbahn)</item>
+        <item>R (\"Rocket\", Railway)</item>
         <item>T (\"Tirpitz\", Japan)</item>
     </string-array>
     <string-array translatable="false" name="pref_alias_machine_type">
@@ -32,34 +32,44 @@
         <item>R</item>
         <item>T</item>
     </string-array>
-
     <string name="pref_title_simulate_anomaly">Simulate Anomaly</string>
     <string name="pref_description_simulate_anomaly">The double step anomaly causes the middle rotor
         to rotate twice, if it is one step before its turnover point.
     </string>
+
+    <string name="pref_header_input_preparation">Input Preparation</string>
+    <string name="pref_title_special_characters">Special characters</string>
+    <string name="pref_on_replace_special_characters">Replace special characters with similar ones</string>
+    <string name="pref_off_replace_special_characters">Remove special characters from the message</string>
     <string name="pref_title_numeric_spelling_language">Number spelling language</string>
     <string name="pref_description_numeric_spelling_language">Language, in which numbers are spelled.</string>
     <string-array name="pref_list_numeric_spelling_language">
         <item>German</item>
         <item>French</item>
         <item>English</item>
+        <item>No replacing</item>
     </string-array>
     <string-array translatable="false" name="pref_alias_numeric_spelling_language">
         <item>de</item>
         <item>fr</item>
         <item>en</item>
+        <item>no</item>
     </string-array>
 
     <string name="pref_header_appearance">Appearance</string>
     <string name="pref_title_message_formatting">Message Formatting</string>
     <string name="pref_description_message_formatting">Do you want to split the message up into blocks?</string>
     <string-array name="pref_list_message_formatting">
-        <item>No blocks</item>
+        <item>No division</item>
+        <item>Blocks of 4</item>
         <item>Blocks of 5</item>
+        <item>Blocks of 6</item>
     </string-array>
     <string-array translatable="false" name="pref_alias_message_formatting">
         <item>no</item>
+        <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
 
 </resources>

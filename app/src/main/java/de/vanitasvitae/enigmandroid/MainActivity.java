@@ -57,8 +57,8 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         Log.d("Activity","OnCreate!");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefMachineType = sharedPreferences.getString("prefMachineType", getResources().
-                getStringArray(R.array.pref_list_machine_type)[0]);
+        this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
+                getStringArray(R.array.pref_alias_machine_type)[0]);
         ActivitySingleton singleton = ActivitySingleton.getInstance();
         singleton.setActivity(this);
         updateContentView();
@@ -181,12 +181,12 @@ public class MainActivity extends Activity
     private void updatePreferenceValues()
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.setPrefMachineType(sharedPreferences.getString("prefMachineType", getResources().
-                getStringArray(R.array.pref_list_machine_type)[0]));
-        this.setPrefAnomaly(sharedPreferences.getBoolean("prefAnomaly", true));
-        this.setPrefNumericLanguage(sharedPreferences.getString("prefNumericLanguage", getResources().
+        this.setPrefMachineType(sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
+                getStringArray(R.array.pref_alias_machine_type)[0]));
+        this.setPrefAnomaly(sharedPreferences.getBoolean(SettingsActivity.PREF_ANOMALY, true));
+        this.setPrefNumericLanguage(sharedPreferences.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
                 getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
-        this.setPrefMessageFormatting(sharedPreferences.getString("prefMessageFormatting", getResources().
+        this.setPrefMessageFormatting(sharedPreferences.getString(SettingsActivity.PREF_MESSAGE_FORMATTING, getResources().
                 getStringArray(R.array.pref_alias_message_formatting)[0]));
     }
 
@@ -202,7 +202,7 @@ public class MainActivity extends Activity
             }
             updateContentView();
             layoutContainer = LayoutContainer.createLayoutContainer(prefMachineType);
-            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer(prefNumericLanguage));
+            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
             layoutContainer.getInput().setText(savedInput);
         }
     }
@@ -211,8 +211,8 @@ public class MainActivity extends Activity
     {
         if(prefMachineType != null) return prefMachineType;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefMachineType = sharedPreferences.getString("prefMachineType", getResources().
-                    getStringArray(R.array.pref_list_machine_type)[0]);
+        this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
+                    getStringArray(R.array.pref_alias_machine_type)[0]);
         return prefMachineType;
     }
 
@@ -235,7 +235,7 @@ public class MainActivity extends Activity
         if(prefNumericLanguage == null || !prefNumericLanguage.equals(lang))
         {
             prefNumericLanguage = lang;
-            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer(lang));
+            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
         }
     }
 
@@ -243,7 +243,7 @@ public class MainActivity extends Activity
     {
         if(prefNumericLanguage != null) return prefNumericLanguage;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefNumericLanguage = sharedPreferences.getString("prefNumericLanguage", getResources().
+        this.prefNumericLanguage = sharedPreferences.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
                 getStringArray(R.array.pref_alias_numeric_spelling_language)[0]);
         return prefNumericLanguage;
     }
@@ -261,7 +261,7 @@ public class MainActivity extends Activity
     {
         if(prefMessageFormatting != null) return prefMessageFormatting;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefMessageFormatting = sharedPreferences.getString("prefMessageFormatting", getResources().
+        this.prefMessageFormatting = sharedPreferences.getString(SettingsActivity.PREF_MESSAGE_FORMATTING, getResources().
                 getStringArray(R.array.pref_alias_message_formatting)[0]);
         return prefMessageFormatting;
     }
@@ -373,12 +373,12 @@ public class MainActivity extends Activity
             case RESULT_SETTINGS:
             {
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-                this.setPrefMachineType(sharedPrefs.getString("prefMachineType", getResources()
-                        .getStringArray(R.array.pref_list_machine_type)[0]));
-                this.setPrefAnomaly(sharedPrefs.getBoolean("prefAnomaly", true));
-                this.setPrefNumericLanguage(sharedPrefs.getString("prefNumericLanguage", getResources().
+                this.setPrefMachineType(sharedPrefs.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources()
+                        .getStringArray(R.array.pref_alias_machine_type)[0]));
+                this.setPrefAnomaly(sharedPrefs.getBoolean(SettingsActivity.PREF_ANOMALY, true));
+                this.setPrefNumericLanguage(sharedPrefs.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
                         getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
-                this.setPrefMessageFormatting(sharedPrefs.getString("prefMessageFormatting",
+                this.setPrefMessageFormatting(sharedPrefs.getString(SettingsActivity.PREF_MESSAGE_FORMATTING,
                         getResources().getStringArray(R.array.pref_alias_message_formatting)[0]));
                 break;
             }

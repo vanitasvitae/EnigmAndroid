@@ -54,7 +54,9 @@ public abstract class EditTextAdapter
     {
         switch (type)
         {
-            case "5": return new EditTextAdapter5Gap(editText);
+            case "4": return new EditTextAdapterGap(editText, 4);
+            case "5": return new EditTextAdapterGap(editText, 5);
+            case "6": return new EditTextAdapterGap(editText, 6);
             case "no": return new EditTextAdapterNoGap(editText);
             default: return new EditTextAdapterNoGap(editText);
         }
@@ -75,11 +77,13 @@ public abstract class EditTextAdapter
         }
     }
 
-    public static class EditTextAdapter5Gap extends EditTextAdapter
+    public static class EditTextAdapterGap extends EditTextAdapter
     {
-        public EditTextAdapter5Gap(EditText editText)
+        protected int blocksize;
+        public EditTextAdapterGap(EditText editText, int blocksize)
         {
             super(editText);
+            this.blocksize = blocksize;
         }
 
         @Override
@@ -88,13 +92,14 @@ public abstract class EditTextAdapter
             this.content = text;
             String out = "";
             int i;
-            for(i=0; i<text.length()/5; i++)
+            for(i=0; i<text.length()/blocksize; i++)
             {
-                out = out + text.substring(i*5, (i+1)*5);
+                out = out + text.substring(i*blocksize, (i+1)*blocksize);
                 out = out + " ";
             }
-            out = out + text.substring(i*5);
+            out = out + text.substring(i*blocksize);
             this.editText.setText(out);
         }
     }
+
 }

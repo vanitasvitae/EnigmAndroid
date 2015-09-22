@@ -24,6 +24,13 @@ import android.preference.PreferenceActivity;
  */
 public class SettingsActivity extends PreferenceActivity
 {
+    public static final String PREF_NUMERIC_LANGUAGE = "prefNumericLanguage";
+    public static final String PREF_MACHINE_TYPE = "prefMachineType";
+    public static final String PREF_ANOMALY = "prefAnomaly";
+    public static final String PREF_MESSAGE_FORMATTING = "prefMessageFormatting";
+    public static final String PREF_REPLACE_SPECIAL_CHARACTERS = "prefReplaceSpecialCharacters";
+    public static final String PREF_REPLACE_SPACES = "prefReplaceSpaces";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

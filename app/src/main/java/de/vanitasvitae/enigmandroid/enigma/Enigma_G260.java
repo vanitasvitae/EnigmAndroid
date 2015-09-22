@@ -32,10 +32,10 @@ public class Enigma_G260 extends Enigma_G31
     @Override
     public void initialize()
     {
-        this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(29, 0, 0);
-        this.rotor2 = Rotor.createRotor(30, 0, 0);
-        this.rotor3 = Rotor.createRotor(31, 0, 0);
-        this.reflector = Reflector.createReflector(10);
+        this.entryWheel = Rotor.createRotor(1, 0, 0);
+        this.rotor1 = Rotor.createRotor(60, 0, 0);
+        this.rotor2 = Rotor.createRotor(61, 0, 0);
+        this.rotor3 = Rotor.createRotor(62, 0, 0);
+        this.reflector = Reflector.createReflector(60);
     }
 }

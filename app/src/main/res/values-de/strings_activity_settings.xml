@@ -3,15 +3,35 @@
     <string name="pref_header_simulation">Simulation</string>
     <string name="pref_title_machine_type">Enigma Modell</string>
     <string name="pref_description_machine_type">Welches Modell soll simuliert werden?</string>
+    <string-array name="pref_list_machine_type">
+        <item>I (Heer, Luftwaffe)</item>
+        <item>M3 (Heer, Marine)</item>
+        <item>M4 (\"Shark\", Marine)</item>
+        <item>G31/A865 (Abwehr)</item>
+        <item>G312 (Abwehr)</item>
+        <item>G260 (Abwehr)</item>
+        <item>D (Kommerziell)</item>
+        <item>K</item>
+        <item>K (Schweiz)</item>
+        <item>K (Schweiz, Luftwaffe)</item>
+        <item>R (\"Rocket\", Reichsbahn)</item>
+        <item>T (\"Tirpitz\", Japan)</item>
+    </string-array>
     <string name="pref_title_simulate_anomaly">Doppelschritt Anomalie</string>
     <string name="pref_description_simulate_anomaly">Die Doppelschritt Anomalie lässt die mittlere Walze zweimal rotieren,
         falls sie sich vor dem Übertragspunkt befindet.</string>
+
+    <string name="pref_header_input_preparation">Eingabe Vorbereitung</string>
+    <string name="pref_title_special_characters">Sonderzeichen</string>
+    <string name="pref_on_replace_special_characters">Ersetze Sonderzeichen mit ähnlichen Zeichen</string>
+    <string name="pref_off_replace_special_characters">Entferne Sonderzeichen aus der Nachricht</string>
     <string name="pref_title_numeric_spelling_language">Zahlenbuchstabiersprache</string>
     <string name="pref_description_numeric_spelling_language">Sprache in der Zahlen buchstabiert werden sollen.</string>
     <string-array name="pref_list_numeric_spelling_language">
         <item>Deutsch</item>
         <item>Französisch</item>
         <item>Englisch</item>
+        <item>Keine Ersetzung</item>
     </string-array>
 
     <string name="pref_header_appearance">Erscheinungsbild</string>
@@ -19,6 +39,8 @@
     <string name="pref_description_message_formatting">Soll die Nachricht in Blöcke unterteilt werden?</string>
     <string-array name="pref_list_message_formatting">
         <item>Keine Unterteilung</item>
+        <item>Viererblöcke</item>
         <item>Fünferblöcke</item>
+        <item>Sechserblöcke</item>
     </string-array>
 </resources>

@@ -117,7 +117,7 @@ public class SeedInterpreter
 
     public static int[] getPermutation(long seed)
     {
-        int[] per = Reflector.ReflectorEnigma_D_KD_G31.defaultWiring;
+        int[] per = Reflector.ReflectorEnigma_D_KD_G31.defaultWiring_D_KD_G31;
         long maxPermutations = Long.valueOf("532985208200576");
         //long result =
         return per;

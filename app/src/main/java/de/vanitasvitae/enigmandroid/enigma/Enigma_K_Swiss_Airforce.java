@@ -39,11 +39,11 @@ public class Enigma_K_Swiss_Airforce extends Enigma_K
     @Override
     public void initialize()
     {
-        this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(38, 0, 0);
-        this.rotor2 = Rotor.createRotor(39, 0, 0);
-        this.rotor3 = Rotor.createRotor(40, 0, 0);
-        this.reflector = Reflector.createReflector(7);
+        this.entryWheel = Rotor.createRotor(1, 0, 0);
+        this.rotor1 = Rotor.createRotor(100, 0, 0);
+        this.rotor2 = Rotor.createRotor(101, 0, 0);
+        this.rotor3 = Rotor.createRotor(102, 0, 0);
+        this.reflector = Reflector.createReflector(100);
     }
 
     @Override
@@ -103,6 +103,8 @@ public class Enigma_K_Swiss_Airforce extends Enigma_K
     @Override
     public EnigmaStateBundle getState() {
         EnigmaStateBundle state = new EnigmaStateBundle();
+
+        state.setTypeEntryWheel(entryWheel.getNumber());
 
         state.setTypeRotor1(rotor1.getNumber());
         state.setTypeRotor2(rotor2.getNumber());

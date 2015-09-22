@@ -39,11 +39,11 @@ public class Enigma_R extends Enigma
     @Override
     public void initialize()
     {
-        this.entryWheel = Rotor.createRotor(0, 0, 0);
-        this.rotor1 = Rotor.createRotor(41, 0, 0);
-        this.rotor2 = Rotor.createRotor(42, 0, 0);
-        this.rotor3 = Rotor.createRotor(43, 0, 0);
-        this.reflector = Reflector.createReflector(11);
+        this.entryWheel = Rotor.createRotor(1, 0, 0);
+        this.rotor1 = Rotor.createRotor(110, 0, 0);
+        this.rotor2 = Rotor.createRotor(111, 0, 0);
+        this.rotor3 = Rotor.createRotor(112, 0, 0);
+        this.reflector = Reflector.createReflector(110);
     }
 
     @Override
@@ -103,6 +103,8 @@ public class Enigma_R extends Enigma
     @Override
     public EnigmaStateBundle getState() {
         EnigmaStateBundle state = new EnigmaStateBundle();
+
+        state.setTypeEntryWheel(entryWheel.getNumber());
 
         state.setTypeRotor1(rotor1.getNumber());
         state.setTypeRotor2(rotor2.getNumber());

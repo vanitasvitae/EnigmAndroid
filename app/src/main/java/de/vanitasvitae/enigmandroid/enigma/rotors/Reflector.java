@@ -1,5 +1,7 @@
 package de.vanitasvitae.enigmandroid.enigma.rotors;
 
+import android.util.Log;
+
 /**
  * Reflector of the enigma machine.
  * The reflector was used to reflect the scrambled signal at the end of the wiring back to
@@ -29,6 +31,8 @@ public class Reflector
     protected int rotation;
     protected int ringSetting;
 
+    public static final int[] defaultWiring_D_KD_G31 = {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
+
     /**
      * This constructor is not accessible from outside this class file.
      * Use the one of the createReflector* methods instead to create concrete Reflectors from
@@ -36,10 +40,9 @@ public class Reflector
      * @param type type indicator of the reflector
      * @param connections wiring of the reflector as Integer array
      */
-    protected Reflector(String type, int number, int[] connections)
+    protected Reflector(String type, int[] connections)
     {
         this.type = type;
-        this.number = number;
         this.connections = connections;
     }
 
@@ -63,6 +66,16 @@ public class Reflector
         this.ringSetting = ringSetting;
     }
 
+    public void setConfiguration(int[] c)
+    {
+        this.connections = c;
+    }
+
+    public int[] getConfiguration()
+    {
+        return connections;
+    }
+
     /**
      * Factory method to create reflectors.
      * @param type type of the created reflector
@@ -84,19 +97,56 @@ public class Reflector
     {
         switch (type)
         {
-            case 1: return new ReflectorA();
-            case 2: return new ReflectorB();
-            case 3: return new ReflectorC();
-            case 4: return new ReflectorThinB();
-            case 5: return new ReflectorThinC();
-            case 6: return new ReflectorEnigma_D_KD_G31();
-            case 7: return new ReflectorEnigma_K();
-            case 8: return new ReflectorEnigma_T();
-            case 9: return new Reflector_G312();
-            case 10: return new Reflector_G260();
-            case 11: return new Reflector_R();
-            default: return new ReflectorB();
+            //Enigma I
+            case 10: return new ReflectorA().setTypeNumer(type);
+            case 11: return new ReflectorB().setTypeNumer(type);
+            case 12: return new ReflectorC().setTypeNumer(type);
+
+            //Enigma M3
+            case 20: return new ReflectorB().setTypeNumer(type);
+            case 21: return new ReflectorC().setTypeNumer(type);
+
+            //Enigma M4
+            case 30: return new ReflectorThinB().setTypeNumer(type);
+            case 31: return new ReflectorThinC().setTypeNumer(type);
+
+            //Enigma G31
+            case 40: return new ReflectorEnigma_D_KD_G31().setTypeNumer(type);
+
+            //Enigma G312
+            case 50: return new Reflector_G312().setTypeNumer(type);
+
+            //Enigma G260
+            case 60: return new Reflector_G260().setTypeNumer(type);
+
+            //Enigma D
+            case 70: return new ReflectorEnigma_D_KD_G31().setTypeNumer(type);
+
+            //Enigma K
+            case 80: return new ReflectorEnigma_K().setTypeNumer(type);
+
+            //Enigma K Swiss
+            case 90: return new ReflectorEnigma_K().setTypeNumer(type);
+
+            //Enigma K Swiss Airforce
+            case 100: return new ReflectorEnigma_K().setTypeNumer(type);
+
+            //Enigma R
+            case 110: return new Reflector_R().setTypeNumer(type);
+
+            //Enigma T
+            case 120: return new ReflectorEnigma_T().setTypeNumer(type);
+
+            default:
+                Log.d("Reflector:","Fail! "+type);
+                return null;
         }
+    }
+
+    public Reflector setTypeNumer(int nr)
+    {
+        this.number = nr;
+        return this;
     }
 
     /**
@@ -156,7 +206,7 @@ public class Reflector
     {
         public ReflectorA()
         {
-            super("A", 1, new int[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
+            super("A", new int[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
         }
     }
 
@@ -169,7 +219,7 @@ public class Reflector
     {
         public ReflectorB()
         {
-            super("B", 2, new int[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
+            super("B", new int[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
         }
     }
 
@@ -182,7 +232,7 @@ public class Reflector
     {
         public ReflectorC()
         {
-            super("C", 3, new int[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
+            super("C", new int[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
         }
     }
 
@@ -197,7 +247,7 @@ public class Reflector
     {
         public ReflectorThinB()
         {
-            super("ThinB", 4, new int[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
+            super("ThinB", new int[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
         }
     }
 
@@ -212,7 +262,7 @@ public class Reflector
     {
         public ReflectorThinC()
         {
-            super("ThinC", 5, new int[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
+            super("ThinC", new int[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
         }
     }
 
@@ -223,20 +273,9 @@ public class Reflector
      */
     public static class ReflectorEnigma_D_KD_G31 extends Reflector
     {
-        public static final int[] defaultWiring = {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
         public ReflectorEnigma_D_KD_G31()
         {
-            super("Ref-D", 6, defaultWiring);
-        }
-
-        public void setConfiguration(int[] conf)
-        {
-            this.connections = conf;
-        }
-
-        public int[] getConfiguration()
-        {
-            return this.connections;
+            super("Ref-D", defaultWiring_D_KD_G31);
         }
     }
 
@@ -248,7 +287,7 @@ public class Reflector
     {
         public ReflectorEnigma_K()
         {
-            super("Ref-K", 7, new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
+            super("Ref-K", new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
         }
     }
     /**
@@ -259,7 +298,7 @@ public class Reflector
     {
         public ReflectorEnigma_T()
         {
-            super("Ref-T", 8, new int[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
+            super("Ref-T", new int[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
         }
     }
 
@@ -271,7 +310,7 @@ public class Reflector
     {
         public Reflector_G312()
         {
-            super("Ref-G312", 9, new int[]{17,20,11,16,12,25,9,18,24,6,14,2,4,19,10,22,3,0,7,13,1,23,15,21,8,5});
+            super("Ref-G312", new int[]{17,20,11,16,12,25,9,18,24,6,14,2,4,19,10,22,3,0,7,13,1,23,15,21,8,5});
         }
     }
 
@@ -283,7 +322,7 @@ public class Reflector
     {
         public Reflector_G260()
         {
-            super("Ref-G260", 10, new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
+            super("Ref-G260", new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
         }
     }
 
@@ -294,7 +333,7 @@ public class Reflector
     {
         public Reflector_R()
         {
-            super("Ref-R", 11, new int[]{16,24,7,14,6,13,4,2,21,15,20,25,19,5,3,9,0,23,22,12,10,8,18,17,1,11});
+            super("Ref-R", new int[]{16,24,7,14,6,13,4,2,21,15,20,25,19,5,3,9,0,23,22,12,10,8,18,17,1,11});
         }
     }
 
