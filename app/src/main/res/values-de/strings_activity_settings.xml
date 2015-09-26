@@ -12,8 +12,8 @@
         <item>G260 (Abwehr)</item>
         <item>D (Kommerziell)</item>
         <item>K</item>
-        <item>K (Schweiz)</item>
-        <item>K (Schweiz, Luftwaffe)</item>
+        <item>Swiss-K (Schweiz)</item>
+        <item>Swiss-K (Schweiz, Luftwaffe)</item>
         <item>R (\"Rocket\", Reichsbahn)</item>
         <item>T (\"Tirpitz\", Japan)</item>
     </string-array>

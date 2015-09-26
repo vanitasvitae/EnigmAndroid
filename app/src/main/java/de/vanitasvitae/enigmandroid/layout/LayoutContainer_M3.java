@@ -106,7 +106,7 @@ public class LayoutContainer_M3 extends LayoutContainer_I
     }
 
     @Override
-    protected void setLayoutState(EnigmaStateBundle state)
+    public void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
         this.rotor1View.setSelection(state.getTypeRotor1() - 20);

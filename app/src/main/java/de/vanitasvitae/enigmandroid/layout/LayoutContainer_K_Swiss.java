@@ -112,7 +112,7 @@ public class LayoutContainer_K_Swiss extends LayoutContainer
     }
 
     @Override
-    protected void setLayoutState(EnigmaStateBundle state)
+    public void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
         this.rotor1View.setSelection(state.getTypeRotor1() - 90);

@@ -5,6 +5,7 @@
     <string name="app_name">EnigmAndroid</string>
     <string name="action_version">Version</string>
     <string name="action_reset">Reset</string>
+    <string name="action_random">Random configuration</string>
     <string name="action_choose_ringsettings">Ring-Settings</string>
     <string name="action_settings">Settings</string>
     <string name="action_send">Send</string>
@@ -40,6 +41,7 @@
     <string name="dialog_plugboard_set">Plugged Plugboard.</string>
     <string name="dialog_abort">No changes</string>
     <string name="message_reset">Enigma reset</string>
+    <string name="message_random">Enigma set to random configuration</string>
 
     <string-array translatable="false" name="rotors_1_3">
         <item>I</item>

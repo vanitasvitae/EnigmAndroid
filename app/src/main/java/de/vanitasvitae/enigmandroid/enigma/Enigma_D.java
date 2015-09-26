@@ -1,10 +1,14 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
- * Concrete implementation of an enigma machine of type I
+ * Concrete implementation of an enigma machine of type D
+ * This machine has a rewirable UKW, non changeable rotors.
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -59,6 +63,27 @@ public class Enigma_D extends Enigma {
                 rotor3.rotate();
             }
         }
+    }
+
+    @Override
+    public void randomState()
+    {
+        Random rand = new SecureRandom();
+        int rot1 = rand.nextInt(26);
+        int rot2 = rand.nextInt(26);
+        int rot3 = rand.nextInt(26);
+        int rotRef = rand.nextInt(26);
+        int ring1 = rand.nextInt(26);
+        int ring2 = rand.nextInt(26);
+        int ring3 = rand.nextInt(26);
+        int ringRef = rand.nextInt(26);
+
+        this.rotor1 = Rotor.createRotor(70, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(71, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(72, rot3, ring3);
+        this.reflector = (Reflector.ReflectorEnigma_D_KD_G31) Reflector.createReflector(70);
+        this.reflector.setRotation(rotRef);
+        this.reflector.setRingSetting(ringRef);
     }
 
     @Override

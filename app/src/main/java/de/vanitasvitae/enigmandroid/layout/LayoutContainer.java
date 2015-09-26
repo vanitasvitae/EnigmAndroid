@@ -45,7 +45,7 @@ public abstract class LayoutContainer
     public abstract Enigma getEnigma();
     protected abstract void initializeLayout();
     public abstract void resetLayout();
-    protected abstract void setLayoutState(EnigmaStateBundle state);
+    public abstract void setLayoutState(EnigmaStateBundle state);
     protected abstract void refreshState();
     public abstract void showRingSettingsDialog();
 

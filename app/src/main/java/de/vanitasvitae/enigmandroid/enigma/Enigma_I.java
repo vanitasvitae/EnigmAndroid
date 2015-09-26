@@ -1,5 +1,8 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -61,6 +64,30 @@ public class Enigma_I extends Enigma
                 rotor3.rotate();
             }
         }
+    }
+
+    @Override
+    public void randomState()
+    {
+        Random rand = new SecureRandom();
+
+        int rotor1, rotor2=-1, rotor3=-1;
+        rotor1 = rand.nextInt(5);
+        while(rotor2 == -1 || rotor2 == rotor1) rotor2 = rand.nextInt(5);
+        while(rotor3 == -1 || rotor3 == rotor2 || rotor3 == rotor1) rotor3 = rand.nextInt(5);
+        int ref = rand.nextInt(3);
+
+        int rot1 = rand.nextInt(26);
+        int rot2 = rand.nextInt(26);
+        int rot3 = rand.nextInt(26);
+        int ring1 = rand.nextInt(26);
+        int ring2 = rand.nextInt(26);
+        int ring3 = rand.nextInt(26);
+
+        this.rotor1 = Rotor.createRotor(10 + rotor1, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(10 + rotor2, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(10 + rotor3, rot3, ring3);
+        this.reflector = Reflector.createReflector(10 + ref);
     }
 
     @Override

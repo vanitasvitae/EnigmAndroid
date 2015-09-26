@@ -66,6 +66,13 @@ public abstract class Enigma
     public abstract void nextState();
 
     /**
+     * Set the enigma to a random state.
+     * Don not choose a rotor twice, set random rotations, ringSettings, ukw and possibly
+     * plugboard / rewirable ukw configurations.
+     */
+    public abstract void randomState();
+
+    /**
      * Substitute char k by sending the signal through the enigma.
      * The signal passes the plugboard, the rotors and returns back after going through the
      * reflector wheel.

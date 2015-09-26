@@ -13,8 +13,8 @@
         <item>G260 (Defense)</item>
         <item>D (Commercial)</item>
         <item>K</item>
-        <item>K (Swiss)</item>
-        <item>K (Swiss, Airforce)</item>
+        <item>Swiss-K</item>
+        <item>Swiss-K (Airforce)</item>
         <item>R (\"Rocket\", Railway)</item>
         <item>T (\"Tirpitz\", Japan)</item>
     </string-array>

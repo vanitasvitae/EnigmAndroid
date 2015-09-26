@@ -287,6 +287,14 @@ public class MainActivity extends Activity
                     Toast.LENGTH_SHORT).show();
             return true;
         }
+        else if (id == R.id.action_random_configuration)
+        {
+            layoutContainer.getEnigma().randomState();
+            layoutContainer.setLayoutState(layoutContainer.getEnigma().getState());
+            Toast.makeText(getApplicationContext(), R.string.message_random,
+                    Toast.LENGTH_SHORT).show();
+            return true;
+        }
         else if (id == R.id.action_choose_ringstellung)
         {
             layoutContainer.showRingSettingsDialog();

@@ -95,7 +95,7 @@ public class LayoutContainer_D extends LayoutContainer
     }
 
     @Override
-    protected void setLayoutState(EnigmaStateBundle state)
+    public void setLayoutState(EnigmaStateBundle state)
     {
         this.state = state;
         this.rotor1PositionView.setSelection(state.getRotationRotor1());

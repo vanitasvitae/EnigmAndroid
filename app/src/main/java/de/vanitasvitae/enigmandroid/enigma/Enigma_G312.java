@@ -1,6 +1,8 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import java.security.SecureRandom;
 import java.sql.Ref;
+import java.util.Random;
 
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
@@ -39,5 +41,32 @@ public class Enigma_G312 extends Enigma_G31
         this.rotor2 = Rotor.createRotor(51, 0, 0);
         this.rotor3 = Rotor.createRotor(52, 0, 0);
         this.reflector = Reflector.createReflector(50);
+    }
+
+    @Override
+    public void randomState()
+    {
+        Random rand = new SecureRandom();
+
+        int rotor1, rotor2=-1, rotor3=-1;
+        rotor1 = rand.nextInt(3);
+        while(rotor2 == -1 || rotor2 == rotor1) rotor2 = rand.nextInt(3);
+        rotor3 = 3 - rotor1 - rotor2;
+
+        int rot1 = rand.nextInt(26);
+        int rot2 = rand.nextInt(26);
+        int rot3 = rand.nextInt(26);
+        int rotRef = rand.nextInt(26);
+        int ring1 = rand.nextInt(26);
+        int ring2 = rand.nextInt(26);
+        int ring3 = rand.nextInt(26);
+        int ringRef = rand.nextInt(26);
+
+        this.rotor1 = Rotor.createRotor(50 + rotor1, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(50 + rotor2, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(50 + rotor3, rot3, ring3);
+        this.reflector = Reflector.createReflector(50);
+        reflector.setRotation(rotRef);
+        reflector.setRingSetting(ringRef);
     }
 }
