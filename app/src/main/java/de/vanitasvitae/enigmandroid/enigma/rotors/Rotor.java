@@ -84,89 +84,89 @@ public class Rotor
     {
         switch (type)
         {
-            case 1: Log.d("Rotor", "created " + type); return new EntryWheel_QWERTZ().setTypeNumber(type);
-            case 2: Log.d("Rotor","created "+type); return new EntryWheel_T().setTypeNumber(type);
+            case 1: return new EntryWheel_QWERTZ().setTypeNumber(type);
+            case 2: return new EntryWheel_T().setTypeNumber(type);
 
             //Enigma I
-            case 10: Log.d("Rotor","created "+type); return new Rotor_I(rotation, ringSetting).setTypeNumber(type);
-            case 11: Log.d("Rotor","created "+type); return new Rotor_II(rotation, ringSetting).setTypeNumber(type);
-            case 12: Log.d("Rotor","created "+type); return new Rotor_III(rotation, ringSetting).setTypeNumber(type);
-            case 13: Log.d("Rotor","created "+type); return new Rotor_IV(rotation, ringSetting).setTypeNumber(type);
-            case 14: Log.d("Rotor","created "+type); return new Rotor_V(rotation, ringSetting).setTypeNumber(type);
+            case 10: return new Rotor_I(rotation, ringSetting).setTypeNumber(type);
+            case 11: return new Rotor_II(rotation, ringSetting).setTypeNumber(type);
+            case 12: return new Rotor_III(rotation, ringSetting).setTypeNumber(type);
+            case 13: return new Rotor_IV(rotation, ringSetting).setTypeNumber(type);
+            case 14: return new Rotor_V(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma M3
-            case 20: Log.d("Rotor","created "+type); return new Rotor_I(rotation, ringSetting).setTypeNumber(type);
-            case 21: Log.d("Rotor","created "+type); return new Rotor_II(rotation, ringSetting).setTypeNumber(type);
-            case 22: Log.d("Rotor","created "+type); return new Rotor_III(rotation, ringSetting).setTypeNumber(type);
-            case 23: Log.d("Rotor","created "+type); return new Rotor_IV(rotation, ringSetting).setTypeNumber(type);
-            case 24: Log.d("Rotor","created "+type); return new Rotor_V(rotation, ringSetting).setTypeNumber(type);
-            case 25: Log.d("Rotor","created "+type); return new Rotor_VI(rotation, ringSetting).setTypeNumber(type);
-            case 26: Log.d("Rotor","created "+type); return new Rotor_VII(rotation, ringSetting).setTypeNumber(type);
-            case 27: Log.d("Rotor","created "+type); return new Rotor_VIII(rotation, ringSetting).setTypeNumber(type);
+            case 20: return new Rotor_I(rotation, ringSetting).setTypeNumber(type);
+            case 21: return new Rotor_II(rotation, ringSetting).setTypeNumber(type);
+            case 22: return new Rotor_III(rotation, ringSetting).setTypeNumber(type);
+            case 23: return new Rotor_IV(rotation, ringSetting).setTypeNumber(type);
+            case 24: return new Rotor_V(rotation, ringSetting).setTypeNumber(type);
+            case 25: return new Rotor_VI(rotation, ringSetting).setTypeNumber(type);
+            case 26: return new Rotor_VII(rotation, ringSetting).setTypeNumber(type);
+            case 27: return new Rotor_VIII(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma M4
-            case 30: Log.d("Rotor","created "+type); return new Rotor_I(rotation, ringSetting).setTypeNumber(type);
-            case 31: Log.d("Rotor","created "+type); return new Rotor_II(rotation, ringSetting).setTypeNumber(type);
-            case 32: Log.d("Rotor","created "+type); return new Rotor_III(rotation, ringSetting).setTypeNumber(type);
-            case 33: Log.d("Rotor","created "+type); return new Rotor_IV(rotation, ringSetting).setTypeNumber(type);
-            case 34: Log.d("Rotor","created "+type); return new Rotor_V(rotation, ringSetting).setTypeNumber(type);
-            case 35: Log.d("Rotor","created "+type); return new Rotor_VI(rotation, ringSetting).setTypeNumber(type);
-            case 36: Log.d("Rotor","created "+type); return new Rotor_VII(rotation, ringSetting).setTypeNumber(type);
-            case 37: Log.d("Rotor","created "+type); return new Rotor_VIII(rotation, ringSetting).setTypeNumber(type);
-            case 38: Log.d("Rotor","created "+type); return new Rotor_M4_Beta(rotation, ringSetting).setTypeNumber(type);
-            case 39: Log.d("Rotor","created "+type); return new Rotor_M4_Gamma(rotation, ringSetting).setTypeNumber(type);
+            case 30: return new Rotor_I(rotation, ringSetting).setTypeNumber(type);
+            case 31: return new Rotor_II(rotation, ringSetting).setTypeNumber(type);
+            case 32: return new Rotor_III(rotation, ringSetting).setTypeNumber(type);
+            case 33: return new Rotor_IV(rotation, ringSetting).setTypeNumber(type);
+            case 34: return new Rotor_V(rotation, ringSetting).setTypeNumber(type);
+            case 35: return new Rotor_VI(rotation, ringSetting).setTypeNumber(type);
+            case 36: return new Rotor_VII(rotation, ringSetting).setTypeNumber(type);
+            case 37: return new Rotor_VIII(rotation, ringSetting).setTypeNumber(type);
+            case 38: return new Rotor_M4_Beta(rotation, ringSetting).setTypeNumber(type);
+            case 39: return new Rotor_M4_Gamma(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma G31
-            case 40: Log.d("Rotor","created "+type); return new Rotor_G31_I(rotation, ringSetting).setTypeNumber(type);
-            case 41: Log.d("Rotor","created "+type); return new Rotor_G31_II(rotation, ringSetting).setTypeNumber(type);
-            case 42: Log.d("Rotor","created "+type); return new Rotor_G31_III(rotation, ringSetting).setTypeNumber(type);
+            case 40: return new Rotor_G31_I(rotation, ringSetting).setTypeNumber(type);
+            case 41: return new Rotor_G31_II(rotation, ringSetting).setTypeNumber(type);
+            case 42: return new Rotor_G31_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma G312
-            case 50: Log.d("Rotor","created "+type); return new Rotor_G312_I(rotation, ringSetting).setTypeNumber(type);
-            case 51: Log.d("Rotor","created "+type); return new Rotor_G312_II(rotation, ringSetting).setTypeNumber(type);
-            case 52: Log.d("Rotor","created "+type); return new Rotor_G312_III(rotation, ringSetting).setTypeNumber(type);
+            case 50: return new Rotor_G312_I(rotation, ringSetting).setTypeNumber(type);
+            case 51: return new Rotor_G312_II(rotation, ringSetting).setTypeNumber(type);
+            case 52: return new Rotor_G312_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma G260
-            case 60: Log.d("Rotor","created "+type); return new Rotor_G260_I(rotation, ringSetting).setTypeNumber(type);
-            case 61: Log.d("Rotor","created "+type); return new Rotor_G260_II(rotation, ringSetting).setTypeNumber(type);
-            case 62: Log.d("Rotor","created "+type); return new Rotor_G260_III(rotation, ringSetting).setTypeNumber(type);
+            case 60: return new Rotor_G260_I(rotation, ringSetting).setTypeNumber(type);
+            case 61: return new Rotor_G260_II(rotation, ringSetting).setTypeNumber(type);
+            case 62: return new Rotor_G260_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma D
-            case 70: Log.d("Rotor","created "+type); return new Rotor_D_I(rotation, ringSetting).setTypeNumber(type);
-            case 71: Log.d("Rotor","created "+type); return new Rotor_D_II(rotation, ringSetting).setTypeNumber(type);
-            case 72: Log.d("Rotor","created "+type); return new Rotor_D_III(rotation, ringSetting).setTypeNumber(type);
+            case 70: return new Rotor_D_I(rotation, ringSetting).setTypeNumber(type);
+            case 71: return new Rotor_D_II(rotation, ringSetting).setTypeNumber(type);
+            case 72: return new Rotor_D_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma K
-            case 80: Log.d("Rotor","created "+type); return new Rotor_K_I(rotation, ringSetting).setTypeNumber(type);
-            case 81: Log.d("Rotor","created "+type); return new Rotor_K_II(rotation, ringSetting).setTypeNumber(type);
-            case 82: Log.d("Rotor","created "+type); return new Rotor_K_III(rotation, ringSetting).setTypeNumber(type);
+            case 80: return new Rotor_K_I(rotation, ringSetting).setTypeNumber(type);
+            case 81: return new Rotor_K_II(rotation, ringSetting).setTypeNumber(type);
+            case 82: return new Rotor_K_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma K Swiss
-            case 90: Log.d("Rotor","created "+type); return new Rotor_KSwiss_Standard_I(rotation, ringSetting).setTypeNumber(type);
-            case 91: Log.d("Rotor","created "+type); return new Rotor_KSwiss_Standard_II(rotation, ringSetting).setTypeNumber(type);
-            case 92: Log.d("Rotor","created "+type); return new Rotor_KSwiss_Standard_III(rotation, ringSetting).setTypeNumber(type);
+            case 90: return new Rotor_KSwiss_Standard_I(rotation, ringSetting).setTypeNumber(type);
+            case 91: return new Rotor_KSwiss_Standard_II(rotation, ringSetting).setTypeNumber(type);
+            case 92: return new Rotor_KSwiss_Standard_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma K Swiss Airforce
-            case 100: Log.d("Rotor","created "+type); return new Rotor_K_Swiss_Airforce_I(rotation, ringSetting).setTypeNumber(type);
-            case 101: Log.d("Rotor","created "+type); return new Rotor_K_Swiss_Airforce_II(rotation, ringSetting).setTypeNumber(type);
-            case 102: Log.d("Rotor","created "+type); return new Rotor_K_Swiss_Airforce_III(rotation, ringSetting).setTypeNumber(type);
+            case 100: return new Rotor_K_Swiss_Airforce_I(rotation, ringSetting).setTypeNumber(type);
+            case 101: return new Rotor_K_Swiss_Airforce_II(rotation, ringSetting).setTypeNumber(type);
+            case 102: return new Rotor_K_Swiss_Airforce_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma R
-            case 110: Log.d("Rotor","created "+type); return new Rotor_R_I(rotation, ringSetting).setTypeNumber(type);
-            case 111: Log.d("Rotor","created "+type); return new Rotor_R_II(rotation, ringSetting).setTypeNumber(type);
-            case 112: Log.d("Rotor","created "+type); return new Rotor_R_III(rotation, ringSetting).setTypeNumber(type);
+            case 110: return new Rotor_R_I(rotation, ringSetting).setTypeNumber(type);
+            case 111: return new Rotor_R_II(rotation, ringSetting).setTypeNumber(type);
+            case 112: return new Rotor_R_III(rotation, ringSetting).setTypeNumber(type);
 
             //Enigma T
-            case 120: Log.d("Rotor","created "+type); return new Rotor_T_I(rotation, ringSetting).setTypeNumber(type);
-            case 121: Log.d("Rotor","created "+type); return new Rotor_T_II(rotation, ringSetting).setTypeNumber(type);
-            case 122: Log.d("Rotor","created "+type); return new Rotor_T_III(rotation, ringSetting).setTypeNumber(type);
-            case 123: Log.d("Rotor","created "+type); return new Rotor_T_IV(rotation, ringSetting).setTypeNumber(type);
-            case 124: Log.d("Rotor","created "+type); return new Rotor_T_V(rotation, ringSetting).setTypeNumber(type);
-            case 125: Log.d("Rotor","created "+type); return new Rotor_T_VI(rotation, ringSetting).setTypeNumber(type);
-            case 126: Log.d("Rotor","created "+type); return new Rotor_T_VII(rotation, ringSetting).setTypeNumber(type);
-            case 127: Log.d("Rotor","created "+type); return new Rotor_T_VIII(rotation, ringSetting).setTypeNumber(type);
+            case 120: return new Rotor_T_I(rotation, ringSetting).setTypeNumber(type);
+            case 121: return new Rotor_T_II(rotation, ringSetting).setTypeNumber(type);
+            case 122: return new Rotor_T_III(rotation, ringSetting).setTypeNumber(type);
+            case 123: return new Rotor_T_IV(rotation, ringSetting).setTypeNumber(type);
+            case 124: return new Rotor_T_V(rotation, ringSetting).setTypeNumber(type);
+            case 125: return new Rotor_T_VI(rotation, ringSetting).setTypeNumber(type);
+            case 126: return new Rotor_T_VII(rotation, ringSetting).setTypeNumber(type);
+            case 127: return new Rotor_T_VIII(rotation, ringSetting).setTypeNumber(type);
 
-            default: Log.d("Rotor:"," Fail! "+type);
+            default: Log.e("Rotor:"," Tried to create Rotor of invalid type "+type);
                 return null;
         }
     }

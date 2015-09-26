@@ -61,28 +61,12 @@ public class LayoutContainer_D extends LayoutContainer
         });
 
         Character[] rotorPositionArray = new Character[26];
-        for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /**Fill with A..Z*/}
+        for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /*Fill with A..Z*/}
 
-        ArrayAdapter<Character> rotor1PositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item,rotorPositionArray);
-        rotor1PositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        rotor1PositionView.setAdapter(rotor1PositionAdapter);
-        ArrayAdapter<Character> rotor2PositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item,rotorPositionArray);
-        rotor2PositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        rotor2PositionView.setAdapter(rotor2PositionAdapter);
-        ArrayAdapter<Character> rotor3PositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item,rotorPositionArray);
-        rotor3PositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        rotor3PositionView.setAdapter(rotor3PositionAdapter);
-        ArrayAdapter<Character> reflectorPositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item,rotorPositionArray);
-        reflectorPositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        reflectorPositionView.setAdapter(reflectorPositionAdapter);
+        prepareSpinnerAdapter(rotor1PositionView, rotorPositionArray);
+        prepareSpinnerAdapter(rotor2PositionView, rotorPositionArray);
+        prepareSpinnerAdapter(rotor3PositionView, rotorPositionArray);
+        prepareSpinnerAdapter(reflectorPositionView, rotorPositionArray);
     }
 
     @Override

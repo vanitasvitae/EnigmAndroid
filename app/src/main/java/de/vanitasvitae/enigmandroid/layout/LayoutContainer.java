@@ -1,6 +1,8 @@
 package de.vanitasvitae.enigmandroid.layout;
 
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
@@ -133,6 +135,35 @@ public abstract class LayoutContainer
                 default:
                     return new LayoutContainer_I();
             }
+    }
+
+    /**
+     * Add ArrayAdapter, contents and layouts to Spinner
+     * @param view Spinner
+     * @param resourceID ID of the referenced array (eg. R.array.rotor_1_8)
+     */
+    protected void prepareSpinnerAdapter(Spinner view, int resourceID) {
+        MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(main, resourceID,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        view.setAdapter(adapter);
+    }
+
+    /**
+     * Add ArrayAdapter, contents and layouts to Spinner
+     * @param view Spinner
+     * @param array Character array
+     */
+    protected void prepareSpinnerAdapter(Spinner view, Character[] array)
+    {
+        MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
+        ArrayAdapter<Character> adapter = new ArrayAdapter<>(main.getApplicationContext(),
+                android.R.layout.simple_spinner_item, array);
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        view.setAdapter(adapter);
     }
 
     public void setInputPreparer(InputPreparer inputPreparer)

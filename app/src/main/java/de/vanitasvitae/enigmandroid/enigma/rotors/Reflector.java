@@ -98,52 +98,52 @@ public class Reflector
         switch (type)
         {
             //Enigma I
-            case 10: return new ReflectorA().setTypeNumer(type);
-            case 11: return new ReflectorB().setTypeNumer(type);
-            case 12: return new ReflectorC().setTypeNumer(type);
+            case 10: return new ReflectorA().setNumber(type);
+            case 11: return new ReflectorB().setNumber(type);
+            case 12: return new ReflectorC().setNumber(type);
 
             //Enigma M3
-            case 20: return new ReflectorB().setTypeNumer(type);
-            case 21: return new ReflectorC().setTypeNumer(type);
+            case 20: return new ReflectorB().setNumber(type);
+            case 21: return new ReflectorC().setNumber(type);
 
             //Enigma M4
-            case 30: return new ReflectorThinB().setTypeNumer(type);
-            case 31: return new ReflectorThinC().setTypeNumer(type);
+            case 30: return new ReflectorThinB().setNumber(type);
+            case 31: return new ReflectorThinC().setNumber(type);
 
             //Enigma G31
-            case 40: return new ReflectorEnigma_D_KD_G31().setTypeNumer(type);
+            case 40: return new ReflectorEnigma_D_KD_G31().setNumber(type);
 
             //Enigma G312
-            case 50: return new Reflector_G312().setTypeNumer(type);
+            case 50: return new Reflector_G312().setNumber(type);
 
             //Enigma G260
-            case 60: return new Reflector_G260().setTypeNumer(type);
+            case 60: return new Reflector_G260().setNumber(type);
 
             //Enigma D
-            case 70: return new ReflectorEnigma_D_KD_G31().setTypeNumer(type);
+            case 70: return new ReflectorEnigma_D_KD_G31().setNumber(type);
 
             //Enigma K
-            case 80: return new ReflectorEnigma_K().setTypeNumer(type);
+            case 80: return new ReflectorEnigma_K().setNumber(type);
 
             //Enigma K Swiss
-            case 90: return new ReflectorEnigma_K().setTypeNumer(type);
+            case 90: return new ReflectorEnigma_K().setNumber(type);
 
             //Enigma K Swiss Airforce
-            case 100: return new ReflectorEnigma_K().setTypeNumer(type);
+            case 100: return new ReflectorEnigma_K().setNumber(type);
 
             //Enigma R
-            case 110: return new Reflector_R().setTypeNumer(type);
+            case 110: return new Reflector_R().setNumber(type);
 
             //Enigma T
-            case 120: return new ReflectorEnigma_T().setTypeNumer(type);
+            case 120: return new ReflectorEnigma_T().setNumber(type);
 
             default:
-                Log.d("Reflector:","Fail! "+type);
+                Log.e("Reflector:"," Tried to create Reflector of invalid type "+type);
                 return null;
         }
     }
 
-    public Reflector setTypeNumer(int nr)
+    public Reflector setNumber(int nr)
     {
         this.number = nr;
         return this;

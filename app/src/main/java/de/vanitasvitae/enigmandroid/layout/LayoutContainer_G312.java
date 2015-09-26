@@ -66,42 +66,15 @@ public class LayoutContainer_G312 extends LayoutContainer
         this.reflectorPositionView = (Spinner) main.findViewById(R.id.reflector_position);
 
         Character[] rotorPositionArray = new Character[26];
-        for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /**Fill with A..Z*/}
+        for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /*Fill with A..Z*/}
 
-        ArrayAdapter<CharSequence> rotor1Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_3,
-                android.R.layout.simple_spinner_item);
-        rotor1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor1View.setAdapter(rotor1Adapter);
-        ArrayAdapter<CharSequence> rotor2Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_3,
-                android.R.layout.simple_spinner_item);
-        rotor2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor2View.setAdapter(rotor2Adapter);
-        ArrayAdapter<CharSequence> rotor3Adapter = ArrayAdapter.createFromResource(main, R.array.rotors_1_3,
-                android.R.layout.simple_spinner_item);
-        rotor3Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rotor3View.setAdapter(rotor3Adapter);
-
-        ArrayAdapter<Character> rotor1PositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item, rotorPositionArray);
-        rotor1PositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        rotor1PositionView.setAdapter(rotor1PositionAdapter);
-        ArrayAdapter<Character> rotor2PositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item, rotorPositionArray);
-        rotor2PositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        rotor2PositionView.setAdapter(rotor2PositionAdapter);
-        ArrayAdapter<Character> rotor3PositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item, rotorPositionArray);
-        rotor3PositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        rotor3PositionView.setAdapter(rotor3PositionAdapter);
-
-        ArrayAdapter<Character> reflectorPositionAdapter = new ArrayAdapter<>(main.getApplicationContext(),
-                android.R.layout.simple_spinner_item, rotorPositionArray);
-        reflectorPositionAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        reflectorPositionView.setAdapter(reflectorPositionAdapter);
+        prepareSpinnerAdapter(rotor1View, R.array.rotors_1_3);
+        prepareSpinnerAdapter(rotor2View, R.array.rotors_1_3);
+        prepareSpinnerAdapter(rotor3View, R.array.rotors_1_3);
+        prepareSpinnerAdapter(rotor1PositionView, rotorPositionArray);
+        prepareSpinnerAdapter(rotor2PositionView, rotorPositionArray);
+        prepareSpinnerAdapter(rotor3PositionView, rotorPositionArray);
+        prepareSpinnerAdapter(reflectorPositionView, rotorPositionArray);
     }
 
     @Override
