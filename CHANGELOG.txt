@@ -1,5 +1,5 @@
 CHANGELOG ENIGMANDROID
-v0.1.8-not-yet-released<
+v0.1.8-27.09.2015<
 *Added Enigma G31
 *Added Enigma G312
 *Added Enigma G260
