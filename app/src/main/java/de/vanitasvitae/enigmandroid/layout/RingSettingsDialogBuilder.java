@@ -102,7 +102,7 @@ public abstract class RingSettingsDialogBuilder
         }
 
         @Override
-        protected void showDialog(EnigmaStateBundle stateBundle, ArrayAdapter[] adapters, int[] rIDs, Actions actions)
+        protected void showDialog(final EnigmaStateBundle stateBundle, ArrayAdapter[] adapters, int[] rIDs, Actions actions)
         {
             if(adapters.length != 3 || rIDs.length != 3)
             {
@@ -147,6 +147,7 @@ public abstract class RingSettingsDialogBuilder
                                     (ring1.getSelectedItemPosition()+1) + ", " +
                                     (ring2.getSelectedItemPosition()+1) + ", " +
                                     (ring3.getSelectedItemPosition()+1) + ".";
+                            main.onDialogFinished(stateBundle);
                             Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                         }
                     })
@@ -219,7 +220,7 @@ public abstract class RingSettingsDialogBuilder
                     });
         }
         @Override
-        protected void showDialog(EnigmaStateBundle stateBundle, ArrayAdapter[] adapters, int[] rIDs, Actions actions) {
+        protected void showDialog(final EnigmaStateBundle stateBundle, ArrayAdapter[] adapters, int[] rIDs, Actions actions) {
             if(adapters.length != 4 || rIDs.length != 4)
             {
                 Log.d("Enigm|RingSettings", "Length of adapters array or length of rIDs array not equal to 4!");
@@ -271,6 +272,7 @@ public abstract class RingSettingsDialogBuilder
                                     (ring2.getSelectedItemPosition()+1) + ", " +
                                     (ring3.getSelectedItemPosition()+1) + ", " +
                                     (ring4.getSelectedItemPosition()+1) + ".";
+                            main.onDialogFinished(stateBundle);
                             Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                         }
                     })

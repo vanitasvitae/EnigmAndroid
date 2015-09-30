@@ -2,6 +2,11 @@ package de.vanitasvitae.enigmandroid.enigma.rotors;
 
 import android.util.Log;
 
+import java.util.Random;
+
+import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
+
 /**
  * Reflector of the enigma machine.
  * The reflector was used to reflect the scrambled signal at the end of the wiring back to
@@ -31,7 +36,7 @@ public class Reflector
     protected int rotation;
     protected int ringSetting;
 
-    public static final int[] defaultWiring_D_KD_G31 = {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
+    public static final int[] defaultWiring_D_KD_G31 =  {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
 
     /**
      * This constructor is not accessible from outside this class file.
@@ -95,6 +100,7 @@ public class Reflector
      */
     public static Reflector createReflector(int type)
     {
+        Log.d(MainActivity.APP_ID, "Reflectorcreation: "+type);
         switch (type)
         {
             //Enigma I
@@ -138,7 +144,7 @@ public class Reflector
             case 120: return new ReflectorEnigma_T().setNumber(type);
 
             default:
-                Log.e("Reflector:"," Tried to create Reflector of invalid type "+type);
+                Log.e(MainActivity.APP_ID," Tried to create Reflector of invalid type "+type);
                 return null;
         }
     }
@@ -336,5 +342,4 @@ public class Reflector
             super("Ref-R", new int[]{16,24,7,14,6,13,4,2,21,15,20,25,19,5,3,9,0,23,22,12,10,8,18,17,1,11});
         }
     }
-
 }

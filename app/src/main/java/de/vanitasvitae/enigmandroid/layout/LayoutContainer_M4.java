@@ -72,7 +72,7 @@ public class LayoutContainer_M4 extends LayoutContainer
         setPlugboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PluggableDialogBuilder(state).showDialogPlugboard();
+                new PluggableDialogBuilder(getEnigma().getState()).showDialogPlugboard();
             }
         });
 
@@ -100,7 +100,6 @@ public class LayoutContainer_M4 extends LayoutContainer
 
     @Override
     public void setLayoutState(EnigmaStateBundle state) {
-        this.state = state;
         this.rotor1View.setSelection(state.getTypeRotor1() - 30);
         this.rotor2View.setSelection(state.getTypeRotor2() - 30);
         this.rotor3View.setSelection(state.getTypeRotor3() - 30);
@@ -113,7 +112,8 @@ public class LayoutContainer_M4 extends LayoutContainer
     }
 
     @Override
-    protected void refreshState() {
+    public void syncStateFromLayoutToEnigma() {
+        EnigmaStateBundle state = getEnigma().getState();
         state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 30);
         state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 30);
         state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 30);
@@ -123,12 +123,13 @@ public class LayoutContainer_M4 extends LayoutContainer
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
         state.setRotationRotor4(rotor4PositionView.getSelectedItemPosition());
+        getEnigma().setState(state);
     }
 
     @Override
     public void showRingSettingsDialog()
     {
         new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRotRot().
-                createRingSettingsDialog(state);
+                createRingSettingsDialog(getEnigma().getState());
     }
 }

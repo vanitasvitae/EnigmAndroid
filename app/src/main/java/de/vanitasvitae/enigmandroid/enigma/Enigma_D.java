@@ -1,8 +1,5 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -34,6 +31,7 @@ public class Enigma_D extends Enigma {
 
     protected Reflector.ReflectorEnigma_D_KD_G31 reflector;
 
+    protected static int machineTypeOffset = 70;
     public Enigma_D()
     {
         super();
@@ -44,10 +42,10 @@ public class Enigma_D extends Enigma {
     public void initialize()
     {
         this.entryWheel = Rotor.createRotor(1, 0, 0);
-        this.rotor1 = Rotor.createRotor(70, 0, 0);
-        this.rotor2 = Rotor.createRotor(71, 0, 0);
-        this.rotor3 = Rotor.createRotor(72, 0, 0);
-        this.reflector = (Reflector.ReflectorEnigma_D_KD_G31) Reflector.createReflector(70);
+        this.rotor1 = Rotor.createRotor(machineTypeOffset, 0, 0);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset, 0, 0);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset, 0, 0);
+        this.reflector = (Reflector.ReflectorEnigma_D_KD_G31) Reflector.createReflector(machineTypeOffset);
     }
 
     @Override
@@ -66,9 +64,7 @@ public class Enigma_D extends Enigma {
     }
 
     @Override
-    public void randomState()
-    {
-        Random rand = new SecureRandom();
+    protected void generateState() {
         int rot1 = rand.nextInt(26);
         int rot2 = rand.nextInt(26);
         int rot3 = rand.nextInt(26);
@@ -78,12 +74,14 @@ public class Enigma_D extends Enigma {
         int ring3 = rand.nextInt(26);
         int ringRef = rand.nextInt(26);
 
-        this.rotor1 = Rotor.createRotor(70, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(71, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(72, rot3, ring3);
-        this.reflector = (Reflector.ReflectorEnigma_D_KD_G31) Reflector.createReflector(70);
+        this.rotor1 = Rotor.createRotor(machineTypeOffset, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset+1, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset+2, rot3, ring3);
+
+        this.reflector = (Reflector.ReflectorEnigma_D_KD_G31) Reflector.createReflector(machineTypeOffset);
         this.reflector.setRotation(rotRef);
         this.reflector.setRingSetting(ringRef);
+        this.reflector.setConfiguration(Plugboard.seedToReflectorConfiguration(rand));
     }
 
     @Override
@@ -152,5 +150,55 @@ public class Enigma_D extends Enigma {
         state.setConfigurationReflector(reflector.getConfiguration());
 
         return state;
+    }
+
+    @Override
+    public void restoreState(String mem)
+    {
+        String reflectorConf = mem.substring(mem.lastIndexOf(":r")+2);
+        long s = Long.valueOf(mem.substring(0, mem.indexOf(":r")));
+
+        s = removeDigit(s, 12);  //Remove machine type
+        int rot1 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ring1 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int rot2 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ring2 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int rot3 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ring3 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int rotRef = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ringRef = getValue(s, 26);
+
+        this.rotor1 = Rotor.createRotor(machineTypeOffset, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset+1, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset+2, rot3, ring3);
+        this.reflector = (Reflector.ReflectorEnigma_D_KD_G31) Reflector.createReflector(machineTypeOffset);
+        this.reflector.setConfiguration(Plugboard.stringToConfiguration(reflectorConf));
+        this.reflector.setRotation(rotRef);
+        this.reflector.setRingSetting(ringRef);
+    }
+
+    @Override
+    public String stateToString() {
+        String save = "";
+        long s = reflector.getRingSetting();
+        s = addDigit(s, reflector.getRotation(), 26);
+        s = addDigit(s, rotor3.getRingSetting(), 26);
+        s = addDigit(s, rotor3.getRotation(), 26);
+        s = addDigit(s, rotor2.getRingSetting(), 26);
+        s = addDigit(s, rotor2.getRotation(), 26);
+        s = addDigit(s, rotor1.getRingSetting(), 26);
+        s = addDigit(s, rotor1.getRotation(), 26);
+        s = addDigit(s, 6, 12); //Machine #6
+
+        save = save+s;
+        save = save + ":r" + Plugboard.configurationToString(getState().getConfigurationReflector());
+        return save;
     }
 }

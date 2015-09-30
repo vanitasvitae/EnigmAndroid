@@ -28,25 +28,16 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  */
 public class Enigma_M3 extends Enigma_I
 {
+    protected static int machineTypeOffset = 20;
+
     public Enigma_M3()
     {
+        super();
         machineType = "M3";
     }
-    @Override
-    public void initialize()
-    {
-        this.plugboard = new Plugboard();
-        this.rotor1 = Rotor.createRotor(20, 0, 0);
-        this.rotor2 = Rotor.createRotor(21, 0, 0);
-        this.rotor3 = Rotor.createRotor(22, 0, 0);
-        this.reflector = Reflector.createReflector(20);
-    }
 
     @Override
-    public void randomState()
-    {
-        Random rand = new SecureRandom();
-
+    protected void generateState() {
         int rotor1, rotor2=-1, rotor3=-1;
         rotor1 = rand.nextInt(8);
         while(rotor2 == -1 || rotor2 == rotor1) rotor2 = rand.nextInt(8);
@@ -60,9 +51,31 @@ public class Enigma_M3 extends Enigma_I
         int ring2 = rand.nextInt(26);
         int ring3 = rand.nextInt(26);
 
-        this.rotor1 = Rotor.createRotor(20 + rotor1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(20 + rotor2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(20 + rotor3, rot3, ring3);
-        this.reflector = Reflector.createReflector(20 + ref);
+        this.rotor1 = Rotor.createRotor(machineTypeOffset + rotor1, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset + rotor2, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset + rotor3, rot3, ring3);
+        this.reflector = Reflector.createReflector(machineTypeOffset + ref);
+
+        this.plugboard = new Plugboard();
+        plugboard.setConfiguration(Plugboard.seedToPlugboardConfiguration(rand));
+    }
+
+    @Override
+    public String stateToString() {
+        String save = "";
+        long s = rotor3.getRingSetting();
+        s = addDigit(s, rotor3.getRotation(), 26);
+        s = addDigit(s, rotor2.getRingSetting(), 26);
+        s = addDigit(s, rotor2.getRotation(), 26);
+        s = addDigit(s, rotor1.getRingSetting(), 26);
+        s = addDigit(s, rotor1.getRotation(), 26);
+        s = addDigit(s, rotor3.getNumber(), 10);
+        s = addDigit(s, rotor2.getNumber(), 10);
+        s = addDigit(s, rotor1.getNumber(), 10);
+        s = addDigit(s, 1, 12); //Machine #1
+
+        save = save+s;
+        save = save + ":p" + Plugboard.configurationToString(getState().getConfigurationPlugboard());
+        return save;
     }
 }

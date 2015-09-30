@@ -15,10 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
+import de.vanitasvitae.enigmandroid.enigma.Enigma;
+import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 import de.vanitasvitae.enigmandroid.layout.LayoutContainer;
+import de.vanitasvitae.enigmandroid.layout.PassphraseDialogBuilder;
 
 /**
  * Main Android Activity of the app
@@ -44,6 +48,7 @@ public class MainActivity extends Activity
     private static final int RESULT_SETTINGS = 1;
     private static final String URI_CHANGELOG =
             "https://github.com/vanitasvitae/EnigmAndroid/blob/master/CHANGELOG.txt";
+    public static final String APP_ID = "EnigmAndroid";
 
     LayoutContainer layoutContainer;
     protected String prefMachineType;
@@ -55,7 +60,6 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d("Activity","OnCreate!");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
                 getStringArray(R.array.pref_alias_machine_type)[0]);
@@ -79,65 +83,6 @@ public class MainActivity extends Activity
                 }
             }
         }
-    }
-
-    /**
-     * Unfortunately we have to overwrite this, because on orientation changes the LayoutContainer
-     * will reset and we would lose information about plugboard, reflector-wiring and ring settings.
-     * These info are we saving here.
-     * TODO: Find more elegant solution
-     * @param outState state
-     */
-    @Override
-    protected void onSaveInstanceState (Bundle outState)
-    {
-        ArrayList<Integer> plugboard = new ArrayList<>();
-        if(layoutContainer.getState().getConfigurationPlugboard() != null) {
-            for (int i : layoutContainer.getState().getConfigurationPlugboard()) plugboard.add(i);
-        }
-        outState.putIntegerArrayList("plugboard",plugboard);
-
-        ArrayList<Integer> reflector = new ArrayList<>();
-        if(layoutContainer.getState().getConfigurationReflector() != null) {
-            for (int i : layoutContainer.getState().getConfigurationReflector()) reflector.add(i);
-        }
-        outState.putIntegerArrayList("reflector", reflector);
-
-        outState.putInt("ring1", layoutContainer.getState().getRingSettingRotor1());
-        outState.putInt("ring2", layoutContainer.getState().getRingSettingRotor2());
-        outState.putInt("ring3", layoutContainer.getState().getRingSettingRotor3());
-        outState.putInt("ring4", layoutContainer.getState().getRingSettingRotor4());
-        outState.putInt("ringR", layoutContainer.getState().getRingSettingReflector());
-
-        super.onSaveInstanceState(outState);
-    }
-
-    /**
-     * Here we get back values previously saved int onSaveInstanceState
-     * @param savedInstanceState state
-     */
-    @Override
-    protected void onRestoreInstanceState (Bundle savedInstanceState)
-    {
-        ArrayList<Integer> plugboard = savedInstanceState.getIntegerArrayList("plugboard");
-        if(plugboard != null && plugboard.size() != 0) {
-            int[] p = new int[plugboard.size()];
-            for (int i = 0; i < plugboard.size(); i++) p[i] = plugboard.get(i);
-            layoutContainer.getState().setConfigurationPlugboard(p);
-        }
-
-        ArrayList<Integer> reflector = savedInstanceState.getIntegerArrayList("reflector");
-        if(reflector != null && reflector.size() != 0) {
-            int[] r = new int[reflector.size()];
-            for (int i = 0; i < reflector.size(); i++) r[i] = reflector.get(i);
-            layoutContainer.getState().setConfigurationReflector(r);
-        }
-
-        layoutContainer.getState().setRingSettingRotor1(savedInstanceState.getInt("ring1"));
-        layoutContainer.getState().setRingSettingRotor2(savedInstanceState.getInt("ring2"));
-        layoutContainer.getState().setRingSettingRotor3(savedInstanceState.getInt("ring3"));
-        layoutContainer.getState().setRingSettingRotor4(savedInstanceState.getInt("ring4"));
-        layoutContainer.getState().setRingSettingReflector(savedInstanceState.getInt("ringR"));
     }
 
     @Override
@@ -204,6 +149,8 @@ public class MainActivity extends Activity
             layoutContainer = LayoutContainer.createLayoutContainer(prefMachineType);
             layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
             layoutContainer.getInput().setText(savedInput);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            sharedPreferences.edit().putString(SettingsActivity.PREF_MACHINE_TYPE, type);
         }
     }
 
@@ -266,6 +213,11 @@ public class MainActivity extends Activity
         return prefMessageFormatting;
     }
 
+    public void onDialogFinished(EnigmaStateBundle state)
+    {
+        layoutContainer.getEnigma().setState(state);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -290,12 +242,12 @@ public class MainActivity extends Activity
         else if (id == R.id.action_random_configuration)
         {
             layoutContainer.getEnigma().randomState();
-            layoutContainer.setLayoutState(layoutContainer.getEnigma().getState());
+            layoutContainer.syncStateFromEnigmaToLayout();
             Toast.makeText(getApplicationContext(), R.string.message_random,
                     Toast.LENGTH_SHORT).show();
             return true;
         }
-        else if (id == R.id.action_choose_ringstellung)
+        else if (id == R.id.action_choose_ringsetting)
         {
             layoutContainer.showRingSettingsDialog();
             return true;
@@ -324,6 +276,25 @@ public class MainActivity extends Activity
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
             }
+        }
+        else if (id == R.id.action_receive_scan)
+        {
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.initiateScan();
+            return true;
+        }
+        else if(id == R.id.action_share_scan)
+        {
+            IntentIntegrator QRIntegrator = new IntentIntegrator(this);
+            layoutContainer.syncStateFromLayoutToEnigma();
+            Log.d(APP_ID, "Sharing configuration to QR: " + layoutContainer.getEnigma().stateToString());
+            QRIntegrator.shareText(layoutContainer.getEnigma().stateToString());
+            return true;
+        }
+        else if(id == R.id.action_enter_seed)
+        {
+            new PassphraseDialogBuilder().showDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -390,8 +361,35 @@ public class MainActivity extends Activity
                         getResources().getStringArray(R.array.pref_alias_message_formatting)[0]));
                 break;
             }
-
+            case IntentIntegrator.REQUEST_CODE:
+                IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                if (scanResult != null) {
+                    String content = scanResult.getContents();
+                    if(content == null) Log.e(APP_ID, "Error! Received nothing from QR-Code!");
+                    else Log.d(APP_ID, "Received "+content+" from QR-Code!");
+                        restoreStateFromCode(content);
+                }
         }
+    }
+
+    private void restoreStateFromCode(String mem)
+    {
+        setPrefMachineType(Enigma.chooseEnigmaFromSave(mem));
+        updateContentView();
+        layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
+        layoutContainer.getEnigma().restoreState(mem);
+        layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
+        layoutContainer.syncStateFromEnigmaToLayout();
+    }
+
+    public void createStateFromSeed(String seed)
+    {
+        setPrefMachineType(Enigma.chooseEnigmaFromSeed(seed));
+        updateContentView();
+        layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
+        layoutContainer.getEnigma().setStateFromSeed(seed);
+        layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
+        layoutContainer.syncStateFromEnigmaToLayout();
     }
 
     /**

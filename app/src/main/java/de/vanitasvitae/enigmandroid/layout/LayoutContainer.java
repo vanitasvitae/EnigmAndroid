@@ -42,25 +42,17 @@ public abstract class LayoutContainer
     protected InputPreparer inputPreparer;
     protected MainActivity main;
 
-    protected EnigmaStateBundle state;
-
     public abstract Enigma getEnigma();
     protected abstract void initializeLayout();
     public abstract void resetLayout();
     public abstract void setLayoutState(EnigmaStateBundle state);
-    protected abstract void refreshState();
+    public abstract void syncStateFromLayoutToEnigma();
+    public void syncStateFromEnigmaToLayout()
+    {
+        this.setLayoutState(getEnigma().getState());
+    }
     public abstract void showRingSettingsDialog();
 
-    public LayoutContainer(EnigmaStateBundle state)
-    {
-        main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
-        this.inputView = (EditText) main.findViewById(R.id.input);
-        this.outputView = (EditText) main.findViewById(R.id.output);
-        input = EditTextAdapter.createEditTextAdapter(inputView, main.getPrefMessageFormatting());
-        output = EditTextAdapter.createEditTextAdapter(outputView, main.getPrefMessageFormatting());
-        initializeLayout();
-        this.state = state;
-    }
     public LayoutContainer()
     {
         main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
@@ -75,24 +67,14 @@ public abstract class LayoutContainer
     {
         if(inputView.getText().length()!=0)
         {
-            getEnigma().setState(getState());
+
+            syncStateFromLayoutToEnigma();
             String message = inputView.getText().toString();
             message = inputPreparer.prepareString(message);
             input.setText(message);
             output.setText(getEnigma().encryptString(message));
             setLayoutState(getEnigma().getState());
         }
-    }
-
-    public EnigmaStateBundle getState()
-    {
-        refreshState();
-        return state;
-    }
-
-    public void setState(EnigmaStateBundle state)
-    {
-        this.state = state;
     }
 
     public EditTextAdapter getInput()

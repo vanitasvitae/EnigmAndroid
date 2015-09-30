@@ -2,6 +2,8 @@ package de.vanitasvitae.enigmandroid.enigma.rotors;
 
 import android.util.Log;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
+
 /**
  * Rotor super class and inner concrete implementations
  * The rotors were the key feature of the enigma used to scramble up input signals into
@@ -82,6 +84,7 @@ public class Rotor
      */
     public static Rotor createRotor(int type, int rotation, int ringSetting)
     {
+        Log.d(MainActivity.APP_ID, "Rotorcreation: "+type);
         switch (type)
         {
             case 1: return new EntryWheel_QWERTZ().setTypeNumber(type);
@@ -166,7 +169,7 @@ public class Rotor
             case 126: return new Rotor_T_VII(rotation, ringSetting).setTypeNumber(type);
             case 127: return new Rotor_T_VIII(rotation, ringSetting).setTypeNumber(type);
 
-            default: Log.e("Rotor:"," Tried to create Rotor of invalid type "+type);
+            default: Log.e(MainActivity.APP_ID," Tried to create Rotor of invalid type "+type);
                 return null;
         }
     }

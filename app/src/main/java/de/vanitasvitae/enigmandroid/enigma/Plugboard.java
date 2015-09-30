@@ -1,5 +1,9 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import java.util.Random;
+
+import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
+
 /**
  * Plugboard of the enigma
  * Copyright (C) 2015  Paul Schaub
@@ -52,5 +56,116 @@ public class Plugboard
     public int encrypt(int input)
     {
         return plugs[(input+plugs.length)%plugs.length];
+    }
+
+    /**
+     * Interpret a String of Pairs as a configuration for the plugboard
+     * Any char with an even index is connected to the successor.
+     * in must not contain duplicates!
+     * @param in String representation of pairs (eg. AXBHCS...)
+     * @return connections as int[]
+     */
+    public static int[] stringToConfiguration(String in)
+    {
+        String pairs = trimString(new InputPreparer.RemoveIllegalCharacters().prepareString(in));
+        int[] out = empty;
+        //Check if in is too long or odd
+        if(pairs.length() > 26 || pairs.length()/2 == (pairs.length()-1)/2)
+        {
+            //Odd length. remove last char. Information loss!
+            pairs = pairs.substring(0,pairs.length()-1);
+        }
+        //Modify out
+        for(int i=0; i<pairs.length()/2; i++)
+        {
+            int a = (int) (pairs.toCharArray()[i*2])-65;
+            int b = (int) (pairs.toCharArray()[(i*2)+1])-65;
+            out[a] = b;
+            out[b] = a;
+        }
+        return out;
+    }
+
+    /**
+     * Remove all duplicate chars x from the String except the first appearance of x.
+     * String MUST be in upper case!
+     * @param in String
+     * @return String
+     */
+    private static String trimString(String in)
+    {
+        in = in.toUpperCase();
+        for(int i=0; i<26; i++)
+        {
+            char x = (char)(i+65);
+            int index = in.indexOf(""+x);
+            if(index != in.lastIndexOf(""+x))
+            {
+                //Remove all duplicates of x
+                in = in.substring(0, index) + in.substring(index+1).replace(""+x,"");
+            }
+        }
+        return in;
+    }
+
+    /**
+     * Generate a configuration from a seeded PRNG.
+     * Not all connections have to be done.
+     * @param rand Seeded PRNG
+     * @return configuration
+     */
+    public static int[] seedToPlugboardConfiguration(Random rand)
+    {
+        int connectionCount = rand.nextInt(14); //0..13
+        int[] out = empty;
+        for(int i=0; i<connectionCount; i++)
+        {
+            int rA = rand.nextInt(26);
+            while(out[rA] != rA) rA = (rA+1)%26;
+            int rB = rand.nextInt(26);
+            while(out[rB] != rB) rB = (rB+1)%26;
+            out[rA] = rB;
+            out[rB] = rA;
+        }
+        return out;
+    }
+
+    /**
+     * Generate a configuration with full set of connections from a seeded PRNG
+     * @param rand Seeded PRNG
+     * @return configuration
+     */
+    public static int[] seedToReflectorConfiguration(Random rand)
+    {
+        int[] out = empty;
+        for(int i=0; i<empty.length; i++)
+        {
+            int rA = rand.nextInt(26);
+            while(out[rA] != rA) rA = (rA+1)%26;
+            int rB = rand.nextInt(26);
+            while(out[rB] != rB) rB = (rB+1)%26;
+            out[rA] = rB;
+            out[rB] = rA;
+        }
+        return out;
+    }
+
+    /**
+     * Converts a configurations array back to a String representation
+     * @param c array
+     * @return String representation
+     */
+    public static String configurationToString(int[] c)
+    {
+        String out = "";
+        for(int i=0; i<c.length; i++) // c.length = 26 (mostly)
+        {
+            if(c[i] != i && out.indexOf((char)(c[i])+65)==-1)
+            {
+                out += (char) (i+65);
+                out += (char) (c[i]+65);
+            }
+        }
+        return out;
     }
 }

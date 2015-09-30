@@ -30,7 +30,7 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_G31;
  */
 public class LayoutContainer_G31 extends LayoutContainer
 {
-    private Enigma_G31 enigma;
+    protected Enigma enigma;
 
     protected int offsetRot = 40;
 
@@ -42,6 +42,12 @@ public class LayoutContainer_G31 extends LayoutContainer
     protected Spinner rotor2PositionView;
     protected Spinner rotor3PositionView;
     protected Spinner reflectorPositionView;
+
+    public LayoutContainer_G31(int off)
+    {
+        super();
+        this.offsetRot = off;
+    }
 
     public LayoutContainer_G31()
     {
@@ -88,7 +94,6 @@ public class LayoutContainer_G31 extends LayoutContainer
     @Override
     public void setLayoutState(EnigmaStateBundle state)
     {
-        this.state = state;
         this.rotor1View.setSelection(state.getTypeRotor1() - offsetRot);
         this.rotor2View.setSelection(state.getTypeRotor2() - offsetRot);
         this.rotor3View.setSelection(state.getTypeRotor3() - offsetRot);
@@ -99,8 +104,9 @@ public class LayoutContainer_G31 extends LayoutContainer
     }
 
     @Override
-    protected void refreshState()
+    public void syncStateFromLayoutToEnigma()
     {
+        EnigmaStateBundle state = getEnigma().getState();
         state.setTypeRotor1(rotor1View.getSelectedItemPosition() + offsetRot);
         state.setTypeRotor2(rotor2View.getSelectedItemPosition() + offsetRot);
         state.setTypeRotor3(rotor3View.getSelectedItemPosition() + offsetRot);
@@ -108,12 +114,13 @@ public class LayoutContainer_G31 extends LayoutContainer
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
         state.setRotationReflector(reflectorPositionView.getSelectedItemPosition());
+        getEnigma().setState(state);
     }
 
     @Override
     public void showRingSettingsDialog()
     {
         new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRotRef().
-                createRingSettingsDialog(state);
+                createRingSettingsDialog(getEnigma().getState());
     }
 }

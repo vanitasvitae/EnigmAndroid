@@ -1,6 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.R;
@@ -86,7 +85,6 @@ public class LayoutContainer_T extends LayoutContainer
     @Override
     public void setLayoutState(EnigmaStateBundle state)
     {
-        this.state = state;
         this.rotor1View.setSelection(state.getTypeRotor1() - 120);
         this.rotor2View.setSelection(state.getTypeRotor2() - 120);
         this.rotor3View.setSelection(state.getTypeRotor3() - 120);
@@ -98,8 +96,9 @@ public class LayoutContainer_T extends LayoutContainer
     }
 
     @Override
-    protected void refreshState()
+    public void syncStateFromLayoutToEnigma()
     {
+        EnigmaStateBundle state = getEnigma().getState();
         state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 120);
         state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 120);
         state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 120);
@@ -107,12 +106,13 @@ public class LayoutContainer_T extends LayoutContainer
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
         state.setRotationReflector(reflectorPositionView.getSelectedItemPosition());
+        getEnigma().setState(state);
     }
 
     @Override
     public void showRingSettingsDialog()
     {
         new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRotRef().
-                createRingSettingsDialog(state);
+                createRingSettingsDialog(getEnigma().getState());
     }
 }

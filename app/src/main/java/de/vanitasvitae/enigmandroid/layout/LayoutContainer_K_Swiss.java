@@ -88,7 +88,6 @@ public class LayoutContainer_K_Swiss extends LayoutContainer
     @Override
     public void setLayoutState(EnigmaStateBundle state)
     {
-        this.state = state;
         this.rotor1View.setSelection(state.getTypeRotor1() - 90);
         this.rotor2View.setSelection(state.getTypeRotor2() - 90);
         this.rotor3View.setSelection(state.getTypeRotor3() - 90);
@@ -99,8 +98,9 @@ public class LayoutContainer_K_Swiss extends LayoutContainer
     }
 
     @Override
-    protected void refreshState()
+    public void syncStateFromLayoutToEnigma()
     {
+        EnigmaStateBundle state = getEnigma().getState();
         state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 90);
         state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 90);
         state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 90);
@@ -108,12 +108,13 @@ public class LayoutContainer_K_Swiss extends LayoutContainer
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());
         state.setRotationReflector(reflectorPositionView.getSelectedItemPosition());
+        getEnigma().setState(state);
     }
 
     @Override
     public void showRingSettingsDialog()
     {
         new RingSettingsDialogBuilder.RingSettingsDialogBuilderRotRotRotRef().
-                createRingSettingsDialog(state);
+                createRingSettingsDialog(getEnigma().getState());
     }
 }

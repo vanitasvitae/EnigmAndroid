@@ -3,7 +3,6 @@ package de.vanitasvitae.enigmandroid.layout;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Objects;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
@@ -45,6 +43,9 @@ public class PluggableDialogBuilder
     protected MainActivity main;
     protected EnigmaStateBundle state;
 
+    protected boolean allowIncompleteConnections;
+    protected Button positive;
+
     protected HashSet<Integer> colors;
 
     protected int previouslyPressedButton = -1;
@@ -59,6 +60,7 @@ public class PluggableDialogBuilder
 
     public void showDialogPlugboard()
     {
+        allowIncompleteConnections = true;
         restoreConfigurationPlugboard();
         AlertDialog.Builder adb = new AlertDialog.Builder(main);
         adb.setTitle(R.string.title_plugboard_dialog);
@@ -71,6 +73,7 @@ public class PluggableDialogBuilder
                             plugs[i] = buttons.get(i).getConnectedButton();
                         }
                         state.setConfigurationPlugboard(plugs);
+                        main.onDialogFinished(state);
                         Toast.makeText(main.getApplication(), R.string.dialog_plugboard_set, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -92,6 +95,7 @@ public class PluggableDialogBuilder
 
     public void showDialogReflector()
     {
+        allowIncompleteConnections = false;
         restoreConfigurationReflector();
         AlertDialog.Builder adb = new AlertDialog.Builder(main);
         adb.setTitle(R.string.title_reflector_dialog);
@@ -104,6 +108,7 @@ public class PluggableDialogBuilder
                             plugs[i] = buttons.get(i).getConnectedButton();
                         }
                         state.setConfigurationReflector(plugs);
+                        main.onDialogFinished(state);
                         Toast.makeText(main.getApplication(), R.string.dialog_reflector_set, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -120,6 +125,11 @@ public class PluggableDialogBuilder
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         d.show();
+        positive = ((AlertDialog)d).getButton(AlertDialog.BUTTON_POSITIVE);
+        if(!allConnectionsDone())
+        {
+            positive.setEnabled(false);
+        }
         d.getWindow().setAttributes(lp);
     }
     public void initializeLayout()
@@ -186,6 +196,16 @@ public class PluggableDialogBuilder
         }
     }
 
+    protected boolean allConnectionsDone()
+    {
+        for(int i=0; i<buttons.size(); i++)
+        {
+            ButtonWrapper b = buttons.get(i);
+            if(b.getConnectedButton() == i || b.getConnectedButton() == -1) return false;
+        }
+        return true;
+    }
+
     protected void restoreConfigurationPlugboard()
     {
         restoreConfiguration(state.getConfigurationPlugboard());
@@ -234,6 +254,16 @@ public class PluggableDialogBuilder
 
             b1.setResourceID(res);
             b2.setResourceID(res);
+        }
+        updatePositiveButton();
+    }
+
+    protected void updatePositiveButton()
+    {
+        if(!allowIncompleteConnections && positive != null)
+        {
+            if(allConnectionsDone()) positive.setEnabled(true);
+            else positive.setEnabled(false);
         }
     }
 

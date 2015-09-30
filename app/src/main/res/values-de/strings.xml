@@ -5,6 +5,9 @@
     <string name="action_version">Version</string>
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_random">Zufällige Konfiguration</string>
+    <string name="action_read_qr">Lese Konfiguration aus QR-Code</string>
+    <string name="action_send_qr">Teile Konfiguration per QR-Code</string>
+    <string name="action_read_passphrase">Konfiguration aus Schlüsselwort</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_choose_ringsettings">Ringstellung</string>
     <string name="action_send">Senden</string>
@@ -24,13 +27,14 @@
     <string name="hint_reflector_position">Position\nUmkehr-\nWalze</string>
     <string name="hint_thin_rotor_position">Position\nWalze 4</string>
     <string name="hint_enigma_reflector_wiring">Verkabelung Umkehrwalze</string>
+    <string name="hint_passphrase">Passphrase eingeben</string>
     <string name="button_crypt">Ver-/Entschlüsseln</string>
     <string name="error_parsing_plugs">Fehler: Fehlerhafte Steckerbrettkonfiguration.</string>
     <string name="error_unable_to_plug_a_b">Kann Stecker nicht setzen: </string>
     <string name="error_plug_already_in_use">Fehler: Einer oder mehrere dieser Stecker sind bereits in Benutzung: </string>
     <string name="error_no_text_to_send">Nachricht ist leer.</string>
     <string name="title_ringsetting">Ringstellungen</string>
-    <string name="title_plugboard_dialog">Steckbrett-\nverbindungen</string>
+    <string name="title_plugboard_dialog">Steckbrett-\nVerbindungen</string>
     <string name="title_reflector_dialog">Verkabelung Umkehrwalze</string>
     <string name="dialog_positiv">OK</string>
     <string name="dialog_negativ">Abbrechen</string>
@@ -38,6 +42,7 @@
     <string name="dialog_ringsettings_success">Setze Ringe auf</string>
     <string name="dialog_reflector_set">Umkehrwalze verkabelt.</string>
     <string name="dialog_plugboard_set">Steckbrett gesteckert.</string>
+    <string name="dialog_passphrase_set">Generiere Konfiguration aus Schlüsselwort</string>
     <string name="dialog_abort">Keine Änderungen</string>
     <string name="message_reset">Enigma zurückgesetzt</string>
     <string name="message_random">Enigma auf zufällige Konfiguration gesetzt</string>

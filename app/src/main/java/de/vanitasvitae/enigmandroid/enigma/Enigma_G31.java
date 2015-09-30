@@ -2,9 +2,6 @@ package de.vanitasvitae.enigmandroid.enigma;
 
 import android.util.Log;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -36,19 +33,24 @@ public class Enigma_G31 extends Enigma
 
     protected Reflector reflector;
 
+    public Enigma_G31(int off)
+    {
+        super(off);
+    }
+
     public Enigma_G31()
     {
-        super();
+        super(40);
         machineType = "G31";
     }
     @Override
     public void initialize()
     {
         this.entryWheel = Rotor.createRotor(1, 0, 0);
-        this.rotor1 = Rotor.createRotor(40, 0, 0);
-        this.rotor2 = Rotor.createRotor(41, 0, 0);
-        this.rotor3 = Rotor.createRotor(42, 0, 0);
-        this.reflector = Reflector.createReflector(40);
+        this.rotor1 = Rotor.createRotor(machineTypeOffset, 0, 0);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset + 1, 0, 0);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset + 2, 0, 0);
+        this.reflector = Reflector.createReflector(machineTypeOffset);
     }
 
     @Override
@@ -70,15 +72,12 @@ public class Enigma_G31 extends Enigma
         }
     }
 
-    @Override
-    public void randomState()
+    protected void generateState()
     {
-        Random rand = new SecureRandom();
-
-        int rotor1, rotor2=-1, rotor3=-1;
-        rotor1 = rand.nextInt(3);
-        while(rotor2 == -1 || rotor2 == rotor1) rotor2 = rand.nextInt(3);
-        rotor3 = 3 - rotor1 - rotor2;
+        int r1, r2=-1, r3=-1;
+        r1 = rand.nextInt(3);
+        while(r2 == -1 || r2 == r1) r2 = rand.nextInt(3);
+        r3 = 3 - r1 - r2;
 
         int rot1 = rand.nextInt(26);
         int rot2 = rand.nextInt(26);
@@ -89,10 +88,10 @@ public class Enigma_G31 extends Enigma
         int ring3 = rand.nextInt(26);
         int ringRef = rand.nextInt(26);
 
-        this.rotor1 = Rotor.createRotor(40 + rotor1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(40 + rotor2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(40 + rotor3, rot3, ring3);
-        this.reflector = Reflector.createReflector(40);
+        this.rotor1 = Rotor.createRotor(machineTypeOffset + r1, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset + r2, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset + r3, rot3, ring3);
+        this.reflector = Reflector.createReflector(machineTypeOffset);
         reflector.setRotation(rotRef);
         reflector.setRingSetting(ringRef);
     }
@@ -159,5 +158,66 @@ public class Enigma_G31 extends Enigma
         state.setRingSettingReflector(reflector.getRingSetting());
 
         return state;
+    }
+
+    @Override
+    public void restoreState(String mem)
+    {
+        long s = Long.valueOf(mem);
+        s = removeDigit(s, 12);  //Remove machine type
+
+        int r1 = getValue(s, 10);
+        s = removeDigit(s, 10);
+        int r2 = getValue(s, 10);
+        s = removeDigit(s, 10);
+        int r3 = getValue(s, 10);
+        s = removeDigit(s, 10);
+
+        int rot1 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ring1 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int rot2 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ring2 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int rot3 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ring3 = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int rotRef = getValue(s, 26);
+        s = removeDigit(s, 26);
+        int ringRef = getValue(s, 26);
+
+
+        this.rotor1 = Rotor.createRotor(machineTypeOffset + r1, rot1, ring1);
+        this.rotor2 = Rotor.createRotor(machineTypeOffset + r2, rot2, ring2);
+        this.rotor3 = Rotor.createRotor(machineTypeOffset + r3, rot3, ring3);
+        this.reflector = Reflector.createReflector(machineTypeOffset);
+        this.reflector.setRotation(rotRef);
+        this.reflector.setRingSetting(ringRef);
+    }
+
+    @Override
+    public String stateToString()
+    {
+        String save = "";
+        long s = reflector.getRingSetting();
+        s = addDigit(s, reflector.getRotation(), 26);
+        s = addDigit(s, rotor3.getRingSetting(), 26);
+        s = addDigit(s, rotor3.getRotation(), 26);
+        s = addDigit(s, rotor2.getRingSetting(), 26);
+        s = addDigit(s, rotor2.getRotation(), 26);
+        s = addDigit(s, rotor1.getRingSetting(), 26);
+        s = addDigit(s, rotor1.getRotation(), 26);
+
+        s = addDigit(s, rotor3.getNumber(), 10);
+        s = addDigit(s, rotor2.getNumber(), 10);
+        s = addDigit(s, rotor1.getNumber(), 10);
+
+        s = addDigit(s, 3, 12); //Machine #3
+
+        save = save+s;
+        return save;
     }
 }
