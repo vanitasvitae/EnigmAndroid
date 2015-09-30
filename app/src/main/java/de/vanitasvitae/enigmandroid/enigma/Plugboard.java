@@ -168,4 +168,17 @@ public class Plugboard
         }
         return out;
     }
+
+    public static long configurationToLong(int[] a)
+    {
+        String s = configurationToString(a);
+        long l = 0;
+        for(char c : s.toCharArray())
+        {
+            int i = (int) (c);
+            i-=65;
+            Enigma.addDigit(l,i,26);
+        }
+        return l;
+    }
 }

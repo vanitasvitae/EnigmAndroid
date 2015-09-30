@@ -3,7 +3,6 @@ package de.vanitasvitae.enigmandroid.layout;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,7 +17,8 @@ import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 
 /**
- * Builder for the dialog that is used to get settings for the rings
+ * Builder for the dialog that is used to plug the plugboard/wire the
+ * rewirable reflector.
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -50,6 +50,10 @@ public class PluggableDialogBuilder
 
     protected int previouslyPressedButton = -1;
 
+    /**
+     * Constructor that prepares layout and buttons.
+     * @param state EnigmaStateBundle from which dialog gets restored and which gets manipulated
+     */
     public PluggableDialogBuilder(EnigmaStateBundle state)
     {
         this.state = state;
@@ -58,6 +62,9 @@ public class PluggableDialogBuilder
         setButtonListeners();
     }
 
+    /**
+     * Show dialog for the plugboard
+     */
     public void showDialogPlugboard()
     {
         allowIncompleteConnections = true;
@@ -93,6 +100,10 @@ public class PluggableDialogBuilder
         d.getWindow().setAttributes(lp);
     }
 
+    /**
+     * Show the dialog for the reflector. This can only be positively closed when all
+     * connections are made.
+     */
     public void showDialogReflector()
     {
         allowIncompleteConnections = false;
@@ -132,6 +143,10 @@ public class PluggableDialogBuilder
         }
         d.getWindow().setAttributes(lp);
     }
+
+    /**
+     * Initialize array of buttons, initialize background-color hashset.
+     */
     public void initializeLayout()
     {
         buttons = new ArrayList<>();
@@ -178,9 +193,11 @@ public class PluggableDialogBuilder
         colors.add(R.drawable.button_pink);
         colors.add(R.drawable.button_elder);
         colors.add(R.drawable.button_black);
-        Log.d("Dialogtest", ""+R.drawable.button_red);
     }
 
+    /**
+     * Set listeners for all buttons
+     */
     public void setButtonListeners()
     {
         for(int i=0; i<26; i++)
@@ -196,6 +213,11 @@ public class PluggableDialogBuilder
         }
     }
 
+    /**
+     * Check, whether all connections are done. If so, return true.
+     * return false otherwise
+     * @return boolean
+     */
     protected boolean allConnectionsDone()
     {
         for(int i=0; i<buttons.size(); i++)
@@ -206,16 +228,26 @@ public class PluggableDialogBuilder
         return true;
     }
 
+    /**
+     * restore the connections according to the plugboard
+     */
     protected void restoreConfigurationPlugboard()
     {
         restoreConfiguration(state.getConfigurationPlugboard());
     }
 
+    /**
+     * restore the connections according to the reflector
+     */
     protected void restoreConfigurationReflector()
     {
         restoreConfiguration(state.getConfigurationReflector());
     }
 
+    /**
+     * Connect all the buttons according to c.
+     * @param c array of connections
+     */
     protected void restoreConfiguration(int[] c)
     {
         for(int i=0; i<26; i++)
@@ -224,6 +256,14 @@ public class PluggableDialogBuilder
         }
     }
 
+    /**
+     * Connect button1 and button2. If two buttons got pressed afterwards and they are not the same
+     * they get connected. If one or both of them was connected beforehand, these connections get
+     * resolved. If both events come from the same button, the buttons connections (if any) get
+     * resolved.
+     * @param button1 first and
+     * @param button2 second button
+     */
     public void setPlug(int button1, int button2)
     {
         if(button1 == button2)
@@ -258,6 +298,10 @@ public class PluggableDialogBuilder
         updatePositiveButton();
     }
 
+    /**
+     * Update state of positive button. Check, if all connections are done and if so, enable positive
+     * button. Otherwise disable it.
+     */
     protected void updatePositiveButton()
     {
         if(!allowIncompleteConnections && positive != null)
@@ -267,6 +311,11 @@ public class PluggableDialogBuilder
         }
     }
 
+    /**
+     * Set buttons to not connected. That includes changing background to grey, set connection to
+     * itself.
+     * @param b
+     */
     private void setButtonFree(int b)
     {
         ButtonWrapper button = buttons.get(b);
@@ -277,6 +326,10 @@ public class PluggableDialogBuilder
         button.setConnectedButton(b);
     }
 
+    /**
+     * Handle button pressed events.
+     * @param button button that got pressed
+     */
     public void buttonPressed(int button)
     {
         if(previouslyPressedButton != -1)
@@ -291,12 +344,22 @@ public class PluggableDialogBuilder
         }
     }
 
+    /**
+     * Wrapper class for Buttons, that also stores the index of both, the connected button, as well
+     * as the button itself and resourceID of used material.
+     */
     private static class ButtonWrapper
     {
         private Button button;
         private int connectedButton;
         private int resourceID;
         private int index;
+
+        /**
+         * Create ButtonWrapper
+         * @param button underlying Button
+         * @param index index of the button in the buttons array
+         */
         public ButtonWrapper(Button button, int index)
         {
             this.button = button;
@@ -304,33 +367,56 @@ public class PluggableDialogBuilder
             this.connectedButton = index;
         }
 
+        /**
+         * set the index of the connected button and update buttons text
+         * @param other index
+         */
         public void setConnectedButton(int other)
         {
             this.connectedButton = other;
             this.getButton().setText((char) (index + 65) + ":" + (char) (connectedButton + 65));
         }
 
+        /**
+         * return index of the connected button
+         * @return index of connected button
+         */
         public int getConnectedButton()
         {
             return this.connectedButton;
         }
 
+        /**
+         * Indicate, that this button is waiting for another button to connect to.
+         */
         public void setWaiting()
         {
             this.getButton().setText((char) (index + 65) + ": ");
         }
 
+        /**
+         * Set buttons background and store value in resourceID
+         * @param r resourceID of background material
+         */
         public void setResourceID(int r)
         {
             button.setBackgroundResource(r);
             this.resourceID = r;
         }
 
+        /**
+         * get resourceID of buttons background as store in resourceID
+         * @return resourceID
+         */
         public int getResourceID()
         {
             return this.resourceID;
         }
 
+        /**
+         * Return stored button object
+         * @return button
+         */
         public Button getButton()
         {
             return button;

@@ -372,16 +372,32 @@ public class MainActivity extends Activity
         }
     }
 
+    /**
+     * Set EnigmAndroid into a certain state as described in the QR-Code
+     * @param mem content of the QR-Code
+     */
     private void restoreStateFromCode(String mem)
     {
-        setPrefMachineType(Enigma.chooseEnigmaFromSave(mem));
-        updateContentView();
-        layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
-        layoutContainer.getEnigma().restoreState(mem);
-        layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
-        layoutContainer.syncStateFromEnigmaToLayout();
+        if(!mem.startsWith(APP_ID+"/"))
+        {
+            Toast.makeText(this, R.string.error_no_valid_qr, Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            mem = mem.substring((APP_ID+"/").length());
+            setPrefMachineType(Enigma.chooseEnigmaFromSave(mem));
+            updateContentView();
+            layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
+            layoutContainer.getEnigma().restoreState(mem);
+            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
+            layoutContainer.syncStateFromEnigmaToLayout();
+        }
     }
 
+    /**
+     * Set EnigmAndroid into a state calculated from the seed.
+     * @param seed seed
+     */
     public void createStateFromSeed(String seed)
     {
         setPrefMachineType(Enigma.chooseEnigmaFromSeed(seed));

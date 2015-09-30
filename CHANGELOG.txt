@@ -3,6 +3,7 @@ v0.1.9-not-yet-released<
 *Added option to share/receive configurations via QR-Code (ZXing Barcode Scanner)
 *Prevent user from setting incomplete reflector wiring
 *Add option to generate configuration from passphrase
+*TODO: Encode content of QR-Code completely in Base26(A..Z)
 *TODO: Add Enigma Z (Probably wont happen due to lack of information :/)
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
 

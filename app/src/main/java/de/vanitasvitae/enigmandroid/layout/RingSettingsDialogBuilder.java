@@ -46,6 +46,10 @@ public abstract class RingSettingsDialogBuilder
         return adapter;
     }
 
+    /**
+     * Creates a ArrayAdapter working over an array of numbers 1 to 26.
+     * @return ArrayAdapter
+     */
     public static ArrayAdapter createAdapter1_26()
     {
         Integer[] ringArray = new Integer[26];
@@ -54,7 +58,9 @@ public abstract class RingSettingsDialogBuilder
     }
 
 
-
+    /**
+     * DialogBuilder for 3 Spinners and ringSettingRotor1-3
+     */
     public static class RingSettingsDialogBuilderRotRotRot extends RingSettingsDialogBuilder
     {
         public void createRingSettingsDialog(final EnigmaStateBundle state)
@@ -161,6 +167,9 @@ public abstract class RingSettingsDialogBuilder
         }
     }
 
+    /**
+     * DialogBuilder for 4 Spinners and ringSettingRotor1-3, ringSettingReflector
+     */
     public static class RingSettingsDialogBuilderRotRotRotRef extends RingSettingsDialogBuilder
     {
         @Override
@@ -286,6 +295,9 @@ public abstract class RingSettingsDialogBuilder
         }
     }
 
+    /**
+     * DialogBuilder for 4 Spinners and ringSettingRotor1-4
+     */
     public static class RingSettingsDialogBuilderRotRotRotRot extends RingSettingsDialogBuilderRotRotRotRef
     {
         @Override
@@ -346,6 +358,9 @@ public abstract class RingSettingsDialogBuilder
         }
     }
 
+    /**
+     * Abstract class that defines how Spinners correspond to the EnigmaStateBundle
+     */
     public static abstract class Actions
     {
         protected EnigmaStateBundle stateBundle;
@@ -355,6 +370,10 @@ public abstract class RingSettingsDialogBuilder
         }
     }
 
+    /**
+     * Abstract class that defines, how the 3 Spinners correspond to 3 values in the
+     * EnigmaStateBundle
+     */
     public static abstract class Actions3 extends Actions
     {
         public Actions3(EnigmaStateBundle bundle)
@@ -369,6 +388,10 @@ public abstract class RingSettingsDialogBuilder
         protected abstract int getThirdValueFromBundle();
     }
 
+    /**
+     * Extension of Actions3 which forces implementing classes to implement methods for the fourth
+     * Spinner.
+     */
     public static abstract class Actions4 extends Actions3
     {
         public Actions4(EnigmaStateBundle bundle)

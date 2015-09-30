@@ -1,5 +1,6 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -156,7 +157,7 @@ public class Enigma_I extends Enigma
         String plugboardConf = mem.substring(mem.lastIndexOf(":p") + 2);
         long s = Long.valueOf(mem.substring(0, mem.indexOf(":p")));
 
-        s = removeDigit(s, 12);  //Remove machine type
+        s = removeDigit(s, 20);  //Remove machine type
         int r1 = getValue(s, 10);
         s = removeDigit(s, 10);
         int r2 = getValue(s, 10);
@@ -188,7 +189,7 @@ public class Enigma_I extends Enigma
 
     @Override
     public String stateToString() {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long s = rotor3.getRingSetting();
         s = addDigit(s, rotor3.getRotation(), 26);
         s = addDigit(s, rotor2.getRingSetting(), 26);
@@ -198,7 +199,7 @@ public class Enigma_I extends Enigma
         s = addDigit(s, rotor3.getNumber(), 10);
         s = addDigit(s, rotor2.getNumber(), 10);
         s = addDigit(s, rotor1.getNumber(), 10);
-        s = addDigit(s, 0, 12); //Machine #0
+        s = addDigit(s, 0, 20); //Machine #0
 
         save = save+s;
         save = save + ":p" + Plugboard.configurationToString(getState().getConfigurationPlugboard());

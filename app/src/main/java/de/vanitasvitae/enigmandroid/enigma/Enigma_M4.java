@@ -201,7 +201,7 @@ public class Enigma_M4 extends Enigma
         String plugboardConf = mem.substring(mem.lastIndexOf(":p") + 2);
         long s = Long.valueOf(mem.substring(0, mem.indexOf(":p")));
 
-        s = (s-(s%12))/12;  //Remove machine type
+        s = removeDigit(s, 20);  //Remove machine type
 
         int r1 = getValue(s, 10);
         s = removeDigit(s, 10);
@@ -248,7 +248,7 @@ public class Enigma_M4 extends Enigma
 
     @Override
     public String stateToString() {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long s = reflector.getRingSetting();
         s = addDigit(s, reflector.getRotation(), 26);
         s = addDigit(s, rotor4.getRingSetting(), 26);
@@ -266,7 +266,7 @@ public class Enigma_M4 extends Enigma
         s = addDigit(s, rotor2.getNumber(), 10);
         s = addDigit(s, rotor1.getNumber(), 10);
 
-        s = addDigit(s, 2, 12);
+        s = addDigit(s, 2, 20);
 
         save = save+s;
         save = save + ":p" + Plugboard.configurationToString(getState().getConfigurationPlugboard());

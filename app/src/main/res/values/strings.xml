@@ -34,6 +34,7 @@
     <string name="error_unable_to_plug_a_b">Unable to plug </string>
     <string name="error_plug_already_in_use">Error: One or more of these plugs are already in use:</string>
     <string name="error_no_text_to_send">Can\'t send empty text.</string>
+    <string name="error_no_valid_qr">Error: Not a valid EnigmAndroid QR-Code!</string>
     <string name="title_ringsetting">Ring-Settings</string>
     <string name="title_plugboard_dialog">Plugboard Settings</string>
     <string name="title_reflector_dialog">Reflector Wiring</string>

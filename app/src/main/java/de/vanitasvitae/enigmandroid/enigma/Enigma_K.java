@@ -166,7 +166,7 @@ public class Enigma_K extends Enigma
     public void restoreState(String mem)
     {
         long s = Long.valueOf(mem);
-        s = removeDigit(s,12);  //Remove machine type
+        s = removeDigit(s,20);  //Remove machine type
         int r1 = getValue(s,10);
         s = removeDigit(s,10);
         int r2 = getValue(s,10);
@@ -201,7 +201,7 @@ public class Enigma_K extends Enigma
     @Override
     public String stateToString()
     {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long t = reflector.getRingSetting();
         t = addDigit(t, reflector.getRotation(), 26);
         t = addDigit(t, rotor3.getRingSetting(),26);
@@ -213,7 +213,7 @@ public class Enigma_K extends Enigma
         t = addDigit(t, rotor3.getNumber(), 10);
         t = addDigit(t, rotor2.getNumber(), 10);
         t = addDigit(t, rotor1.getNumber(), 10);
-        t = addDigit(t, 7, 12); //Machine #7
+        t = addDigit(t, 7, 20); //Machine #7
 
         save = save+t;
         return save;

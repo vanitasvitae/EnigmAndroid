@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.sql.Ref;
 import java.util.Random;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -62,7 +63,7 @@ public class Enigma_M3 extends Enigma_I
 
     @Override
     public String stateToString() {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long s = rotor3.getRingSetting();
         s = addDigit(s, rotor3.getRotation(), 26);
         s = addDigit(s, rotor2.getRingSetting(), 26);
@@ -72,7 +73,7 @@ public class Enigma_M3 extends Enigma_I
         s = addDigit(s, rotor3.getNumber(), 10);
         s = addDigit(s, rotor2.getNumber(), 10);
         s = addDigit(s, rotor1.getNumber(), 10);
-        s = addDigit(s, 1, 12); //Machine #1
+        s = addDigit(s, 1, 20); //Machine #1
 
         save = save+s;
         save = save + ":p" + Plugboard.configurationToString(getState().getConfigurationPlugboard());

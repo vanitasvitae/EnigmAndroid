@@ -5,21 +5,17 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
-import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 
 /**
- * Builder for the dialog that is used to get settings for the rings
+ * Builder for the dialog that is used to obtain a passphrase to generate
+ * a enigma configuration from it.
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -51,22 +47,27 @@ public class PassphraseDialogBuilder
         passphrase.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                //Do nothing
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                //Do nothing
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                //Count input text and enable positive button if length > 0.
+                //Disable else
                 if(s.length() > 0) positive.setEnabled(true);
                 else positive.setEnabled(false);
             }
         });
     }
 
+    /**
+     * create and show the dialog
+     */
     public void showDialog()
     {
 

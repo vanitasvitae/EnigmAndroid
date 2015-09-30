@@ -1,5 +1,7 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
+
 /**
  * Implementation of the Enigma machine of type G31 (Abwehr)
  * Copyright (C) 2015  Paul Schaub
@@ -31,7 +33,7 @@ public class Enigma_G260 extends Enigma_G31
     @Override
     public String stateToString()
     {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long s = reflector.getRingSetting();
         s = addDigit(s, reflector.getRotation(), 26);
         s = addDigit(s, rotor3.getRingSetting(), 26);
@@ -45,7 +47,7 @@ public class Enigma_G260 extends Enigma_G31
         s = addDigit(s, rotor2.getNumber(), 10);
         s = addDigit(s, rotor1.getNumber(), 10);
 
-        s = addDigit(s, 5, 12); //Machine #5
+        s = addDigit(s, 5, 20); //Machine #5
 
         save = save+s;
         return save;

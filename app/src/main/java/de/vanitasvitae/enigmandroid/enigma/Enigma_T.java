@@ -5,6 +5,7 @@ import android.util.Log;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -158,7 +159,7 @@ public class Enigma_T extends Enigma
     public void restoreState(String mem)
     {
         long s = Long.valueOf(mem);
-        s = removeDigit(s,12);  //Remove machine type
+        s = removeDigit(s,20);  //Remove machine type
         int r1 = getValue(s,10);
         s = removeDigit(s,10);
         int r2 = getValue(s,10);
@@ -193,7 +194,7 @@ public class Enigma_T extends Enigma
     @Override
     public String stateToString()
     {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long t = reflector.getRingSetting();
         t = addDigit(t, reflector.getRotation(), 26);
         t = addDigit(t, rotor3.getRingSetting(),26);
@@ -205,7 +206,7 @@ public class Enigma_T extends Enigma
         t = addDigit(t, rotor3.getNumber(), 10);
         t = addDigit(t, rotor2.getNumber(), 10);
         t = addDigit(t, rotor1.getNumber(), 10);
-        t = addDigit(t, 11, 12); //Machine #11
+        t = addDigit(t, 11, 20); //Machine #11
 
         save = save+t;
         return save;

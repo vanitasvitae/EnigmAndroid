@@ -2,6 +2,7 @@ package de.vanitasvitae.enigmandroid.enigma;
 
 import android.util.Log;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -164,7 +165,7 @@ public class Enigma_G31 extends Enigma
     public void restoreState(String mem)
     {
         long s = Long.valueOf(mem);
-        s = removeDigit(s, 12);  //Remove machine type
+        s = removeDigit(s, 20);  //Remove machine type
 
         int r1 = getValue(s, 10);
         s = removeDigit(s, 10);
@@ -201,7 +202,7 @@ public class Enigma_G31 extends Enigma
     @Override
     public String stateToString()
     {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long s = reflector.getRingSetting();
         s = addDigit(s, reflector.getRotation(), 26);
         s = addDigit(s, rotor3.getRingSetting(), 26);
@@ -215,7 +216,7 @@ public class Enigma_G31 extends Enigma
         s = addDigit(s, rotor2.getNumber(), 10);
         s = addDigit(s, rotor1.getNumber(), 10);
 
-        s = addDigit(s, 3, 12); //Machine #3
+        s = addDigit(s, 3, 20); //Machine #3
 
         save = save+s;
         return save;

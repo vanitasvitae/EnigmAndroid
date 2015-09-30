@@ -3,6 +3,7 @@ package de.vanitasvitae.enigmandroid.enigma;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -36,7 +37,7 @@ public class Enigma_K_Swiss_Standard extends Enigma_K
     @Override
     public String stateToString()
     {
-        String save = "";
+        String save = MainActivity.APP_ID+"/";
         long t = reflector.getRingSetting();
         t = addDigit(t, reflector.getRotation(), 26);
         t = addDigit(t, rotor3.getRingSetting(),26);
@@ -48,7 +49,7 @@ public class Enigma_K_Swiss_Standard extends Enigma_K
         t = addDigit(t, rotor3.getNumber(), 10);
         t = addDigit(t, rotor2.getNumber(), 10);
         t = addDigit(t, rotor1.getNumber(), 10);
-        t = addDigit(t, 8, 12); //Machine #8
+        t = addDigit(t, 8, 20); //Machine #8
 
         save = save+t;
         return save;
