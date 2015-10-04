@@ -112,7 +112,8 @@ public abstract class RingSettingsDialogBuilder
         {
             if(adapters.length != 3 || rIDs.length != 3)
             {
-                Log.d("Enigm|RingSettings", "Length of adapters array or length of rIDs array not equal to 3!");
+                Log.e(MainActivity.APP_ID, "RingSettingsDialogBuilderRotRotRot.showDialog():" +
+						" Length of adapters array or length of rIDs array not equal to 3!");
             }
             final Actions3 action = (Actions3) actions;
             final MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
@@ -232,7 +233,8 @@ public abstract class RingSettingsDialogBuilder
         protected void showDialog(final EnigmaStateBundle stateBundle, ArrayAdapter[] adapters, int[] rIDs, Actions actions) {
             if(adapters.length != 4 || rIDs.length != 4)
             {
-                Log.d("Enigm|RingSettings", "Length of adapters array or length of rIDs array not equal to 4!");
+                Log.d(MainActivity.APP_ID, "RingSettingsDialogBuilderRotRotRotRef.showDialog():" +
+                        "Length of adapters array or length of rIDs array not equal to 4!");
             }
             final Actions4 action = (Actions4) actions;
             final MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();

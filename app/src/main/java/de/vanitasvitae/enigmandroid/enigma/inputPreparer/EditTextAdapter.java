@@ -79,11 +79,11 @@ public abstract class EditTextAdapter
 
     public static class EditTextAdapterGap extends EditTextAdapter
     {
-        protected int blocksize;
-        public EditTextAdapterGap(EditText editText, int blocksize)
+        protected int blockSize;
+        public EditTextAdapterGap(EditText editText, int blockSize)
         {
             super(editText);
-            this.blocksize = blocksize;
+            this.blockSize = blockSize;
         }
 
         @Override
@@ -92,12 +92,12 @@ public abstract class EditTextAdapter
             this.content = text;
             String out = "";
             int i;
-            for(i=0; i<text.length()/blocksize; i++)
+            for(i=0; i<text.length()/blockSize; i++)
             {
-                out = out + text.substring(i*blocksize, (i+1)*blocksize);
+                out = out + text.substring(i*blockSize, (i+1)*blockSize);
                 out = out + " ";
             }
-            out = out + text.substring(i*blocksize);
+            out = out + text.substring(i*blockSize);
             this.editText.setText(out);
         }
     }

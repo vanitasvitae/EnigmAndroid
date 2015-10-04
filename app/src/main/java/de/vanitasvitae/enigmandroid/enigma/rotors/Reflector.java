@@ -2,10 +2,11 @@ package de.vanitasvitae.enigmandroid.enigma.rotors;
 
 import android.util.Log;
 
-import java.util.Random;
+import java.math.BigInteger;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
-import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
+import de.vanitasvitae.enigmandroid.enigma.Enigma;
+import de.vanitasvitae.enigmandroid.enigma.Plugboard;
 
 /**
  * Reflector of the enigma machine.
@@ -30,25 +31,51 @@ import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
  */
 public class Reflector
 {
-    protected String type;
-    protected int number;
+    protected int type;
+    protected String name;
+    protected int index;
+    protected String summary;
     protected int[] connections;
     protected int rotation;
     protected int ringSetting;
-
-    public static final int[] defaultWiring_D_KD_G31 =  {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
 
     /**
      * This constructor is not accessible from outside this class file.
      * Use the one of the createReflector* methods instead to create concrete Reflectors from
      * outside this class file
-     * @param type type indicator of the reflector
+     * @param type name indicator of the reflector
      * @param connections wiring of the reflector as Integer array
      */
-    protected Reflector(String type, int[] connections)
+    protected Reflector(int type, String name, String summary, int[] connections)
     {
         this.type = type;
+        this.name = name;
+        this.summary = summary;
         this.connections = connections;
+    }
+
+    public Reflector getInstance()
+    {
+        //noinspection ConstantConditions
+        return createReflector(this.type).setIndex(this.getIndex());
+    }
+
+    public Reflector getInstance(int rotation, int ringSetting)
+    {
+        //noinspection ConstantConditions
+        return createReflector(this.type).setIndex(this.getIndex())
+                .setRotation(rotation).setRingSetting(ringSetting);
+    }
+
+    public Reflector setIndex(int index)
+    {
+        this.index = index;
+        return this;
+    }
+
+    public int getIndex()
+    {
+        return this.index;
     }
 
     public int getRotation()
@@ -61,19 +88,37 @@ public class Reflector
         return ringSetting;
     }
 
-    public void setRotation(int rotation)
+    public Reflector setRotation(int rotation)
     {
         this.rotation = rotation;
+        return this;
     }
 
-    public void setRingSetting(int ringSetting)
+    public Reflector setRingSetting(int ringSetting)
     {
         this.ringSetting = ringSetting;
+        return this;
     }
 
-    public void setConfiguration(int[] c)
+    public Reflector setConfiguration(int[] c)
     {
         this.connections = c;
+        return this;
+    }
+
+    public BigInteger setConfiguration(BigInteger b)
+    {
+        String s = "";
+
+        int x;
+        while((x = Enigma.getValue(b, 27)) != 26 || b.compareTo(BigInteger.ZERO) > 1)
+        {
+            s = ((char) (x+65))+s;
+            b = Enigma.removeDigit(b, 27);
+        }
+        Log.d(MainActivity.APP_ID, "Restored: " + s);
+        this.setConfiguration(Plugboard.stringToConfiguration(s));
+        return b;
     }
 
     public int[] getConfiguration()
@@ -83,7 +128,7 @@ public class Reflector
 
     /**
      * Factory method to create reflectors.
-     * @param type type of the created reflector
+     * @param type name of the created reflector
      *             1 -> ReflectorA
      *             2 -> ReflectorB
      *             3 -> ReflectorC
@@ -100,59 +145,23 @@ public class Reflector
      */
     public static Reflector createReflector(int type)
     {
-        Log.d(MainActivity.APP_ID, "Reflectorcreation: "+type);
         switch (type)
         {
-            //Enigma I
-            case 10: return new ReflectorA().setNumber(type);
-            case 11: return new ReflectorB().setNumber(type);
-            case 12: return new ReflectorC().setNumber(type);
-
-            //Enigma M3
-            case 20: return new ReflectorB().setNumber(type);
-            case 21: return new ReflectorC().setNumber(type);
-
-            //Enigma M4
-            case 30: return new ReflectorThinB().setNumber(type);
-            case 31: return new ReflectorThinC().setNumber(type);
-
-            //Enigma G31
-            case 40: return new ReflectorEnigma_D_KD_G31().setNumber(type);
-
-            //Enigma G312
-            case 50: return new Reflector_G312().setNumber(type);
-
-            //Enigma G260
-            case 60: return new Reflector_G260().setNumber(type);
-
-            //Enigma D
-            case 70: return new ReflectorEnigma_D_KD_G31().setNumber(type);
-
-            //Enigma K
-            case 80: return new ReflectorEnigma_K().setNumber(type);
-
-            //Enigma K Swiss
-            case 90: return new ReflectorEnigma_K().setNumber(type);
-
-            //Enigma K Swiss Airforce
-            case 100: return new ReflectorEnigma_K().setNumber(type);
-
-            //Enigma R
-            case 110: return new Reflector_R().setNumber(type);
-
-            //Enigma T
-            case 120: return new ReflectorEnigma_T().setNumber(type);
+            case 0: return new Reflector_A();
+            case 1: return new Reflector_B();
+            case 2: return new Reflector_C();
+            case 10: return new Reflector_Thin_B();
+            case 11: return new ReflectorThinC();
+            case 20: return new ReflectorEnigma_D_KD_G31();
+            case 30: return new Reflector_G312();
+            case 40: return new Reflector_K_G260();
+            case 50: return new Reflector_R();
+            case 60: return new ReflectorEnigma_T();
 
             default:
-                Log.e(MainActivity.APP_ID," Tried to create Reflector of invalid type "+type);
+                Log.e(MainActivity.APP_ID," Tried to create Reflector of invalid name "+type);
                 return null;
         }
-    }
-
-    public Reflector setNumber(int nr)
-    {
-        this.number = nr;
-        return this;
     }
 
     /**
@@ -165,20 +174,6 @@ public class Reflector
     public int encrypt(int input)
     {
         return this.connections[normalize(input)];
-    }
-
-    /**
-     * Return the type indicator of the reflector
-     * @return type
-     */
-    public String getType()
-    {
-        return this.type;
-    }
-
-    public int getNumber()
-    {
-        return this.number;
     }
 
     /**
@@ -208,11 +203,12 @@ public class Reflector
      * Used in Enigma I
      * AE  BJ  CM  DZ  FL  GY  HX  IV  KW  NR  OQ  PU  ST
      */
-    private static class ReflectorA extends Reflector
+    public static class Reflector_A extends Reflector
     {
-        public ReflectorA()
+        public Reflector_A()
         {
-            super("A", new int[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
+            super(0, "A", "EJMZALYXVBWFCRQUONTSPIKHGD",
+                    new int[]{4,9,12,25,0,11,24,23,21,1,22,5,2,17,16,20,14,13,19,18,15,8,10,7,6,3});
         }
     }
 
@@ -221,11 +217,12 @@ public class Reflector
      * Used in Enigma I, M3
      * AY  BR  CU  DH  EQ  FS  GL  IP  JX  KN  MO  TZ  VW
      */
-    private static class ReflectorB extends Reflector
+    public static class Reflector_B extends Reflector
     {
-        public ReflectorB()
+        public Reflector_B()
         {
-            super("B", new int[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
+            super(1, "B", "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+                    new int[]{24,17,20,7,16,18,11,3,15,23,13,6,14,10,12,8,4,1,5,25,2,22,21,9,0,19});
         }
     }
 
@@ -234,112 +231,110 @@ public class Reflector
      * Used in Enigma I, M3
      * AF  BV  CP  DJ  EI  GO  HY  KR  LZ  MX  NW  QT  SU
      */
-    private static class ReflectorC extends Reflector
+    public static class Reflector_C extends Reflector
     {
-        public ReflectorC()
+        public Reflector_C()
         {
-            super("C", new int[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
+            super(2, "C", "FVPJIAOYEDRZXWGCTKUGSBNMHL",
+                    new int[]{5,21,15,9,8,0,14,24,4,3,17,25,23,22,6,2,19,10,20,16,18,1,13,12,7,11});
         }
     }
 
     /**
-     * Concrete implementation of thin reflector type b (not equal to normal type b!)
+     * Concrete implementation of thin reflector name b (not equal to normal name b!)
      * When used with Rotor Beta on rotation 0, the pair was equivalent to normal reflector B
      * S->Beta->ThinB->Beta'->X == X->UKWB->S
      * Used in Enigma M4
      * E N K Q A U Y W J I C O P B L M D X Z V F T H R G S
      */
-    private static class ReflectorThinB extends Reflector
+    public static class Reflector_Thin_B extends Reflector
     {
-        public ReflectorThinB()
+        public Reflector_Thin_B()
         {
-            super("ThinB", new int[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
+            super(10, "Thin-B", "ENKQAUYWJICOPBLMDXZVFTHRGS",
+                    new int[]{4,13,10,16,0,20,24,22,9,8,2,14,15,1,11,12,3,23,25,21,5,19,7,17,6,18});
         }
     }
 
     /**
-     * Concrete implementation of thin reflector type c (not equal to normal type c!)
+     * Concrete implementation of thin reflector name c (not equal to normal name c!)
      * When used with Rotor Gamma on rotation 0, the pair was equivalent to normal reflector C
      * S->Gamma->ThinC->Gamma'->X == X->UKWC->S
      * Used in Enigma M4
      * R D O B J N T K V E H M L F C W Z A X G Y I P S U Q
      */
-    private static class ReflectorThinC extends Reflector
+    public static class ReflectorThinC extends Reflector
     {
         public ReflectorThinC()
         {
-            super("ThinC", new int[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
+            super(11, "ThinC", "RDOBJNTKVEHMLFCWZAXGYIPSUQ",
+                    new int[]{17,3,14,1,9,13,19,10,21,4,7,12,11,5,2,22,25,0,23,6,24,8,15,18,20,16});
         }
     }
 
     /**
-     * Pluggable Reflector of the Enigma machine of type D and KD
+     * Pluggable Reflector of the Enigma machine of name D and KD
      * Standard wiring: AI,BM,CE,DT,FG,HR,JY,KS,LQ,NZ,OX,PW,UV
      * Has additional ringSetting and can rotate
      */
     public static class ReflectorEnigma_D_KD_G31 extends Reflector
     {
+        public static final int[] defaultWiring_D_KD_G31 =  {8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13};
         public ReflectorEnigma_D_KD_G31()
         {
-            super("Ref-D", defaultWiring_D_KD_G31);
+            super(20, "Ref-D", "Default: IMETCGFRAYSQBZXWLHKDVUPOJN", defaultWiring_D_KD_G31);
         }
     }
 
     /**
-     * Reflector as used in various Enigma models of the K-Series
-     * I M E T C G F R A Y S Q B Z X W L H K D V U P O J N
-     */
-    private static class ReflectorEnigma_K extends Reflector
-    {
-        public ReflectorEnigma_K()
-        {
-            super("Ref-K", new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
-        }
-    }
-    /**
-     * Reflector as used in the Enigma type T (Tirpitz)
-     * G E K P B T A U M O C N I L J D X Z Y F H W V Q S R
-     */
-    private static class ReflectorEnigma_T extends Reflector
-    {
-        public ReflectorEnigma_T()
-        {
-            super("Ref-T", new int[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
-        }
-    }
-
-    /**
-     * Reflector as used in the Enigma type G-312 Abwehr
+     * Reflector as used in the Enigma name G-312 Abwehr
      * R U L Q M Z J S Y G O C E T K W D A H N B X P V I F
      */
-    private static class Reflector_G312 extends Reflector
+    public static class Reflector_G312 extends Reflector
     {
         public Reflector_G312()
         {
-            super("Ref-G312", new int[]{17,20,11,16,12,25,9,18,24,6,14,2,4,19,10,22,3,0,7,13,1,23,15,21,8,5});
+            super(30, "Ref-G312", "RULQMZJSYGOCETKWDAHNBXPVIF",
+                    new int[]{17,20,11,16,12,25,9,18,24,6,14,2,4,19,10,22,3,0,7,13,1,23,15,21,8,5});
         }
     }
 
     /**
-     * Reflector as used in the Enigma type G-260 Abwehr
+     * Reflector as used in the Enigma name G-260 Abwehr
      * I M E T C G F R A Y S Q B Z X W L H K D V U P O J N
      */
-    private static class Reflector_G260 extends Reflector
+    public static class Reflector_K_G260 extends Reflector
     {
-        public Reflector_G260()
+        public Reflector_K_G260()
         {
-            super("Ref-G260", new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
+            super(40,"Ref-K/G260", "IMETCGFRAYSQBZXWLHKDVUPOJN",
+                    new int[]{8,12,4,19,2,6,5,17,0,24,18,16,1,25,23,22,11,7,10,3,21,20,15,14,9,13});
         }
     }
 
     /**
      * Reflector as used in the Enigma Type R "Rocket" (Reichsbahn)
+     * Q Y H O G N E C V P U Z T F D J A X W M K J S R B L
      */
-    private static class Reflector_R extends Reflector
+    public static class Reflector_R extends Reflector
     {
         public Reflector_R()
         {
-            super("Ref-R", new int[]{16,24,7,14,6,13,4,2,21,15,20,25,19,5,3,9,0,23,22,12,10,8,18,17,1,11});
+            super(50, "Ref-R", "QYHOGNECVPUZTFDJAXWMKJSRBL",
+                    new int[]{16,24,7,14,6,13,4,2,21,15,20,25,19,5,3,9,0,23,22,12,10,8,18,17,1,11});
+        }
+    }
+
+    /**
+     * Reflector as used in the Enigma name T (Tirpitz)
+     * G E K P B T A U M O C N I L J D X Z Y F H W V Q S R
+     */
+    public static class ReflectorEnigma_T extends Reflector
+    {
+        public ReflectorEnigma_T()
+        {
+            super(60, "Ref-T", "GEKPBTAUMOCNILJDXZYFHWVQSR",
+                    new int[]{6,4,10,15,1,19,0,20,12,14,2,13,8,11,9,3,23,25,24,5,7,22,21,16,18,17});
         }
     }
 }

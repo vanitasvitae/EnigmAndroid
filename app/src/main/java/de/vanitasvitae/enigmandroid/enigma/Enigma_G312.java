@@ -1,9 +1,13 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import de.vanitasvitae.enigmandroid.MainActivity;
+import java.math.BigInteger;
+
+import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
+import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
+import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
- * Implementation of the Enigma machine of type G31 (Abwehr)
+ * Implementation of the Enigma machine of name G31 (Abwehr)
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -25,15 +29,24 @@ public class Enigma_G312 extends Enigma_G31
 {
     public Enigma_G312()
     {
-        super(50);
+        super();
         machineType = "G312";
+    }
+
+    @Override
+    protected void establishAvailableParts()
+    {
+        addAvailableEntryWheel(new EntryWheel.EntryWheel_QWERTZ());
+        addAvailableRotor(new Rotor.Rotor_G312_I(0, 0));
+        addAvailableRotor(new Rotor.Rotor_G312_II(0, 0));
+        addAvailableRotor(new Rotor.Rotor_G312_III(0, 0));
+        addAvailableReflector(new Reflector.Reflector_G312());
     }
 
     @Override
     public String stateToString()
     {
-        String save = MainActivity.APP_ID+"/";
-        long s = reflector.getRingSetting();
+        BigInteger s = BigInteger.valueOf(reflector.getRingSetting());
         s = addDigit(s, reflector.getRotation(), 26);
         s = addDigit(s, rotor3.getRingSetting(), 26);
         s = addDigit(s, rotor3.getRotation(), 26);
@@ -42,13 +55,12 @@ public class Enigma_G312 extends Enigma_G31
         s = addDigit(s, rotor1.getRingSetting(), 26);
         s = addDigit(s, rotor1.getRotation(), 26);
 
-        s = addDigit(s, rotor3.getNumber(), 10);
-        s = addDigit(s, rotor2.getNumber(), 10);
-        s = addDigit(s, rotor1.getNumber(), 10);
+        s = addDigit(s, rotor3.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor2.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor1.getIndex(), availableRotors.size());
 
         s = addDigit(s, 4, 20); //Machine #4
 
-        save = save+s;
-        return save;
+        return s.toString(16);
     }
 }

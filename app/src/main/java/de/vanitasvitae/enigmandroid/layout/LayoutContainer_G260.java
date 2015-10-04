@@ -1,11 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-
-import de.vanitasvitae.enigmandroid.R;
-import de.vanitasvitae.enigmandroid.enigma.Enigma;
-import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_G260;
 
 /**
@@ -30,11 +24,9 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_G260;
  */
 public class LayoutContainer_G260 extends LayoutContainer_G31
 {
-    protected static int offsetRot = 60;
-
     public LayoutContainer_G260()
     {
-        super(60);
+        super();
         main.setTitle("G260 - EnigmAndroid");
         this.resetLayout();
     }

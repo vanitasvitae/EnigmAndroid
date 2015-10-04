@@ -35,10 +35,10 @@ import de.vanitasvitae.enigmandroid.R;
  */
 public class PassphraseDialogBuilder
 {
-    MainActivity main;
-    View passphraseDialogView;
-    EditText passphrase;
-    Button positive;
+    private MainActivity main;
+    private View passphraseDialogView;
+    private EditText passphrase;
+    private Button positive;
     public PassphraseDialogBuilder()
     {
         main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();

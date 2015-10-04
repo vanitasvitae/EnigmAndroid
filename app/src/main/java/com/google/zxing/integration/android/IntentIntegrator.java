@@ -434,7 +434,7 @@ public class IntentIntegrator {
 
 
   /**
-   * Defaults to type "TEXT_TYPE".
+   * Defaults to name "TEXT_TYPE".
    *
    * @param text the text string to encode as a barcode
    * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
@@ -450,7 +450,7 @@ public class IntentIntegrator {
    * scan the text off the screen of the device.
    *
    * @param text the text string to encode as a barcode
-   * @param type type of data to encode. See {@code com.google.zxing.client.android.Contents.Type} constants.
+   * @param type name of data to encode. See {@code com.google.zxing.client.android.Contents.Type} constants.
    * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
    *   if a prompt was needed, or null otherwise
    */

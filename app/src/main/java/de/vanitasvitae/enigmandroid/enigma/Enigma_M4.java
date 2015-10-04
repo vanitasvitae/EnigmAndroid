@@ -1,14 +1,17 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import java.security.SecureRandom;
-import java.util.Random;
+import android.util.Log;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
- * Concrete Implementation of the Enigma Machine type M4 of the german Kriegsmarine
+ * Concrete Implementation of the Enigma Machine name M4 of the german Kriegsmarine
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -28,16 +31,17 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  */
 public class Enigma_M4 extends Enigma
 {
+    private ArrayList<Rotor> availableThinRotors;
+    private EntryWheel entryWheel;
     private Rotor rotor1;
     private Rotor rotor2;
     private Rotor rotor3;
+
     private Rotor rotor4;
 
     private Reflector reflector;
 
     private Plugboard plugboard;
-
-    protected static int machineTypeOffset = 30;
 
     public Enigma_M4()
     {
@@ -45,17 +49,55 @@ public class Enigma_M4 extends Enigma
         machineType = "M4";
     }
 
+    protected void addAvailableThinRotor(Rotor r)
+    {
+        if(availableThinRotors == null) availableThinRotors = new ArrayList<>();
+        availableThinRotors.add(availableThinRotors.size(), r.setIndex(availableThinRotors.size()));
+    }
+
+    public Rotor getThinRotor(int index)
+    {
+        if(availableThinRotors == null || availableThinRotors.size() == 0) return null;
+        return availableThinRotors.get(index % availableThinRotors.size()).getInstance();
+    }
+
+    public Rotor getThinRotor(int index, int rotation, int ringSettings)
+    {
+        Rotor r = getThinRotor(index);
+        if(r == null) return null;
+        return r.setRotation(rotation).setRingSetting(ringSettings);
+    }
+
+    @Override
+    protected void establishAvailableParts()
+    {
+        Log.d(MainActivity.APP_ID, "Established");
+        addAvailableEntryWheel(new EntryWheel.EntryWheel_ABCDEF());
+        addAvailableRotor(new Rotor.Rotor_I(0, 0));
+        addAvailableRotor(new Rotor.Rotor_II(0,0));
+        addAvailableRotor(new Rotor.Rotor_III(0,0));
+        addAvailableRotor(new Rotor.Rotor_IV(0,0));
+        addAvailableRotor(new Rotor.Rotor_V(0,0));
+        addAvailableRotor(new Rotor.Rotor_VI(0,0));
+        addAvailableRotor(new Rotor.Rotor_VII(0, 0));
+        addAvailableRotor(new Rotor.Rotor_VIII(0,0));
+        addAvailableThinRotor(new Rotor.Rotor_M4_Beta(0, 0));
+        addAvailableThinRotor(new Rotor.Rotor_M4_Gamma(0, 0));
+        addAvailableReflector(new Reflector.Reflector_Thin_B());
+        addAvailableReflector(new Reflector.ReflectorThinC());
+    }
+
     @Override
     public void initialize()
     {
+        Log.d(MainActivity.APP_ID, "Initialized");
         this.plugboard = new Plugboard();
-        this.rotor1 = Rotor.createRotor(machineTypeOffset, 0, 0);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset+1, 0, 0);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset+2, 0, 0);
-        this.rotor4 = Rotor.createRotor(machineTypeOffset + 8, 0, 0);
-        this.reflector = Reflector.createReflector(machineTypeOffset);
-        this.prefAnomaly = ((MainActivity) MainActivity.ActivitySingleton.getInstance()
-                .getActivity()).getPrefAnomaly();
+        this.entryWheel = getEntryWheel(0);
+        this.rotor1 = getRotor(0, 0, 0);
+        this.rotor2 = getRotor(1, 0, 0);
+        this.rotor3 = getRotor(2, 0, 0);
+        this.rotor4 = getThinRotor(0, 0, 0);
+        this.reflector = getReflector(0);
     }
 
     @Override
@@ -69,7 +111,7 @@ public class Enigma_M4 extends Enigma
         //Rotate rotors
         rotor1.rotate();
         //Eventually turn next rotor (usual turnOver or anomaly)
-        if (rotor1.isAtTurnoverPosition() || (this.doAnomaly && prefAnomaly))
+        if (rotor1.isAtTurnoverPosition() || this.doAnomaly)
         {
             rotor2.rotate();
             //Set doAnomaly for next call of encryptChar
@@ -104,14 +146,13 @@ public class Enigma_M4 extends Enigma
         int ring4 = rand.nextInt(26);
         int ringRef = rand.nextInt(26);
 
-        this.rotor1 = Rotor.createRotor(machineTypeOffset + r1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset + r2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset + r3, rot3, ring3);
-        this.rotor4 = Rotor.createRotor(machineTypeOffset + 8 + r4, rot4, ring4);
+        this.entryWheel = getEntryWheel(0);
+        this.rotor1 = getRotor(r1, rot1, ring1);
+        this.rotor2 = getRotor(r2, rot2, ring2);
+        this.rotor3 = getRotor(r3, rot3, ring3);
+        this.rotor4 = getThinRotor(r4, rot4, ring4);
 
-        this.reflector = Reflector.createReflector(machineTypeOffset + ref);
-        this.reflector.setRotation(rotRef);
-        this.reflector.setRingSetting(ringRef);
+        this.reflector = getReflector(ref, rotRef, ringRef);
 
         this.plugboard = new Plugboard();
         this.plugboard.setConfiguration(Plugboard.seedToPlugboardConfiguration(rand));
@@ -133,6 +174,7 @@ public class Enigma_M4 extends Enigma
         //Encryption
         //forward direction
         x = plugboard.encrypt(x);
+        x = entryWheel.encryptForward(x);
         x = rotor1.normalize(x + rotor1.getRotation() - rotor1.getRingSetting());
         x = rotor1.encryptForward(x);
         x = rotor1.normalize(x - rotor1.getRotation() + rotor1.getRingSetting() + rotor2.getRotation() - rotor2.getRingSetting());
@@ -153,6 +195,7 @@ public class Enigma_M4 extends Enigma
         x = rotor1.normalize(x + rotor1.getRotation() - rotor1.getRingSetting() - rotor2.getRotation() + rotor2.getRingSetting());
         x = rotor1.encryptBackward(x);
         x = rotor1.normalize(x - rotor1.getRotation() + rotor1.getRingSetting());
+        x = entryWheel.encryptBackward(x);
         x = plugboard.encrypt(x);
         return (char) (x + 65);     //Add Offset again and cast back to char
     }
@@ -160,11 +203,11 @@ public class Enigma_M4 extends Enigma
     @Override
     public void setState(EnigmaStateBundle state)
     {
-        rotor1 = Rotor.createRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
-        rotor2 = Rotor.createRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
-        rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
-        rotor4 = Rotor.createRotor(state.getTypeRotor4(), state.getRotationRotor4(), state.getRingSettingRotor4());
-        reflector = Reflector.createReflector(state.getTypeReflector());
+        rotor1 = getRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
+        rotor2 = getRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
+        rotor3 = getRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
+        rotor4 = getThinRotor(state.getTypeRotor4(), state.getRotationRotor4(), state.getRingSettingRotor4());
+        reflector = getReflector(state.getTypeReflector());
         plugboard.setConfiguration(state.getConfigurationPlugboard());
 
     }
@@ -173,10 +216,12 @@ public class Enigma_M4 extends Enigma
     public EnigmaStateBundle getState()
     {
         EnigmaStateBundle state = new EnigmaStateBundle();
-        state.setTypeRotor1(rotor1.getNumber());
-        state.setTypeRotor2(rotor2.getNumber());
-        state.setTypeRotor3(rotor3.getNumber());
-        state.setTypeRotor4(rotor4.getNumber());
+        state.setTypeEntryWheel(entryWheel.getIndex());
+
+        state.setTypeRotor1(rotor1.getIndex());
+        state.setTypeRotor2(rotor2.getIndex());
+        state.setTypeRotor3(rotor3.getIndex());
+        state.setTypeRotor4(rotor4.getIndex());
 
         state.setRotationRotor1(rotor1.getRotation());
         state.setRotationRotor2(rotor2.getRotation());
@@ -188,7 +233,7 @@ public class Enigma_M4 extends Enigma
         state.setRingSettingRotor3(rotor3.getRingSetting());
         state.setRingSettingRotor4(rotor4.getRingSetting());
 
-        state.setTypeReflector(reflector.getNumber());
+        state.setTypeReflector(reflector.getIndex());
 
         state.setConfigurationPlugboard(plugboard.getConfiguration());
 
@@ -196,23 +241,18 @@ public class Enigma_M4 extends Enigma
     }
 
     @Override
-    public void restoreState(String mem)
+    public void restoreState(BigInteger s)
     {
-        String plugboardConf = mem.substring(mem.lastIndexOf(":p") + 2);
-        long s = Long.valueOf(mem.substring(0, mem.indexOf(":p")));
-
-        s = removeDigit(s, 20);  //Remove machine type
-
-        int r1 = getValue(s, 10);
-        s = removeDigit(s, 10);
-        int r2 = getValue(s, 10);
-        s = removeDigit(s,10);
-        int r3 = getValue(s, 10);
-        s = removeDigit(s,10);
-        int r4 = getValue(s, 10);
-        s = removeDigit(s,10);
-        int ref = getValue(s, 10);
-        s = removeDigit(s,10);
+        int r1 = getValue(s, availableRotors.size());
+        s = removeDigit(s, availableRotors.size());
+        int r2 = getValue(s, availableRotors.size());
+        s = removeDigit(s,availableRotors.size());
+        int r3 = getValue(s, availableRotors.size());
+        s = removeDigit(s,availableRotors.size());
+        int r4 = getValue(s, availableThinRotors.size());
+        s = removeDigit(s,availableThinRotors.size());
+        int ref = getValue(s, availableReflectors.size());
+        s = removeDigit(s,availableReflectors.size());
 
         int rot1 = getValue(s, 26);
         s = removeDigit(s,26);
@@ -233,23 +273,21 @@ public class Enigma_M4 extends Enigma
         int rotRef = getValue(s, 26);
         s = removeDigit(s,26);
         int ringRef = getValue(s, 26);
+        s = removeDigit(s,26);
 
-        this.rotor1 = Rotor.createRotor(machineTypeOffset + r1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset + r2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset + r3, rot3, ring3);
-        this.rotor4 = Rotor.createRotor(machineTypeOffset + r4, rot4, ring4);
-        this.reflector = Reflector.createReflector(machineTypeOffset + ref);
-        this.reflector.setRotation(rotRef);
-        this.reflector.setRingSetting(ringRef);
-
+        this.rotor1 = getRotor(r1, rot1, ring1);
+        this.rotor2 = getRotor(r2, rot2, ring2);
+        this.rotor3 = getRotor(r3, rot3, ring3);
+        this.rotor4 = getThinRotor(r4, rot4, ring4);
+        this.reflector = getReflector(ref, rotRef, ringRef);
         this.plugboard = new Plugboard();
-        plugboard.setConfiguration(Plugboard.stringToConfiguration(plugboardConf));
+        plugboard.setConfiguration(s);
     }
 
     @Override
     public String stateToString() {
-        String save = MainActivity.APP_ID+"/";
-        long s = reflector.getRingSetting();
+        BigInteger s = Plugboard.configurationToBigInteger(plugboard.getConfiguration());
+        s = addDigit(s, reflector.getRingSetting(), 26);
         s = addDigit(s, reflector.getRotation(), 26);
         s = addDigit(s, rotor4.getRingSetting(), 26);
         s = addDigit(s, rotor4.getRotation(), 26);
@@ -260,16 +298,13 @@ public class Enigma_M4 extends Enigma
         s = addDigit(s, rotor1.getRingSetting(), 26);
         s = addDigit(s, rotor1.getRotation(), 26);
 
-        s = addDigit(s, reflector.getNumber(), 10);
-        s = addDigit(s, rotor4.getNumber(), 10);
-        s = addDigit(s, rotor3.getNumber(), 10);
-        s = addDigit(s, rotor2.getNumber(), 10);
-        s = addDigit(s, rotor1.getNumber(), 10);
+        s = addDigit(s, reflector.getIndex(), availableReflectors.size());
+        s = addDigit(s, rotor4.getIndex(), availableThinRotors.size());
+        s = addDigit(s, rotor3.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor2.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor1.getIndex(), availableRotors.size());
 
         s = addDigit(s, 2, 20);
-
-        save = save+s;
-        save = save + ":p" + Plugboard.configurationToString(getState().getConfigurationPlugboard());
-        return save;
+        return s.toString(16);
     }
 }

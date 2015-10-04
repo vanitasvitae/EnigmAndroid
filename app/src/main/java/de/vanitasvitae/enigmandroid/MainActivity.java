@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,10 +15,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
@@ -50,16 +56,18 @@ public class MainActivity extends Activity
             "https://github.com/vanitasvitae/EnigmAndroid/blob/master/CHANGELOG.txt";
     public static final String APP_ID = "EnigmAndroid";
 
-    LayoutContainer layoutContainer;
-    protected String prefMachineType;
-    protected boolean prefAnomaly;
-    protected String prefNumericLanguage;
-    protected String prefMessageFormatting;
+    private LayoutContainer layoutContainer;
+    private String prefMachineType;
+    private String prefNumericLanguage;
+    private String prefMessageFormatting;
+
+    private SecureRandom secureRandom;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        secureRandom = new SecureRandom();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
                 getStringArray(R.array.pref_alias_machine_type)[0]);
@@ -115,7 +123,7 @@ public class MainActivity extends Activity
             case "G31":
             case "G312":
             case "G260":
-                this.setContentView(R.layout.activity_main_g_k_t);
+                this.setContentView(R.layout.activity_main_g_k_r_t);
                 break;
             default:
                 this.setContentView(R.layout.activity_main_i_m3);
@@ -128,14 +136,13 @@ public class MainActivity extends Activity
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.setPrefMachineType(sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
                 getStringArray(R.array.pref_alias_machine_type)[0]));
-        this.setPrefAnomaly(sharedPreferences.getBoolean(SettingsActivity.PREF_ANOMALY, true));
         this.setPrefNumericLanguage(sharedPreferences.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
                 getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
         this.setPrefMessageFormatting(sharedPreferences.getString(SettingsActivity.PREF_MESSAGE_FORMATTING, getResources().
                 getStringArray(R.array.pref_alias_message_formatting)[0]));
     }
 
-    public void setPrefMachineType(String type)
+    private void setPrefMachineType(String type)
     {
         if(prefMachineType == null || !prefMachineType.equals(type))
         {
@@ -150,7 +157,7 @@ public class MainActivity extends Activity
             layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
             layoutContainer.getInput().setText(savedInput);
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            sharedPreferences.edit().putString(SettingsActivity.PREF_MACHINE_TYPE, type);
+            sharedPreferences.edit().putString(SettingsActivity.PREF_MACHINE_TYPE, type).apply();
         }
     }
 
@@ -161,20 +168,6 @@ public class MainActivity extends Activity
         this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
                     getStringArray(R.array.pref_alias_machine_type)[0]);
         return prefMachineType;
-    }
-
-    public void setPrefAnomaly(boolean anomaly)
-    {
-        if(prefAnomaly !=anomaly)
-        {
-            prefAnomaly = anomaly;
-            if(layoutContainer != null && layoutContainer.getEnigma() != null) layoutContainer.getEnigma().setPrefAnomaly(anomaly);
-        }
-    }
-
-    public boolean getPrefAnomaly()
-    {
-        return prefAnomaly;
     }
 
     public void setPrefNumericLanguage(String lang)
@@ -211,6 +204,11 @@ public class MainActivity extends Activity
         this.prefMessageFormatting = sharedPreferences.getString(SettingsActivity.PREF_MESSAGE_FORMATTING, getResources().
                 getStringArray(R.array.pref_alias_message_formatting)[0]);
         return prefMessageFormatting;
+    }
+
+    public SecureRandom getSecureRandom()
+    {
+        return this.secureRandom;
     }
 
     public void onDialogFinished(EnigmaStateBundle state)
@@ -288,7 +286,7 @@ public class MainActivity extends Activity
             IntentIntegrator QRIntegrator = new IntentIntegrator(this);
             layoutContainer.syncStateFromLayoutToEnigma();
             Log.d(APP_ID, "Sharing configuration to QR: " + layoutContainer.getEnigma().stateToString());
-            QRIntegrator.shareText(layoutContainer.getEnigma().stateToString());
+            QRIntegrator.shareText(APP_ID+"/"+layoutContainer.getEnigma().stateToString());
             return true;
         }
         else if(id == R.id.action_enter_seed)
@@ -300,9 +298,9 @@ public class MainActivity extends Activity
     }
 
     /**
-     * Set the chosen Configuration to the enigma, get the input string from the input textbox and
+     * Set the chosen Configuration to the enigma, get the input string from the input text box and
      * prepare it, set the input to the prepared text, encrypt the prepared input and set the
-     * encrypted string to the output textbox and update the spinners to their new positions.
+     * encrypted string to the output text box and update the spinners to their new positions.
      * @param v View
      */
     public void doCrypto(View v)
@@ -314,10 +312,18 @@ public class MainActivity extends Activity
      * Show a Dialog containing information about the app, license, usage, author and a link
      * to the changelog
      */
-    public void showAboutDialog()
+    private void showAboutDialog()
     {
         final View aboutView = View.inflate(this, R.layout.dialog_about, null);
+		//Get and set Version code
+        PackageInfo pInfo = null;
+        try{ pInfo = getPackageManager().getPackageInfo(this.getPackageName(), 0);}
+        catch (PackageManager.NameNotFoundException e){ e.printStackTrace();}
+        String version = pInfo.versionName+ " ("+pInfo.versionCode+")";
+        TextView versionText = (TextView) aboutView.findViewById(R.id.about_version_section);
+        versionText.setText(version);
 
+		//Build and show dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_about_dialog);
         builder.setView(aboutView)
@@ -354,7 +360,6 @@ public class MainActivity extends Activity
                 SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
                 this.setPrefMachineType(sharedPrefs.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources()
                         .getStringArray(R.array.pref_alias_machine_type)[0]));
-                this.setPrefAnomaly(sharedPrefs.getBoolean(SettingsActivity.PREF_ANOMALY, true));
                 this.setPrefNumericLanguage(sharedPrefs.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
                         getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
                 this.setPrefMessageFormatting(sharedPrefs.getString(SettingsActivity.PREF_MESSAGE_FORMATTING,
@@ -366,8 +371,10 @@ public class MainActivity extends Activity
                 if (scanResult != null) {
                     String content = scanResult.getContents();
                     if(content == null) Log.e(APP_ID, "Error! Received nothing from QR-Code!");
-                    else Log.d(APP_ID, "Received "+content+" from QR-Code!");
+                    else {
+                        Log.d(APP_ID, "Received " + content + " from QR-Code!");
                         restoreStateFromCode(content);
+                    }
                 }
         }
     }
@@ -385,10 +392,12 @@ public class MainActivity extends Activity
         else
         {
             mem = mem.substring((APP_ID+"/").length());
-            setPrefMachineType(Enigma.chooseEnigmaFromSave(mem));
+            BigInteger s = new BigInteger(mem, 16);
+            Log.d(APP_ID, s.toString());
+            setPrefMachineType(Enigma.chooseEnigmaFromSave(s));
             updateContentView();
             layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
-            layoutContainer.getEnigma().restoreState(mem);
+            layoutContainer.getEnigma().restoreState(Enigma.removeDigit(s,20));
             layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
             layoutContainer.syncStateFromEnigmaToLayout();
         }
@@ -412,7 +421,7 @@ public class MainActivity extends Activity
      * Open the web page with the URL url
      * @param url URL of the website
      */
-    public void openWebPage(String url) {
+    private void openWebPage(String url) {
         Uri webPage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
         if (intent.resolveActivity(getPackageManager()) != null) {

@@ -9,20 +9,9 @@
             android:entries="@array/pref_list_machine_type"
             android:entryValues="@array/pref_alias_machine_type"
             android:defaultValue="Enigma I"/>
-        <SwitchPreference
-            android:key="prefAnomaly"
-            android:title="@string/pref_title_simulate_anomaly"
-            android:summary="@string/pref_description_simulate_anomaly"
-            android:defaultValue="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_header_input_preparation">
-        <SwitchPreference
-            android:title="@string/pref_title_special_characters"
-            android:key="prefReplaceSpecialCharacters"
-            android:summaryOn="@string/pref_on_replace_special_characters"
-            android:summaryOff="@string/pref_off_replace_special_characters"
-            android:defaultValue="true"/>
         <ListPreference
             android:key="prefNumericLanguage"
             android:title="@string/pref_title_numeric_spelling_language"

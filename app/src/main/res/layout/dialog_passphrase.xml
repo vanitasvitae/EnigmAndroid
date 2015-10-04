@@ -1,17 +1,12 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="5dp"
     android:paddingEnd="5dp">
-
-    <LinearLayout
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_passphrase"
-            android:id="@+id/passphrase"/>
-    </LinearLayout>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_passphrase"
+        android:id="@+id/passphrase"/>
+</LinearLayout>

@@ -1,7 +1,12 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import android.util.Log;
+
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Random;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 
 /**
@@ -25,7 +30,7 @@ import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
  */
 public class Plugboard
 {
-    public static final int[] empty = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+    private static final int[] empty = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
     private int[] plugs;
 
     public Plugboard()
@@ -41,6 +46,21 @@ public class Plugboard
     public void setConfiguration(int[] conf)
     {
         this.plugs = conf;
+    }
+
+    public BigInteger setConfiguration(BigInteger b)
+    {
+        String s = "";
+
+        int x;
+        while((x = Enigma.getValue(b, 27)) != 26 || b.compareTo(BigInteger.ZERO) > 1)
+        {
+            s = ((char) (x+65))+s;
+            b = Enigma.removeDigit(b, 27);
+        }
+        Log.d(MainActivity.APP_ID, "Restored: " + s);
+        this.setConfiguration(stringToConfiguration(s));
+        return b;
     }
 
     public int[] getConfiguration()
@@ -70,7 +90,8 @@ public class Plugboard
         String pairs = trimString(new InputPreparer.RemoveIllegalCharacters().prepareString(in));
         int[] out = empty;
         //Check if in is too long or odd
-        if(pairs.length() > 26 || pairs.length()/2 == (pairs.length()-1)/2)
+        int l = pairs.length();
+        if(l>1 && (pairs.length() > 26 || pairs.length()/2 == (pairs.length()-1)/2))
         {
             //Odd length. remove last char. Information loss!
             pairs = pairs.substring(0,pairs.length()-1);
@@ -137,13 +158,12 @@ public class Plugboard
      */
     public static int[] seedToReflectorConfiguration(Random rand)
     {
-        int[] out = empty;
-        for(int i=0; i<empty.length; i++)
-        {
+        int[] out = Arrays.copyOf(empty,empty.length);
+        for (int i=0; i<out.length/2; i++) {
             int rA = rand.nextInt(26);
-            while(out[rA] != rA) rA = (rA+1)%26;
+            while (out[rA] != rA) rA = (rA + 27) % 26;
             int rB = rand.nextInt(26);
-            while(out[rB] != rB) rB = (rB+1)%26;
+            while (out[rB] != rB || rA == rB) rB = (rB + 27) % 26;
             out[rA] = rB;
             out[rB] = rA;
         }
@@ -169,16 +189,32 @@ public class Plugboard
         return out;
     }
 
-    public static long configurationToLong(int[] a)
+    public static BigInteger configurationToBigInteger(int[] a)
     {
         String s = configurationToString(a);
-        long l = 0;
+        BigInteger l = BigInteger.ZERO;
+        l = Enigma.addDigit(l,26,27);
         for(char c : s.toCharArray())
         {
             int i = (int) (c);
             i-=65;
-            Enigma.addDigit(l,i,26);
+            l = Enigma.addDigit(l,i,27);
         }
+        Log.d(MainActivity.APP_ID, "Save configuration plugs: "+l.toString());
         return l;
+    }
+
+    public static int[] bigIntegerToConfiguration(BigInteger b)
+    {
+        String s = "";
+
+        int x;
+        while((x = Enigma.getValue(b, 27)) != 26 || b.compareTo(BigInteger.ZERO) > 1)
+        {
+            s = ((char) (x+65))+s;
+            b = Enigma.removeDigit(b, 27);
+        }
+        Log.d(MainActivity.APP_ID, "Restored: "+s);
+        return stringToConfiguration(s);
     }
 }

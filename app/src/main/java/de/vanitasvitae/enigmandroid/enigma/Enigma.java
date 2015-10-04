@@ -1,7 +1,13 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import java.security.SecureRandom;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Random;
+
+import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
+import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
+import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
  * Main component of the Enigma machine
@@ -26,24 +32,90 @@ import java.util.Random;
 public abstract class Enigma
 {
     protected static String machineType;
-    protected int machineTypeOffset = 0;
+
     protected boolean doAnomaly = false;  //Has the time come to handle an anomaly?
-    protected boolean prefAnomaly;  //Do you WANT to simulate the anomaly?
+
+    protected ArrayList<EntryWheel> availableEntryWheels;
+    protected ArrayList<Rotor> availableRotors;
+    protected ArrayList<Reflector> availableReflectors;
+
     protected Random rand;
-    public Enigma(int off)
-    {
-        this.machineTypeOffset = off;
-        initialize();
-    }
 
     public Enigma()
     {
+        establishAvailableParts();
         initialize();
     }
 
-    public int getMachineTypeOffset()
+    /**
+     * In this method, available EntryWheels, Rotors and Reflectors can be defined.
+     */
+    protected abstract void establishAvailableParts();
+
+    /**
+     * Add a Rotor to the ArrayList of available rotors for this machine.
+     * Also set the index of the Rotor.
+     * @param r Rotor
+     */
+    protected void addAvailableRotor(Rotor r)
     {
-        return machineTypeOffset;
+        if(availableRotors == null) availableRotors = new ArrayList<>();
+        availableRotors.add(availableRotors.size(), r.setIndex(availableRotors.size()));
+    }
+
+    protected void addAvailableEntryWheel(EntryWheel e)
+    {
+        if(availableEntryWheels == null) availableEntryWheels = new ArrayList<>();
+        availableEntryWheels.add(availableEntryWheels.size(), e.setIndex(availableEntryWheels.size()));
+    }
+
+    protected void addAvailableReflector(Reflector r)
+    {
+        if(availableReflectors == null) availableReflectors = new ArrayList<>();
+        availableReflectors.add(availableReflectors.size(), r.setIndex(availableReflectors.size()));
+    }
+
+    public ArrayList<EntryWheel> getAvailableEntryWheels()
+    {
+        return availableEntryWheels;
+    }
+
+    public ArrayList<Rotor> getAvailableRotors()
+    {
+        return availableRotors;
+    }
+
+    public ArrayList<Reflector> getAvailableReflectors()
+    {
+        return availableReflectors;
+    }
+
+    public EntryWheel getEntryWheel(int index)
+    {
+        if(availableEntryWheels == null || availableEntryWheels.size() == 0) return null;
+        return availableEntryWheels.get(index % availableEntryWheels.size()).getInstance();
+    }
+
+    public Rotor getRotor(int index)
+    {
+        if(availableRotors == null || availableRotors.size() == 0) return null;
+        return availableRotors.get(index % availableRotors.size()).getInstance();
+    }
+
+    public Rotor getRotor(int index, int rotation, int ringSetting)
+    {
+        return getRotor(index).setRotation(rotation).setRingSetting(ringSetting);
+    }
+
+    public Reflector getReflector(int index)
+    {
+        if(availableReflectors == null || availableReflectors.size() == 0) return null;
+        return availableReflectors.get(index % availableReflectors.size()).getInstance();
+    }
+
+    public Reflector getReflector(int index, int rotation, int ringSetting)
+    {
+        return getReflector(index).setRotation(rotation).setRingSetting(ringSetting);
     }
 
     /**
@@ -85,7 +157,8 @@ public abstract class Enigma
      */
     public void randomState()
     {
-        this.rand = new SecureRandom();
+        this.rand = ((MainActivity) (MainActivity.ActivitySingleton.getInstance().getActivity()))
+                .getSecureRandom();
         generateState();
     }
 
@@ -121,7 +194,7 @@ public abstract class Enigma
     /**
      * Set the rand into a certain state based on seed.
      * Then set the enigmas state.
-     * @param seed
+     * @param seed passphrase
      */
     public void setStateFromSeed(String seed)
     {
@@ -129,12 +202,13 @@ public abstract class Enigma
         generateState();
     }
 
-    public abstract void restoreState(String mem);
+    public abstract void restoreState(BigInteger mem);
 
     public abstract String stateToString();
 
     public static String numToMachineType(int n)
     {
+        n = (12+(n+12)%12)%12; //Problem? Trolololo
         switch (n) {
             case 0: return "I";
             case 1: return "M3";
@@ -156,27 +230,14 @@ public abstract class Enigma
         return numToMachineType(seed.hashCode() % 12);
     }
 
-    public static String chooseEnigmaFromSave(String save)
+    public static String chooseEnigmaFromSave(BigInteger save)
     {
-        int index = save.indexOf(":");
-        if(index != -1) save = save.substring(0, index);
-        long s = Long.valueOf(save);
-        return numToMachineType(getValue(s,12));
-    }
-
-
-    /**
-     * set prefAnomaly variable
-     * @param b boolean
-     */
-    public void setPrefAnomaly(boolean b)
-    {
-        this.prefAnomaly = b;
+        return numToMachineType(getValue(save,20));
     }
 
     /**
-     * Return the type indicator of the enigma machine
-     * @return type
+     * Return the name indicator of the enigma machine
+     * @return name
      */
     public String getMachineType()
     {
@@ -189,9 +250,10 @@ public abstract class Enigma
      * @param d domain (max value) of the value
      * @return value
      */
-    protected static int getValue(long s, int d)
+    public static int getValue(BigInteger s, int d)
     {
-        return (int) ((s%d)+d)%d;
+        BigInteger o = s.mod(BigInteger.valueOf(d)).add(BigInteger.valueOf(d)).mod(BigInteger.valueOf(d));
+        return Integer.valueOf(o.toString());
     }
 
     /**
@@ -200,9 +262,11 @@ public abstract class Enigma
      * @param d domain (max value)
      * @return trimmed source
      */
-    protected static long removeDigit(long s, int d)
+    public static BigInteger removeDigit(BigInteger s, int d)
     {
-        return (s-(s%d))/d;
+        s = s.subtract(s.mod(BigInteger.valueOf(d)));
+        s = s.divide(BigInteger.valueOf(d));
+        return s;
     }
 
     /**
@@ -212,11 +276,10 @@ public abstract class Enigma
      * @param v actual value
      * @return lengthened source
      */
-    protected static long addDigit(long s, int v, int b)
+    public static BigInteger addDigit(BigInteger s, int v, int b)
     {
-        long x = s;
-        x*=b;
-        x+=(v%b);
-        return x;
+        s = s.multiply(BigInteger.valueOf(b));
+        s = s.add(BigInteger.valueOf(v % b));
+        return s;
     }
 }

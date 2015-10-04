@@ -1,7 +1,6 @@
 package de.vanitasvitae.enigmandroid.layout;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -82,10 +81,10 @@ public class LayoutContainer_M3 extends LayoutContainer_I
     @Override
     public void setLayoutState(EnigmaStateBundle state)
     {
-        this.rotor1View.setSelection(state.getTypeRotor1() - 20);
-        this.rotor2View.setSelection(state.getTypeRotor2() - 20);
-        this.rotor3View.setSelection(state.getTypeRotor3() - 20);
-        this.reflectorView.setSelection(state.getTypeReflector() - 20);
+        this.rotor1View.setSelection(state.getTypeRotor1());
+        this.rotor2View.setSelection(state.getTypeRotor2());
+        this.rotor3View.setSelection(state.getTypeRotor3());
+        this.reflectorView.setSelection(state.getTypeReflector());
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -95,10 +94,10 @@ public class LayoutContainer_M3 extends LayoutContainer_I
     public void syncStateFromLayoutToEnigma()
     {
         EnigmaStateBundle state = getEnigma().getState();
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 20);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 20);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 20);
-        state.setTypeReflector(reflectorView.getSelectedItemPosition() + 20);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition());
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition());
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition());
+        state.setTypeReflector(reflectorView.getSelectedItemPosition());
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

@@ -1,11 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-
-import de.vanitasvitae.enigmandroid.R;
-import de.vanitasvitae.enigmandroid.enigma.Enigma;
-import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_G312;
 
 /**
@@ -32,7 +26,7 @@ public class LayoutContainer_G312 extends LayoutContainer_G31
 {
     public LayoutContainer_G312()
     {
-        super(50);
+        super();
         main.setTitle("G312 - EnigmAndroid");
         this.resetLayout();
     }

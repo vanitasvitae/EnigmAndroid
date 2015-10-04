@@ -1,6 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.R;
@@ -32,8 +31,6 @@ public class LayoutContainer_G31 extends LayoutContainer
 {
     protected Enigma enigma;
 
-    protected int offsetRot = 40;
-
     protected Spinner rotor1View;
     protected Spinner rotor2View;
     protected Spinner rotor3View;
@@ -42,12 +39,6 @@ public class LayoutContainer_G31 extends LayoutContainer
     protected Spinner rotor2PositionView;
     protected Spinner rotor3PositionView;
     protected Spinner reflectorPositionView;
-
-    public LayoutContainer_G31(int off)
-    {
-        super();
-        this.offsetRot = off;
-    }
 
     public LayoutContainer_G31()
     {
@@ -94,9 +85,9 @@ public class LayoutContainer_G31 extends LayoutContainer
     @Override
     public void setLayoutState(EnigmaStateBundle state)
     {
-        this.rotor1View.setSelection(state.getTypeRotor1() - offsetRot);
-        this.rotor2View.setSelection(state.getTypeRotor2() - offsetRot);
-        this.rotor3View.setSelection(state.getTypeRotor3() - offsetRot);
+        this.rotor1View.setSelection(state.getTypeRotor1());
+        this.rotor2View.setSelection(state.getTypeRotor2());
+        this.rotor3View.setSelection(state.getTypeRotor3());
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -107,9 +98,9 @@ public class LayoutContainer_G31 extends LayoutContainer
     public void syncStateFromLayoutToEnigma()
     {
         EnigmaStateBundle state = getEnigma().getState();
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + offsetRot);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + offsetRot);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + offsetRot);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition());
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition());
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition());
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

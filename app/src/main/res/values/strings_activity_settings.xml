@@ -32,15 +32,8 @@
         <item>R</item>
         <item>T</item>
     </string-array>
-    <string name="pref_title_simulate_anomaly">Simulate Anomaly</string>
-    <string name="pref_description_simulate_anomaly">The double step anomaly causes the middle rotor
-        to rotate twice, if it is one step before its turnover point.
-    </string>
 
     <string name="pref_header_input_preparation">Input Preparation</string>
-    <string name="pref_title_special_characters">Special characters</string>
-    <string name="pref_on_replace_special_characters">Replace special characters with similar ones</string>
-    <string name="pref_off_replace_special_characters">Remove special characters from the message</string>
     <string name="pref_title_numeric_spelling_language">Number spelling language</string>
     <string name="pref_description_numeric_spelling_language">Language, in which numbers are spelled.</string>
     <string-array name="pref_list_numeric_spelling_language">

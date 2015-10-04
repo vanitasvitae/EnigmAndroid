@@ -46,7 +46,6 @@ public abstract class InputPreparer {
         boolean replaceSpecialChars = sharedPreferences.getBoolean(SettingsActivity.PREF_REPLACE_SPECIAL_CHARACTERS, true);
         String num_lang = sharedPreferences.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, main.getResources().
                 getStringArray(R.array.pref_alias_numeric_spelling_language)[0]);
-        boolean replaceSpaces = sharedPreferences.getBoolean(SettingsActivity.PREF_REPLACE_SPACES, false);
         InputPreparer inPrep = new RemoveIllegalCharacters();
         if(replaceSpecialChars) inPrep = new ReplaceSpecialCharacters(inPrep);
         switch (num_lang)
@@ -162,7 +161,7 @@ public abstract class InputPreparer {
     /**
      * "Final Stage" of Input preparing. This should always be called last
      * (choose this as the inner most capsule of InputPreparers)
-     * This cant have child Inputpreparers.
+     * This cant have child InputPreparers.
      * This Input preparer removes all characters from the string besides A..Z
      */
     public static class RemoveIllegalCharacters extends InputPreparer

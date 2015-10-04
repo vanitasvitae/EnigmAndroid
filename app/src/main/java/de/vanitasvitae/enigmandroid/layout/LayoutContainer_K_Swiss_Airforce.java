@@ -1,12 +1,10 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
-import de.vanitasvitae.enigmandroid.enigma.Enigma_K;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_K_Swiss_Airforce;
 
 /**
@@ -88,9 +86,9 @@ public class LayoutContainer_K_Swiss_Airforce extends LayoutContainer
     @Override
     public void setLayoutState(EnigmaStateBundle state)
     {
-        this.rotor1View.setSelection(state.getTypeRotor1() - 100);
-        this.rotor2View.setSelection(state.getTypeRotor2() - 100);
-        this.rotor3View.setSelection(state.getTypeRotor3() - 100);
+        this.rotor1View.setSelection(state.getTypeRotor1());
+        this.rotor2View.setSelection(state.getTypeRotor2());
+        this.rotor3View.setSelection(state.getTypeRotor3());
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -101,9 +99,9 @@ public class LayoutContainer_K_Swiss_Airforce extends LayoutContainer
     public void syncStateFromLayoutToEnigma()
     {
         EnigmaStateBundle state = getEnigma().getState();
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 100);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 100);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 100);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition());
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition());
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition());
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

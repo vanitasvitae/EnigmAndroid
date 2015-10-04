@@ -1,13 +1,13 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import android.util.Log;
+import java.math.BigInteger;
 
-import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
 /**
- * Implementation of the Enigma machine of type G31 (Abwehr)
+ * Implementation of the Enigma machine of name G31 (Abwehr)
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -27,37 +27,41 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  */
 public class Enigma_G31 extends Enigma
 {
-    protected Rotor entryWheel;
+    protected EntryWheel entryWheel;
     protected Rotor rotor1;
     protected Rotor rotor2;
     protected Rotor rotor3;
-
     protected Reflector reflector;
-
-    public Enigma_G31(int off)
-    {
-        super(off);
-    }
 
     public Enigma_G31()
     {
-        super(40);
+        super();
         machineType = "G31";
     }
+
+    @Override
+    protected void establishAvailableParts()
+    {
+        addAvailableEntryWheel(new EntryWheel.EntryWheel_QWERTZ());
+        addAvailableRotor(new Rotor.Rotor_G31_I(0, 0));
+        addAvailableRotor(new Rotor.Rotor_G31_II(0, 0));
+        addAvailableRotor(new Rotor.Rotor_G31_III(0, 0));
+        addAvailableReflector(new Reflector.ReflectorEnigma_D_KD_G31());
+    }
+
     @Override
     public void initialize()
     {
-        this.entryWheel = Rotor.createRotor(1, 0, 0);
-        this.rotor1 = Rotor.createRotor(machineTypeOffset, 0, 0);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset + 1, 0, 0);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset + 2, 0, 0);
-        this.reflector = Reflector.createReflector(machineTypeOffset);
+        this.entryWheel = getEntryWheel(0);
+        this.rotor1 = getRotor(0);
+        this.rotor2 = getRotor(1);
+        this.rotor3 = getRotor(2);
+        this.reflector = getReflector(0);
     }
 
     @Override
     public void nextState()
     {
-        Log.d("Anomaly",""+prefAnomaly+","+doAnomaly);
         rotor1.rotate();
         if (rotor1.isAtTurnoverPosition())
         {
@@ -75,7 +79,7 @@ public class Enigma_G31 extends Enigma
 
     protected void generateState()
     {
-        int r1, r2=-1, r3=-1;
+        int r1, r2=-1, r3;
         r1 = rand.nextInt(3);
         while(r2 == -1 || r2 == r1) r2 = rand.nextInt(3);
         r3 = 3 - r1 - r2;
@@ -89,12 +93,11 @@ public class Enigma_G31 extends Enigma
         int ring3 = rand.nextInt(26);
         int ringRef = rand.nextInt(26);
 
-        this.rotor1 = Rotor.createRotor(machineTypeOffset + r1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset + r2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset + r3, rot3, ring3);
-        this.reflector = Reflector.createReflector(machineTypeOffset);
-        reflector.setRotation(rotRef);
-        reflector.setRingSetting(ringRef);
+        this.entryWheel = getEntryWheel(0);
+        this.rotor1 = getRotor(r1, rot1, ring1);
+        this.rotor2 = getRotor(r2, rot2, ring2);
+        this.rotor3 = getRotor(r3, rot3, ring3);
+        this.reflector = getReflector(0, rotRef, ringRef);
     }
 
     @Override
@@ -127,24 +130,23 @@ public class Enigma_G31 extends Enigma
     @Override
     public void setState(EnigmaStateBundle state)
     {
-        this.entryWheel = Rotor.createRotor(state.getTypeEntryWheel(), 0, 0);
-        this.rotor1 = Rotor.createRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
-        this.rotor2 = Rotor.createRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
-        this.rotor3 = Rotor.createRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
-        this.reflector = Reflector.createReflector(state.getTypeReflector());
-        this.reflector.setRotation(state.getRotationReflector());
-        this.reflector.setRingSetting(state.getRingSettingReflector());
+        this.entryWheel = getEntryWheel(state.getTypeEntryWheel());
+        this.rotor1 = getRotor(state.getTypeRotor1(), state.getRotationRotor1(), state.getRingSettingRotor1());
+        this.rotor2 = getRotor(state.getTypeRotor2(), state.getRotationRotor2(), state.getRingSettingRotor2());
+        this.rotor3 = getRotor(state.getTypeRotor3(), state.getRotationRotor3(), state.getRingSettingRotor3());
+        this.reflector = getReflector(state.getTypeReflector(),
+                state.getRotationReflector(), state.getRingSettingReflector());
     }
 
     @Override
     public EnigmaStateBundle getState() {
         EnigmaStateBundle state = new EnigmaStateBundle();
 
-        state.setTypeEntryWheel(entryWheel.getNumber());
+        state.setTypeEntryWheel(entryWheel.getIndex());
 
-        state.setTypeRotor1(rotor1.getNumber());
-        state.setTypeRotor2(rotor2.getNumber());
-        state.setTypeRotor3(rotor3.getNumber());
+        state.setTypeRotor1(rotor1.getIndex());
+        state.setTypeRotor2(rotor2.getIndex());
+        state.setTypeRotor3(rotor3.getIndex());
 
         state.setRotationRotor1(rotor1.getRotation());
         state.setRotationRotor2(rotor2.getRotation());
@@ -154,7 +156,7 @@ public class Enigma_G31 extends Enigma
         state.setRingSettingRotor2(rotor2.getRingSetting());
         state.setRingSettingRotor3(rotor3.getRingSetting());
 
-        state.setTypeReflector(reflector.getNumber());
+        state.setTypeReflector(reflector.getIndex());
         state.setRotationReflector(reflector.getRotation());
         state.setRingSettingReflector(reflector.getRingSetting());
 
@@ -162,17 +164,14 @@ public class Enigma_G31 extends Enigma
     }
 
     @Override
-    public void restoreState(String mem)
+    public void restoreState(BigInteger s)
     {
-        long s = Long.valueOf(mem);
-        s = removeDigit(s, 20);  //Remove machine type
-
-        int r1 = getValue(s, 10);
-        s = removeDigit(s, 10);
-        int r2 = getValue(s, 10);
-        s = removeDigit(s, 10);
-        int r3 = getValue(s, 10);
-        s = removeDigit(s, 10);
+        int r1 = getValue(s, availableRotors.size());
+        s = removeDigit(s, availableRotors.size());
+        int r2 = getValue(s, availableRotors.size());
+        s = removeDigit(s, availableRotors.size());
+        int r3 = getValue(s, availableRotors.size());
+        s = removeDigit(s, availableRotors.size());
 
         int rot1 = getValue(s, 26);
         s = removeDigit(s, 26);
@@ -191,19 +190,17 @@ public class Enigma_G31 extends Enigma
         int ringRef = getValue(s, 26);
 
 
-        this.rotor1 = Rotor.createRotor(machineTypeOffset + r1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset + r2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset + r3, rot3, ring3);
-        this.reflector = Reflector.createReflector(machineTypeOffset);
-        this.reflector.setRotation(rotRef);
-        this.reflector.setRingSetting(ringRef);
+        this.entryWheel = getEntryWheel(0);
+        this.rotor1 = getRotor(r1, rot1, ring1);
+        this.rotor2 = getRotor(r2, rot2, ring2);
+        this.rotor3 = getRotor(r3, rot3, ring3);
+        this.reflector = getReflector(0, rotRef, ringRef);
     }
 
     @Override
     public String stateToString()
     {
-        String save = MainActivity.APP_ID+"/";
-        long s = reflector.getRingSetting();
+        BigInteger s = BigInteger.valueOf(reflector.getRingSetting());
         s = addDigit(s, reflector.getRotation(), 26);
         s = addDigit(s, rotor3.getRingSetting(), 26);
         s = addDigit(s, rotor3.getRotation(), 26);
@@ -212,13 +209,11 @@ public class Enigma_G31 extends Enigma
         s = addDigit(s, rotor1.getRingSetting(), 26);
         s = addDigit(s, rotor1.getRotation(), 26);
 
-        s = addDigit(s, rotor3.getNumber(), 10);
-        s = addDigit(s, rotor2.getNumber(), 10);
-        s = addDigit(s, rotor1.getNumber(), 10);
+        s = addDigit(s, rotor3.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor2.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor1.getIndex(), availableRotors.size());
 
         s = addDigit(s, 3, 20); //Machine #3
-
-        save = save+s;
-        return save;
+        return s.toString(16);
     }
 }

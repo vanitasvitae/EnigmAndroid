@@ -12,10 +12,8 @@
     <string name="action_choose_ringsettings">Ringstellung</string>
     <string name="action_send">Senden</string>
     <string name="send_to">Senden an…</string>
-    <string name="message_choose_ringsettings">Wähle die Ringstellungen für die Walzen:</string>
     <string name="hint_enigma_type_here">Hier Tippen</string>
     <string name="hint_enigma_code">Enigma-Code</string>
-    <string name="hint_enigma_plugboard">Steckerbrett (AZ,BE…)</string>
     <string name="hint_rotor1">Walze 1</string>
     <string name="hint_rotor2">Walze 2</string>
     <string name="hint_rotor3">Walze 3</string>
@@ -29,9 +27,6 @@
     <string name="hint_enigma_reflector_wiring">Verkabelung Umkehrwalze</string>
     <string name="hint_passphrase">Schlüsselwort eingeben</string>
     <string name="button_crypt">Ver-/Entschlüsseln</string>
-    <string name="error_parsing_plugs">Fehler: Fehlerhafte Steckerbrettkonfiguration.</string>
-    <string name="error_unable_to_plug_a_b">Kann Stecker nicht setzen: </string>
-    <string name="error_plug_already_in_use">Fehler: Einer oder mehrere dieser Stecker sind bereits in Benutzung: </string>
     <string name="error_no_text_to_send">Nachricht ist leer.</string>
     <string name="error_no_valid_qr">Fehler: Kein korrekter EnigmAndroid QR-Code!</string>
     <string name="title_ringsetting">Ringstellungen</string>
@@ -39,7 +34,6 @@
     <string name="title_reflector_dialog">Verkabelung Umkehrwalze</string>
     <string name="dialog_positiv">OK</string>
     <string name="dialog_negativ">Abbrechen</string>
-    <string name="dialog_clear">Löschen</string>
     <string name="dialog_ringsettings_success">Setze Ringe auf</string>
     <string name="dialog_reflector_set">Umkehrwalze verkabelt.</string>
     <string name="dialog_plugboard_set">Steckbrett gesteckert.</string>

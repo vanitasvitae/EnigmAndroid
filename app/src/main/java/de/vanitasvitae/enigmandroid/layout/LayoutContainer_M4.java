@@ -1,7 +1,6 @@
 package de.vanitasvitae.enigmandroid.layout;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -100,11 +99,11 @@ public class LayoutContainer_M4 extends LayoutContainer
 
     @Override
     public void setLayoutState(EnigmaStateBundle state) {
-        this.rotor1View.setSelection(state.getTypeRotor1() - 30);
-        this.rotor2View.setSelection(state.getTypeRotor2() - 30);
-        this.rotor3View.setSelection(state.getTypeRotor3() - 30);
-        this.rotor4View.setSelection(state.getTypeRotor4() - 38);
-        this.reflectorView.setSelection(state.getTypeReflector() - 30);
+        this.rotor1View.setSelection(state.getTypeRotor1());
+        this.rotor2View.setSelection(state.getTypeRotor2());
+        this.rotor3View.setSelection(state.getTypeRotor3());
+        this.rotor4View.setSelection(state.getTypeRotor4());
+        this.reflectorView.setSelection(state.getTypeReflector());
         this.rotor1PositionView.setSelection(state.getRotationRotor1());
         this.rotor2PositionView.setSelection(state.getRotationRotor2());
         this.rotor3PositionView.setSelection(state.getRotationRotor3());
@@ -114,11 +113,11 @@ public class LayoutContainer_M4 extends LayoutContainer
     @Override
     public void syncStateFromLayoutToEnigma() {
         EnigmaStateBundle state = getEnigma().getState();
-        state.setTypeRotor1(rotor1View.getSelectedItemPosition() + 30);
-        state.setTypeRotor2(rotor2View.getSelectedItemPosition() + 30);
-        state.setTypeRotor3(rotor3View.getSelectedItemPosition() + 30);
-        state.setTypeRotor4(rotor4View.getSelectedItemPosition() + 38);
-        state.setTypeReflector(reflectorView.getSelectedItemPosition() + 30);
+        state.setTypeRotor1(rotor1View.getSelectedItemPosition());
+        state.setTypeRotor2(rotor2View.getSelectedItemPosition());
+        state.setTypeRotor3(rotor3View.getSelectedItemPosition());
+        state.setTypeRotor4(rotor4View.getSelectedItemPosition());
+        state.setTypeReflector(reflectorView.getSelectedItemPosition());
         state.setRotationRotor1(rotor1PositionView.getSelectedItemPosition());
         state.setRotationRotor2(rotor2PositionView.getSelectedItemPosition());
         state.setRotationRotor3(rotor3PositionView.getSelectedItemPosition());

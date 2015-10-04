@@ -314,7 +314,7 @@ public class PluggableDialogBuilder
     /**
      * Set buttons to not connected. That includes changing background to grey, set connection to
      * itself.
-     * @param b
+     * @param b index of button
      */
     private void setButtonFree(int b)
     {

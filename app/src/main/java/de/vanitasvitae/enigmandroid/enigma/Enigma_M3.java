@@ -1,10 +1,8 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
-import java.security.SecureRandom;
-import java.sql.Ref;
-import java.util.Random;
+import java.math.BigInteger;
 
-import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
 
@@ -29,8 +27,6 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  */
 public class Enigma_M3 extends Enigma_I
 {
-    protected static int machineTypeOffset = 20;
-
     public Enigma_M3()
     {
         super();
@@ -38,11 +34,27 @@ public class Enigma_M3 extends Enigma_I
     }
 
     @Override
+    protected void establishAvailableParts()
+    {
+        addAvailableEntryWheel(new EntryWheel.EntryWheel_ABCDEF());
+        addAvailableRotor(new Rotor.Rotor_I(0, 0));
+        addAvailableRotor(new Rotor.Rotor_II(0,0));
+        addAvailableRotor(new Rotor.Rotor_III(0,0));
+        addAvailableRotor(new Rotor.Rotor_IV(0,0));
+        addAvailableRotor(new Rotor.Rotor_V(0,0));
+        addAvailableRotor(new Rotor.Rotor_VI(0,0));
+        addAvailableRotor(new Rotor.Rotor_VII(0,0));
+        addAvailableRotor(new Rotor.Rotor_VIII(0,0));
+        addAvailableReflector(new Reflector.Reflector_B());
+        addAvailableReflector(new Reflector.Reflector_C());
+    }
+
+    @Override
     protected void generateState() {
-        int rotor1, rotor2=-1, rotor3=-1;
-        rotor1 = rand.nextInt(8);
-        while(rotor2 == -1 || rotor2 == rotor1) rotor2 = rand.nextInt(8);
-        while(rotor3 == -1 || rotor3 == rotor2 || rotor3 == rotor1) rotor3 = rand.nextInt(8);
+        int r1, r2=-1, r3=-1;
+        r1 = rand.nextInt(8);
+        while(r2 == -1 || r2 == r1) r2 = rand.nextInt(8);
+        while(r3 == -1 || r3 == r2 || r3 == r1) r3 = rand.nextInt(8);
         int ref = rand.nextInt(2);
 
         int rot1 = rand.nextInt(26);
@@ -52,10 +64,11 @@ public class Enigma_M3 extends Enigma_I
         int ring2 = rand.nextInt(26);
         int ring3 = rand.nextInt(26);
 
-        this.rotor1 = Rotor.createRotor(machineTypeOffset + rotor1, rot1, ring1);
-        this.rotor2 = Rotor.createRotor(machineTypeOffset + rotor2, rot2, ring2);
-        this.rotor3 = Rotor.createRotor(machineTypeOffset + rotor3, rot3, ring3);
-        this.reflector = Reflector.createReflector(machineTypeOffset + ref);
+        this.entryWheel = getEntryWheel(0);
+        this.rotor1 = getRotor(r1, rot1, ring1);
+        this.rotor2 = getRotor(r2, rot2, ring2);
+        this.rotor3 = getRotor(r3, rot3, ring3);
+        this.reflector = getReflector(ref);
 
         this.plugboard = new Plugboard();
         plugboard.setConfiguration(Plugboard.seedToPlugboardConfiguration(rand));
@@ -63,20 +76,19 @@ public class Enigma_M3 extends Enigma_I
 
     @Override
     public String stateToString() {
-        String save = MainActivity.APP_ID+"/";
-        long s = rotor3.getRingSetting();
+        BigInteger s = Plugboard.configurationToBigInteger(plugboard.getConfiguration());
+        s = addDigit(s, rotor3.getRingSetting(), 26);
         s = addDigit(s, rotor3.getRotation(), 26);
         s = addDigit(s, rotor2.getRingSetting(), 26);
         s = addDigit(s, rotor2.getRotation(), 26);
         s = addDigit(s, rotor1.getRingSetting(), 26);
         s = addDigit(s, rotor1.getRotation(), 26);
-        s = addDigit(s, rotor3.getNumber(), 10);
-        s = addDigit(s, rotor2.getNumber(), 10);
-        s = addDigit(s, rotor1.getNumber(), 10);
+        s = addDigit(s, reflector.getIndex(), availableReflectors.size());
+        s = addDigit(s, rotor3.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor2.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor1.getIndex(), availableRotors.size());
         s = addDigit(s, 1, 20); //Machine #1
 
-        save = save+s;
-        save = save + ":p" + Plugboard.configurationToString(getState().getConfigurationPlugboard());
-        return save;
+        return s.toString(16);
     }
 }
