@@ -24,7 +24,11 @@
         jeweiligen Button an und verbinden Sie die gewünschten Steckerpaare, indem Sie im sich öffnenden Dialog nacheinander jeweils zwei
         Stecker berühren. Falls sie eine Verbindung trennen möchten, klicken Sie einen der betroffenen Stecker doppelt an.
         Optional können Sie außerdem auch noch die Ringstellung definieren. Öffnen Sie dazu das Optionsmenü und wählen Sie den Punkt \"Ringstellung\".
-        Haben Sie alle Einstellungen getätigt klicken Sie auf den Button \"Ver-Entschlüsseln\".</string>
+        Haben Sie alle Einstellungen getätigt klicken Sie auf den Button \"Ver-Entschlüsseln\".
+        Um die gewählte Konfiguration der Enigma Maschine per QR-Code zu teilen, wählen Sie den Eintrag \"Teile Konfiguration per QR-Code\" aus dem Optionsmenü.
+        Um eine per QR-Code geteilte Konfiguration zu scannen, wählen Sie stattdessen den Eintrag \"Lese Konfiguration aus QR-Code\".
+        Außerdem können Sie eine Konfiguration aus einem Schlüsselwort generieren, oder wiederherstellen, indem Sie dein Eintrag \"Konfiguration aus Schlüsselwort\"
+        wählen und im erscheinenden Dialog entweder ein beliebiges Wort oder den Inhalt eines QR-Codes (\"EnigmAndroid/…\" eingeben.</string>
 
     <string name="title_section_developer">Entwickler</string>
     <string name="section_developer">EnigmAndroid wird entwickelt von: \nPaul Schaub</string>

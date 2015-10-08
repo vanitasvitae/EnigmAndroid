@@ -47,6 +47,7 @@ public class Enigma_M4 extends Enigma
     {
         super();
         machineType = "M4";
+        Log.d(MainActivity.APP_ID, "Created Enigma M4");
     }
 
     protected void addAvailableThinRotor(Rotor r)

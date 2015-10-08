@@ -19,7 +19,7 @@
             android:id="@+id/Q"
             android:text="Q: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:id="@+id/W"
             android:text="W: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:id="@+id/E"
             android:text="E: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:id="@+id/R"
             android:text="R: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:id="@+id/T"
             android:text="T: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +61,7 @@
         android:layout_below="@id/first_row"
         android:id="@+id/second_row">
 
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
@@ -97,7 +97,7 @@
             android:text="O: "
             android:background="@drawable/button_grey"
             tools:ignore="HardcodedText" />
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
@@ -118,7 +118,7 @@
             android:id="@+id/A"
             android:text="A: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
             android:id="@+id/S"
             android:text="S: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
             android:id="@+id/D"
             android:text="D: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
             android:id="@+id/F"
             android:text="F: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
             android:id="@+id/G"
             android:text="G: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
 
     </LinearLayout>
 
@@ -161,7 +161,7 @@
         android:layout_below="@id/third_row"
         android:id="@+id/fourth_row">
 
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
@@ -197,7 +197,7 @@
             android:text="P: "
             android:background="@drawable/button_grey"
             tools:ignore="HardcodedText" />
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
@@ -218,7 +218,7 @@
             android:id="@+id/Y"
             android:text="Y: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
             android:id="@+id/X"
             android:text="X: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -234,7 +234,7 @@
             android:id="@+id/C"
             android:text="C: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
             android:id="@+id/V"
             android:text="V: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -250,7 +250,7 @@
             android:id="@+id/B"
             android:text="B: "
             android:background="@drawable/button_grey"
-            tools:ignore="HardcodedText" />
+            tools:ignore="ButtonStyle,HardcodedText" />
 
     </LinearLayout>
 
@@ -261,7 +261,7 @@
         android:layout_below="@id/fifth_row"
         android:id="@+id/sixth_row">
 
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content" />
@@ -289,7 +289,7 @@
             android:text="L: "
             android:background="@drawable/button_grey"
             tools:ignore="HardcodedText" />
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content" />

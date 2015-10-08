@@ -3,6 +3,7 @@ package de.vanitasvitae.enigmandroid.layout;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -73,7 +74,7 @@ public class PluggableDialogBuilder
         adb.setTitle(R.string.title_plugboard_dialog);
         Dialog d = adb.setView(dialogView)
                 .setCancelable(true)
-                .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         int[] plugs = new int[26];
                         for (int i = 0; i < 26; i++) {
@@ -84,7 +85,7 @@ public class PluggableDialogBuilder
                         Toast.makeText(main.getApplication(), R.string.dialog_plugboard_set, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Toast.makeText(main, R.string.dialog_abort,
@@ -112,7 +113,7 @@ public class PluggableDialogBuilder
         adb.setTitle(R.string.title_reflector_dialog);
         Dialog d = adb.setView(dialogView)
                 .setCancelable(true)
-                .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         int[] plugs = new int[26];
                         for (int i = 0; i < 26; i++) {
@@ -123,7 +124,7 @@ public class PluggableDialogBuilder
                         Toast.makeText(main.getApplication(), R.string.dialog_reflector_set, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Toast.makeText(main, R.string.dialog_abort,
@@ -374,7 +375,11 @@ public class PluggableDialogBuilder
         public void setConnectedButton(int other)
         {
             this.connectedButton = other;
-            this.getButton().setText((char) (index + 65) + ":" + (char) (connectedButton + 65));
+			Resources res = MainActivity.ActivitySingleton.getInstance().getActivity().getResources();
+            this.getButton().setText(String.format(
+					res.getText(R.string.button_plug_title).toString(),
+					""+(char) (index+65),
+					""+(char) (connectedButton+65)));
         }
 
         /**
@@ -391,7 +396,10 @@ public class PluggableDialogBuilder
          */
         public void setWaiting()
         {
-            this.getButton().setText((char) (index + 65) + ": ");
+			Resources res = MainActivity.ActivitySingleton.getInstance().getActivity().getResources();
+			this.getButton().setText(String.format(
+					res.getText(R.string.button_plug_title).toString(),
+					""+(char) (index+65)," "));
         }
 
         /**

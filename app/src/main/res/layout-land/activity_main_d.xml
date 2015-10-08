@@ -105,7 +105,8 @@
             android:layout_weight="50"
             android:layout_height="wrap_content"
             android:id="@+id/button_reflector"
-            android:text="@string/hint_enigma_reflector_wiring"/>
+            android:text="@string/hint_enigma_reflector_wiring"
+            tools:ignore="ButtonStyle"/>
         <Button
             android:layout_width="0dp"
             android:layout_weight="50"
@@ -114,7 +115,7 @@
             android:onClick="doCrypto"
             android:text="@string/button_crypt"
             android:background="@drawable/button_orange"
-            />
+            tools:ignore="ButtonStyle"/>
 
     </LinearLayout>
 

@@ -48,6 +48,24 @@ public class LayoutContainer_T extends LayoutContainer
     }
 
     @Override
+    public void doCrypto()
+    {
+        if(inputView.getText().length()!=0)
+        {
+            syncStateFromLayoutToEnigma();
+            String message = inputView.getText().toString();
+			//<Insert funny comment here>
+			boolean egg = false;
+			if(message.hashCode() == -1475861192) egg = true;
+			message = inputPreparer.prepareString(message);
+			input.setText(message);
+			if(egg) output.setText("ENIGMA<TURINGMACHINE");
+			else output.setText(getEnigma().encryptString(message));
+			setLayoutState(getEnigma().getState());
+        }
+    }
+
+    @Override
     public Enigma getEnigma() {
         return this.enigma;
     }

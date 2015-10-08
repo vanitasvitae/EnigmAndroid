@@ -139,26 +139,26 @@ public abstract class RingSettingsDialogBuilder
             ring3.setSelection(action.getThirdValueFromBundle());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(main);
-            builder.setTitle(R.string.title_ringsetting);
+            builder.setTitle(R.string.title_ring_setting);
             builder.setView(ringSettingsView)
                     .setCancelable(true)
-                    .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener()
+                    .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int id)
                         {
                             action.firstSpinnerItemSelected(ring1.getSelectedItemPosition());
                             action.secondSpinnerItemSelected(ring2.getSelectedItemPosition());
                             action.thirdSpinnerItemSelected(ring3.getSelectedItemPosition());
-                            String message = main.getResources().getString(
-                                    R.string.dialog_ringsettings_success) + " " +
+                            String message = String.format(main.getResources().getString(
+															R.string.dialog_ring_settings_success),
                                     (ring1.getSelectedItemPosition()+1) + ", " +
                                     (ring2.getSelectedItemPosition()+1) + ", " +
-                                    (ring3.getSelectedItemPosition()+1) + ".";
+                                    (ring3.getSelectedItemPosition()+1));
                             main.onDialogFinished(stateBundle);
                             Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                         }
                     })
-                    .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             Toast.makeText(main, R.string.dialog_abort,
@@ -266,10 +266,10 @@ public abstract class RingSettingsDialogBuilder
             ring4.setSelection(action.getFourthValueFromBundle());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(main);
-            builder.setTitle(R.string.title_ringsetting);
+            builder.setTitle(R.string.title_ring_setting);
             builder.setView(ringSettingsView)
                     .setCancelable(true)
-                    .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener()
+                    .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int id)
                         {
@@ -277,17 +277,17 @@ public abstract class RingSettingsDialogBuilder
                             action.secondSpinnerItemSelected(ring2.getSelectedItemPosition());
                             action.thirdSpinnerItemSelected(ring3.getSelectedItemPosition());
                             action.fourthSpinnerItemSelected(ring4.getSelectedItemPosition());
-                            String message = main.getResources().getString(
-                                    R.string.dialog_ringsettings_success) + " " +
+                            String message = String.format(main.getResources().getString(
+																   R.string.dialog_ring_settings_success),
                                     (ring1.getSelectedItemPosition()+1) + ", " +
                                     (ring2.getSelectedItemPosition()+1) + ", " +
                                     (ring3.getSelectedItemPosition()+1) + ", " +
-                                    (ring4.getSelectedItemPosition()+1) + ".";
+                                    (ring4.getSelectedItemPosition()+1));
                             main.onDialogFinished(stateBundle);
                             Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                         }
                     })
-                    .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             Toast.makeText(main, R.string.dialog_abort,

@@ -13,14 +13,16 @@
     </string>
 
     <string name="title_section_how_to_use">How to use</string>
-    <string name="section_how_to_use">In the beginning, choose a model of the enigma machine to work with.
+    <string name="section_how_to_use">At first, choose a model of the enigma machine to work with.
         You can do this in the settings. To encrypt/decrypt a message, you can name it into the input field.
         Afterwards you can - depending on the chosen model - select a reflector and the some rotors. Also select their initial positions.
         Then you may set pairs on the plugboard or on the pluggable reflector.
         Therefore press the respective button and connect the characters you wish to connect by clicking them one after another.
         If you want to disconnect two plugs, just touch one of the plugs twice.
-        Also you can optionally set custom ring settings. Open the options menu and select \"Ringsettings\".
-        When you are ready press \"En-/Decrypt!\".</string>
+        Also you can optionally set custom ring settings. Open the options menu and select \"Ring-Settings\".
+        When you are ready press \"En-/Decrypt!\". To share the configuration of the enigma machine via QR-Code, just open the options
+        menu and select the entry \"Share configuration via QR-Code\". To scan a QR-Code, choose the respective entry.
+        Also you can enter a codeword or the content of a QR-Code by clicking on the entry \"Create configuration from passphrase\" to restore a configuration that way.</string>
 
     <string name="title_section_developer">Developer</string>
     <string name="section_developer">EnigmAndroid is developed by: \nPaul Schaub</string>

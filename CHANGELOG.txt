@@ -4,10 +4,11 @@ v0.1.9-not-yet-released<
 *Prevent user from setting incomplete reflector wiring
 *Add option to generate configuration from passphrase
 *Reworked Enigma definition (available Rotors/Reflectors/Entrywheels
-*Verified correct functionality of Enigma T
+*Completely verified correct functionality of Enigma T
+*Added number spelling in spanish, italian
+*Added backwards compatibility to Api level 10
 *TODO: Write tests to ensure correct functionality
 *TODO: Migrate preferences to SettingsActivity
-*TODO: Add Enigma Z (Probably wont happen due to lack of information :/)
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
 
 v0.1.8-27.09.2015<

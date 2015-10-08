@@ -67,7 +67,6 @@ public abstract class LayoutContainer
     {
         if(inputView.getText().length()!=0)
         {
-
             syncStateFromLayoutToEnigma();
             String message = inputView.getText().toString();
             message = inputPreparer.prepareString(message);

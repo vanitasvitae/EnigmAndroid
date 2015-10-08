@@ -56,6 +56,10 @@ public abstract class InputPreparer {
                 break;
             case "fr": inPrep = new ReplaceNumbersFrench(inPrep);
                 break;
+			case "sp": inPrep = new ReplaceNumbersSpanish(inPrep);
+				break;
+			case "it": inPrep = new ReplaceNumbersItalian(inPrep);
+				break;
             default:
                 break;
         }
@@ -157,6 +161,60 @@ public abstract class InputPreparer {
             return input;
         }
     }
+
+    /**
+     * Concrete implementation of a spanish InputPreparer
+     */
+    public static class ReplaceNumbersSpanish extends InputPreparer {
+        public ReplaceNumbersSpanish() {
+            this.child = null;
+        }
+
+        public ReplaceNumbersSpanish(InputPreparer child) {
+            this.child = child;
+        }
+
+        protected String prepare(String input) {
+            input = input.replace("0", "CERO")
+                    .replace("1", "UNO")
+                    .replace("2", "DOS")
+                    .replace("3", "TRES")
+                    .replace("4", "CUATRO")
+                    .replace("5", "CINCO")
+                    .replace("6", "SEIS")
+                    .replace("7", "SIETE")
+                    .replace("8", "OCHO")
+                    .replace("9", "NUEVE");
+            return input;
+        }
+    }
+
+	/**
+	 * Concrete implementation of a spanish InputPreparer
+	 */
+	public static class ReplaceNumbersItalian extends InputPreparer {
+		public ReplaceNumbersItalian() {
+			this.child = null;
+		}
+
+		public ReplaceNumbersItalian(InputPreparer child) {
+			this.child = child;
+		}
+
+		protected String prepare(String input) {
+			input = input.replace("0", "ZERO")
+					.replace("1", "UNO")
+					.replace("2", "DUE")
+					.replace("3", "TRE")
+					.replace("4", "QUATTRO")
+					.replace("5", "CINQUE")
+					.replace("6", "SEI")
+					.replace("7", "SETTE")
+					.replace("8", "OTTO")
+					.replace("9", "NOVE");
+			return input;
+		}
+	}
 
     /**
      * "Final Stage" of Input preparing. This should always be called last

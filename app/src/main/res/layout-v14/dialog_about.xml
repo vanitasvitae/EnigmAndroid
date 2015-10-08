@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
             android:text="@string/description_text"
             android:id="@+id/about_app_description"/>
 
@@ -29,28 +29,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
             android:text="@string/action_version"
             android:id="@+id/title_section_version"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
             android:id="@+id/about_version_section"/>
 
         <!-- About How To -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
             android:text="@string/title_section_how_to_use"
             android:id="@+id/title_section_how_to_use"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
             android:text="@string/section_how_to_use"
             android:id="@+id/section_how_to_use"/>
 
@@ -58,14 +58,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
             android:text="@string/title_section_developer"
             android:id="@+id/title_section_developer_text"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
             android:text="@string/section_developer"
             android:id="@+id/about_developer_section"/>
 
@@ -73,14 +73,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
             android:text="@string/title_section_disclaimer"
             android:id="@+id/title_section_disclaimer_text"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
             android:text="@string/section_disclaimer"
             android:id="@+id/about_disclaimer_section"/>
 

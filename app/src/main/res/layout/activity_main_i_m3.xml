@@ -78,7 +78,7 @@
         android:layout_below="@+id/lin_lay_1"
         android:id="@+id/lin_lay_names_2">
 
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight=".125"
             android:layout_height="wrap_content" />
@@ -99,7 +99,7 @@
             android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:text="@string/hint_rotor1_position"/>
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight=".125"
             android:layout_height="wrap_content" />
@@ -112,7 +112,7 @@
         android:id="@+id/lin_lay_2"
         android:layout_below="@+id/lin_lay_names_2">
 
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight=".125"
             android:layout_height="wrap_content" />
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rotor1position">
         </Spinner>
-        <Space
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_weight=".125"
             android:layout_height="wrap_content" />
@@ -174,7 +174,8 @@
             android:layout_weight="50"
             android:text="@string/title_plugboard_dialog"
             android:id="@+id/button_plugboard"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle"/>
         <Button
             android:layout_width="0dp"
             android:layout_weight="50"
@@ -183,7 +184,7 @@
             android:onClick="doCrypto"
             android:text="@string/button_crypt"
             android:background="@drawable/button_orange"
-            />
+            tools:ignore="ButtonStyle"/>
         </LinearLayout>
 
 </RelativeLayout>

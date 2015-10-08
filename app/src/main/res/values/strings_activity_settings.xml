@@ -38,14 +38,18 @@
     <string name="pref_description_numeric_spelling_language">Language, in which numbers are spelled.</string>
     <string-array name="pref_list_numeric_spelling_language">
         <item>German</item>
-        <item>French</item>
         <item>English</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>Italian</item>
         <item>No replacing</item>
     </string-array>
     <string-array translatable="false" name="pref_alias_numeric_spelling_language">
         <item>de</item>
-        <item>fr</item>
         <item>en</item>
+        <item>fr</item>
+        <item>sp</item>
+        <item>it</item>
         <item>no</item>
     </string-array>
 

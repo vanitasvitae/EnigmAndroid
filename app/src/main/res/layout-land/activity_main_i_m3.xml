@@ -159,7 +159,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="@string/title_plugboard_dialog"
-            android:id="@+id/button_plugboard" />
+            android:id="@+id/button_plugboard"
+            tools:ignore="ButtonStyle"/>
 
         <Button
             android:layout_width="0dp"
@@ -169,7 +170,8 @@
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
             android:text="@string/button_crypt"
-            android:background="@drawable/button_orange"/>
+            android:background="@drawable/button_orange"
+            tools:ignore="ButtonStyle"/>
 
     </LinearLayout>
 

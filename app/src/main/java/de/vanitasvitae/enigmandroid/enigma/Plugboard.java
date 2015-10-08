@@ -35,7 +35,7 @@ public class Plugboard
 
     public Plugboard()
     {
-        plugs = empty;
+        plugs = Arrays.copyOf(empty, empty.length);
     }
 
     public Plugboard(int[] conf)
@@ -53,12 +53,11 @@ public class Plugboard
         String s = "";
 
         int x;
-        while((x = Enigma.getValue(b, 27)) != 26 || b.compareTo(BigInteger.ZERO) > 1)
+        while((x = Enigma.getValue(b, 27)) != 26 && b.compareTo(BigInteger.ZERO) > 1)
         {
             s = ((char) (x+65))+s;
             b = Enigma.removeDigit(b, 27);
         }
-        Log.d(MainActivity.APP_ID, "Restored: " + s);
         this.setConfiguration(stringToConfiguration(s));
         return b;
     }
@@ -207,9 +206,8 @@ public class Plugboard
     public static int[] bigIntegerToConfiguration(BigInteger b)
     {
         String s = "";
-
         int x;
-        while((x = Enigma.getValue(b, 27)) != 26 || b.compareTo(BigInteger.ZERO) > 1)
+        while((x = Enigma.getValue(b, 27)) != 26 && b.compareTo(BigInteger.ZERO) > 1)
         {
             s = ((char) (x+65))+s;
             b = Enigma.removeDigit(b, 27);

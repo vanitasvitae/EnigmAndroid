@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_send_white_48dp"/>
     <!-- RINGSETTING -->
     <item android:id="@+id/action_choose_ringsetting"
-        android:title="@string/action_choose_ringsettings"
+        android:title="@string/action_choose_ring_settings"
         android:orderInCategory="97"
         android:showAsAction="ifRoom" />
     <!-- ENTER SEED -->

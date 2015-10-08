@@ -9,7 +9,7 @@
     <string name="action_send_qr">Teile Konfiguration per QR-Code</string>
     <string name="action_read_passphrase">Konfiguration aus Schlüsselwort</string>
     <string name="action_settings">Einstellungen</string>
-    <string name="action_choose_ringsettings">Ringstellung</string>
+    <string name="action_choose_ring_settings">Ringstellung</string>
     <string name="action_send">Senden</string>
     <string name="send_to">Senden an…</string>
     <string name="hint_enigma_type_here">Hier Tippen</string>
@@ -29,17 +29,18 @@
     <string name="button_crypt">Ver-/Entschlüsseln</string>
     <string name="error_no_text_to_send">Nachricht ist leer.</string>
     <string name="error_no_valid_qr">Fehler: Kein korrekter EnigmAndroid QR-Code!</string>
-    <string name="title_ringsetting">Ringstellungen</string>
+    <string name="title_ring_setting">Ringstellungen</string>
     <string name="title_plugboard_dialog">Steckbrett-\nVerbindungen</string>
     <string name="title_reflector_dialog">Verkabelung Umkehrwalze</string>
-    <string name="dialog_positiv">OK</string>
-    <string name="dialog_negativ">Abbrechen</string>
-    <string name="dialog_ringsettings_success">Setze Ringe auf</string>
+    <string name="dialog_positive">OK</string>
+    <string name="dialog_negative">Abbrechen</string>
+    <string name="dialog_ring_settings_success">Setze Ringe auf %1$s.</string>
     <string name="dialog_reflector_set">Umkehrwalze verkabelt.</string>
-    <string name="dialog_plugboard_set">Steckbrett gesteckert.</string>
-    <string name="dialog_passphrase_set">Generiere Konfiguration aus Schlüsselwort</string>
-    <string name="dialog_abort">Keine Änderungen</string>
-    <string name="message_reset">Enigma zurückgesetzt</string>
-    <string name="message_random">Enigma auf zufällige Konfiguration gesetzt</string>
+    <string name="dialog_plugboard_set">Steckbrettverbindungen gesetzt.</string>
+    <string name="dialog_passphrase_set">Konfiguration aus Schlüsselwort %1$s generiert.</string>
+    <string name="dialog_passphrase_was_coded_state">Konfiguration aus Kodierung wiederhergestellt.</string>
+    <string name="dialog_abort">Keine Änderungen.</string>
+    <string name="message_reset">Enigma zurückgesetzt.</string>
+    <string name="message_random">Enigma auf zufällige Konfiguration gesetzt.</string>
 
 </resources>

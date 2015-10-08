@@ -23,8 +23,10 @@
     <string name="pref_description_numeric_spelling_language">Sprache in der Zahlen buchstabiert werden sollen.</string>
     <string-array name="pref_list_numeric_spelling_language">
         <item>Deutsch</item>
-        <item>Französisch</item>
         <item>Englisch</item>
+        <item>Französisch</item>
+        <item>Spanisch</item>
+        <item>Italienisch</item>
         <item>Keine Ersetzung</item>
     </string-array>
 

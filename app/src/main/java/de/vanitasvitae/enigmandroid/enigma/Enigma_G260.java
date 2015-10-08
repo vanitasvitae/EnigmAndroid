@@ -1,7 +1,10 @@
 package de.vanitasvitae.enigmandroid.enigma;
 
+import android.util.Log;
+
 import java.math.BigInteger;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
 import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
@@ -31,6 +34,7 @@ public class Enigma_G260 extends Enigma_G31
     {
         super();
         machineType = "G260";
+        Log.d(MainActivity.APP_ID, "Created Enigma G260");
     }
 
     @Override

@@ -104,7 +104,7 @@ public class MainActivity extends Activity
         switch (prefMachineType)
         {
             case "I":
-                this.setContentView(R.layout.activity_main_i_m3);
+                setContentView(R.layout.activity_main_i_m3);
                 break;
             case "M3":
                 this.setContentView(R.layout.activity_main_i_m3);
@@ -328,7 +328,7 @@ public class MainActivity extends Activity
         builder.setTitle(R.string.title_about_dialog);
         builder.setView(aboutView)
                 .setCancelable(true)
-                .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener()
+                .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int id)
                     {
@@ -383,7 +383,7 @@ public class MainActivity extends Activity
      * Set EnigmAndroid into a certain state as described in the QR-Code
      * @param mem content of the QR-Code
      */
-    private void restoreStateFromCode(String mem)
+    public void restoreStateFromCode(String mem)
     {
         if(!mem.startsWith(APP_ID+"/"))
         {
@@ -393,7 +393,7 @@ public class MainActivity extends Activity
         {
             mem = mem.substring((APP_ID+"/").length());
             BigInteger s = new BigInteger(mem, 16);
-            Log.d(APP_ID, s.toString());
+            Log.d(APP_ID, "Try to restore configuration from BigInteger value "+ s.toString());
             setPrefMachineType(Enigma.chooseEnigmaFromSave(s));
             updateContentView();
             layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());

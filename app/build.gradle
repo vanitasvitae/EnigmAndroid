@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "de.vanitasvitae.enigmandroid"
-        minSdkVersion 16
+        minSdkVersion 10
         targetSdkVersion 23
-        versionCode 14
-        versionName "0.1.8-27.09.2015-beta"
+        versionCode 15
+        versionName "0.1.9-09.10.2015-beta"
     }
     buildTypes {
         release {
@@ -19,5 +19,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.android.support:support-v4:23.0.1'
 }

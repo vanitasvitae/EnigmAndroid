@@ -16,6 +16,8 @@ import de.vanitasvitae.enigmandroid.R;
 /**
  * Builder for the dialog that is used to obtain a passphrase to generate
  * a enigma configuration from it.
+ * Alternatively the user can enter the content String from a EnigmAndroid QR-Code here.
+ * That would have the same effect as scanning the QR-Code.
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
@@ -75,18 +77,26 @@ public class PassphraseDialogBuilder
         builder.setTitle(R.string.hint_passphrase);
         Dialog d = builder.setView(passphraseDialogView)
                 .setCancelable(true)
-                .setPositiveButton(R.string.dialog_positiv, new DialogInterface.OnClickListener()
+                .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int id)
                     {
                         String pass = passphrase.getText().toString();
-                        main.createStateFromSeed(pass);
-                        String message = main.getResources().getString(R.string.dialog_passphrase_set)
-                                +" \'" + pass + "\'";
-                        Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                        if(pass.startsWith(MainActivity.APP_ID+"/"))
+						{
+							main.restoreStateFromCode(pass);
+							Toast.makeText(main, R.string.dialog_passphrase_was_coded_state, Toast.LENGTH_LONG).show();
+						}
+						else
+						{
+							main.createStateFromSeed(pass);
+                            String message = String.format(main.getResources().getString(
+                                    R.string.dialog_passphrase_set), " \'"+pass+"\'");
+							Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+						}
                     }
                 })
-                .setNegativeButton(R.string.dialog_negativ, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Toast.makeText(main, R.string.dialog_abort,
