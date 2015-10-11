@@ -45,6 +45,7 @@ public class LayoutContainer_M4 extends LayoutContainer
     public LayoutContainer_M4()
     {
         super();
+        main.setContentView(R.layout.activity_main_m4);
         main.setTitle("M4 - EnigmAndroid");
         this.resetLayout();
     }

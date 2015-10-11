@@ -29,7 +29,7 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_K;
  */
 public class LayoutContainer_K extends LayoutContainer
 {
-    private Enigma_K enigma;
+    protected Enigma enigma;
 
     protected Spinner rotor1View;
     protected Spinner rotor2View;
@@ -43,6 +43,7 @@ public class LayoutContainer_K extends LayoutContainer
     public LayoutContainer_K()
     {
         super();
+        main.setContentView(R.layout.activity_main_g_k_r_t);
         main.setTitle("K - EnigmAndroid");
         this.resetLayout();
     }

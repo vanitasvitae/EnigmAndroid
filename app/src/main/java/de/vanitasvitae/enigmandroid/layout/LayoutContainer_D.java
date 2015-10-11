@@ -40,6 +40,7 @@ public class LayoutContainer_D extends LayoutContainer
     public LayoutContainer_D()
     {
         super();
+        main.setContentView(R.layout.activity_main_d);
         main.setTitle("D - EnigmAndroid");
         this.resetLayout();
     }

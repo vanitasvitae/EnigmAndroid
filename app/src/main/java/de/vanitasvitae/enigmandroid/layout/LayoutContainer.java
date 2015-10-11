@@ -6,6 +6,7 @@ import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
+import de.vanitasvitae.enigmandroid.SettingsActivity;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.inputPreparer.EditTextAdapter;
@@ -60,6 +61,7 @@ public abstract class LayoutContainer
         this.outputView = (EditText) main.findViewById(R.id.output);
         input = EditTextAdapter.createEditTextAdapter(inputView, main.getPrefMessageFormatting());
         output = EditTextAdapter.createEditTextAdapter(outputView, main.getPrefMessageFormatting());
+		inputPreparer = InputPreparer.createInputPreparer();
         initializeLayout();
     }
 
@@ -85,6 +87,11 @@ public abstract class LayoutContainer
     {
         return this.output;
     }
+
+	public static LayoutContainer createLayoutContainer()
+	{
+		return createLayoutContainer(SettingsActivity.SettingsSingleton.getInstance().getPrefMachineType());
+	}
 
     public static LayoutContainer createLayoutContainer(String enigmaType)
     {

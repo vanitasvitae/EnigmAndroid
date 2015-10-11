@@ -43,6 +43,7 @@ public class LayoutContainer_T extends LayoutContainer
     public LayoutContainer_T()
     {
         super();
+        main.setContentView(R.layout.activity_main_g_k_r_t);
         main.setTitle("T - EnigmAndroid");
         this.resetLayout();
     }

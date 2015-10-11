@@ -43,6 +43,7 @@ public class LayoutContainer_I extends LayoutContainer
     public LayoutContainer_I()
     {
         super();
+        main.setContentView(R.layout.activity_main_i_m3);
         main.setTitle("I - EnigmAndroid");
         this.resetLayout();
     }

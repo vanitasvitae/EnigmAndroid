@@ -43,6 +43,7 @@ public class LayoutContainer_G31 extends LayoutContainer
     public LayoutContainer_G31()
     {
         super();
+        main.setContentView(R.layout.activity_main_g_k_r_t);
         main.setTitle("G31 - EnigmAndroid");
         this.resetLayout();
     }
