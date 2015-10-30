@@ -30,41 +30,42 @@ import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
  */
 public class Enigma_G312 extends Enigma_G31
 {
-    public Enigma_G312()
-    {
-        super();
-        machineType = "G312";
-        Log.d(MainActivity.APP_ID, "Created Enigma G312");
-    }
+	public Enigma_G312()
+	{
+		super();
+		machineType = "G312";
+		Log.d(MainActivity.APP_ID, "Created Enigma G312");
+	}
 
-    @Override
-    protected void establishAvailableParts()
-    {
-        addAvailableEntryWheel(new EntryWheel.EntryWheel_QWERTZ());
-        addAvailableRotor(new Rotor.Rotor_G312_I(0, 0));
-        addAvailableRotor(new Rotor.Rotor_G312_II(0, 0));
-        addAvailableRotor(new Rotor.Rotor_G312_III(0, 0));
-        addAvailableReflector(new Reflector.Reflector_G312());
-    }
+	@Override
+	protected void establishAvailableParts()
+	{
+		addAvailableEntryWheel(new EntryWheel.EntryWheel_QWERTZ());
+		addAvailableRotor(new Rotor.Rotor_G312_I(0, 0));
+		addAvailableRotor(new Rotor.Rotor_G312_II(0, 0));
+		addAvailableRotor(new Rotor.Rotor_G312_III(0, 0));
+		addAvailableReflector(new Reflector.Reflector_G312());
+	}
 
-    @Override
-    public String stateToString()
-    {
-        BigInteger s = BigInteger.valueOf(reflector.getRingSetting());
-        s = addDigit(s, reflector.getRotation(), 26);
-        s = addDigit(s, rotor3.getRingSetting(), 26);
-        s = addDigit(s, rotor3.getRotation(), 26);
-        s = addDigit(s, rotor2.getRingSetting(), 26);
-        s = addDigit(s, rotor2.getRotation(), 26);
-        s = addDigit(s, rotor1.getRingSetting(), 26);
-        s = addDigit(s, rotor1.getRotation(), 26);
+	@Override
+	public BigInteger getEncodedState(int protocol_version)
+	{
+		BigInteger s = BigInteger.valueOf(reflector.getRingSetting());
+		s = addDigit(s, reflector.getRotation(), 26);
+		s = addDigit(s, rotor3.getRingSetting(), 26);
+		s = addDigit(s, rotor3.getRotation(), 26);
+		s = addDigit(s, rotor2.getRingSetting(), 26);
+		s = addDigit(s, rotor2.getRotation(), 26);
+		s = addDigit(s, rotor1.getRingSetting(), 26);
+		s = addDigit(s, rotor1.getRotation(), 26);
 
-        s = addDigit(s, rotor3.getIndex(), availableRotors.size());
-        s = addDigit(s, rotor2.getIndex(), availableRotors.size());
-        s = addDigit(s, rotor1.getIndex(), availableRotors.size());
+		s = addDigit(s, rotor3.getIndex(), availableRotors.size());
+		s = addDigit(s, rotor2.getIndex(), availableRotors.size());
+		s = addDigit(s, rotor1.getIndex(), availableRotors.size());
 
-        s = addDigit(s, 4, 20); //Machine #4
+		s = addDigit(s, 4, 20); //Machine #4
+		s = addDigit(s, protocol_version, MainActivity.max_protocol_version);
 
-        return s.toString(16);
-    }
+		return s;
+	}
 }

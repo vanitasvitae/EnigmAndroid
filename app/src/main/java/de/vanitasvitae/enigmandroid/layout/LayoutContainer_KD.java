@@ -1,15 +1,18 @@
 package de.vanitasvitae.enigmandroid.layout;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
-import de.vanitasvitae.enigmandroid.enigma.Enigma_G31;
+import de.vanitasvitae.enigmandroid.enigma.Enigma_KD;
 
 /**
- * LayoutContainer for the Enigma Model G31
+ * LayoutContainer for the Enigma Model K
  * This class contains the layout and controls the layout elements such as spinners and stuff
  * Copyright (C) 2015  Paul Schaub
 
@@ -28,7 +31,7 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_G31;
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  * @author vanitasvitae
  */
-public class LayoutContainer_G31 extends LayoutContainer
+public class LayoutContainer_KD extends LayoutContainer
 {
 	protected Enigma enigma;
 
@@ -41,17 +44,17 @@ public class LayoutContainer_G31 extends LayoutContainer
 	protected Spinner rotor3PositionView;
 	protected Spinner reflectorPositionView;
 
-	public LayoutContainer_G31()
+	public LayoutContainer_KD()
 	{
 		super();
-		main.setTitle("G31 - EnigmAndroid");
+		main.setTitle("KD - EnigmAndroid");
 		this.resetLayout();
 	}
 
 	@Override
 	protected void setEnigmaLayout()
 	{
-		MainActivity.ActivitySingleton.getInstance().getActivity().setContentView(R.layout.activity_main_g_k_r_t);
+		MainActivity.ActivitySingleton.getInstance().getActivity().setContentView(R.layout.activity_main_kd);
 	}
 
 	@Override
@@ -68,6 +71,13 @@ public class LayoutContainer_G31 extends LayoutContainer
 		this.rotor2PositionView = (Spinner) main.findViewById(R.id.rotor2position);
 		this.rotor3PositionView = (Spinner) main.findViewById(R.id.rotor3position);
 		this.reflectorPositionView = (Spinner) main.findViewById(R.id.reflector_position);
+		Button reflectorWiring = (Button) main.findViewById(R.id.button_reflector);
+		reflectorWiring.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				new PluggableDialogBuilder(getEnigma().getState()).showDialogReflector();
+			}
+		});
 
 		Character[] rotorPositionArray = new Character[26];
 		for(int i=0; i<26; i++) {rotorPositionArray[i] = (char) (65+i); /*Fill with A..Z*/}
@@ -75,6 +85,7 @@ public class LayoutContainer_G31 extends LayoutContainer
 		prepareSpinnerAdapter(rotor1View, R.array.rotors_1_3);
 		prepareSpinnerAdapter(rotor2View, R.array.rotors_1_3);
 		prepareSpinnerAdapter(rotor3View, R.array.rotors_1_3);
+
 		prepareSpinnerAdapter(rotor1PositionView, rotorPositionArray);
 		prepareSpinnerAdapter(rotor2PositionView, rotorPositionArray);
 		prepareSpinnerAdapter(rotor3PositionView, rotorPositionArray);
@@ -83,7 +94,7 @@ public class LayoutContainer_G31 extends LayoutContainer
 
 	@Override
 	public void resetLayout() {
-		enigma = new Enigma_G31();
+		enigma = new Enigma_KD();
 		setLayoutState(enigma.getState());
 		output.setText("");
 		input.setText("");

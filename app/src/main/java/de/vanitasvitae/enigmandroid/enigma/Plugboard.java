@@ -87,7 +87,7 @@ public class Plugboard
     public static int[] stringToConfiguration(String in)
     {
         String pairs = trimString(new InputPreparer.RemoveIllegalCharacters().prepareString(in));
-        int[] out = empty;
+        int[] out = Arrays.copyOf(empty, empty.length);
         //Check if in is too long or odd
         int l = pairs.length();
         if(l>1 && (pairs.length() > 26 || pairs.length()/2 == (pairs.length()-1)/2))

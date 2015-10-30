@@ -40,7 +40,7 @@ public class LayoutContainer_M3 extends LayoutContainer_I
     }
 
     @Override
-    protected void initializeLayout()
+    protected void assembleLayout()
     {
         this.rotor1View = (Spinner) main.findViewById(R.id.rotor1);
         this.rotor2View = (Spinner) main.findViewById(R.id.rotor2);

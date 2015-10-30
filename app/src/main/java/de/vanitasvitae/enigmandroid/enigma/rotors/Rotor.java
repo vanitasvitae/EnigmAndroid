@@ -140,26 +140,30 @@ public abstract class Rotor
             case 51: return new Rotor_K_D_II(rotation, ringSetting);
             case 52: return new Rotor_K_D_III(rotation, ringSetting);
 
-            case 60: return new Rotor_KSwiss_Standard_I(rotation, ringSetting);
-            case 61: return new Rotor_KSwiss_Standard_II(rotation, ringSetting);
-            case 62: return new Rotor_KSwiss_Standard_III(rotation, ringSetting);
+			case 60: return new Rotor_KD_I(rotation, ringSetting);
+			case 61: return new Rotor_KD_II(rotation, ringSetting);
+			case 62: return new Rotor_KD_III(rotation, ringSetting);
 
-            case 70: return new Rotor_K_Swiss_Airforce_I(rotation, ringSetting);
-            case 71: return new Rotor_K_Swiss_Airforce_II(rotation, ringSetting);
-            case 72: return new Rotor_K_Swiss_Airforce_III(rotation, ringSetting);
+            case 70: return new Rotor_KSwiss_Standard_I(rotation, ringSetting);
+            case 71: return new Rotor_KSwiss_Standard_II(rotation, ringSetting);
+            case 72: return new Rotor_KSwiss_Standard_III(rotation, ringSetting);
 
-            case 80: return new Rotor_R_I(rotation, ringSetting);
-            case 81: return new Rotor_R_II(rotation, ringSetting);
-            case 82: return new Rotor_R_III(rotation, ringSetting);
+            case 80: return new Rotor_K_Swiss_Airforce_I(rotation, ringSetting);
+            case 81: return new Rotor_K_Swiss_Airforce_II(rotation, ringSetting);
+            case 82: return new Rotor_K_Swiss_Airforce_III(rotation, ringSetting);
 
-            case 90: return new Rotor_T_I(rotation, ringSetting);
-            case 91: return new Rotor_T_II(rotation, ringSetting);
-            case 92: return new Rotor_T_III(rotation, ringSetting);
-            case 93: return new Rotor_T_IV(rotation, ringSetting);
-            case 94: return new Rotor_T_V(rotation, ringSetting);
-            case 95: return new Rotor_T_VI(rotation, ringSetting);
-            case 96: return new Rotor_T_VII(rotation, ringSetting);
-            case 97: return new Rotor_T_VIII(rotation, ringSetting);
+            case 90: return new Rotor_R_I(rotation, ringSetting);
+            case 91: return new Rotor_R_II(rotation, ringSetting);
+            case 92: return new Rotor_R_III(rotation, ringSetting);
+
+            case 100: return new Rotor_T_I(rotation, ringSetting);
+            case 101: return new Rotor_T_II(rotation, ringSetting);
+            case 102: return new Rotor_T_III(rotation, ringSetting);
+            case 103: return new Rotor_T_IV(rotation, ringSetting);
+            case 104: return new Rotor_T_V(rotation, ringSetting);
+            case 105: return new Rotor_T_VI(rotation, ringSetting);
+            case 106: return new Rotor_T_VII(rotation, ringSetting);
+            case 107: return new Rotor_T_VIII(rotation, ringSetting);
 
             default: Log.e(MainActivity.APP_ID," Tried to create Rotor of invalid name "+type);
                 return null;
@@ -707,6 +711,54 @@ public abstract class Rotor
         }
     }
 
+	/**
+	 * Rotor I as used in the Enigma Type KD
+	 * VEZIOJCXKYDUNTWAPLQGBHSFMR
+	 * Turnover TVZBFIMOR
+	 */
+    public static class Rotor_KD_I extends Rotor
+    {
+        public Rotor_KD_I(int rotation, int ringSetting)
+        {
+            super(60, "KD-I", "VEZIOJCXKYDUNTWAPLQGBHSFMR",
+                  new Integer[]{21,4,25,8,14,9,2,23,10,24,3,20,13,19,22,0,15,11,16,6,1,7,18,5,12,17},
+                  new Integer[]{15,20,6,10,1,23,19,21,3,5,8,17,24,12,4,16,18,25,22,13,11,0,14,7,9,2},
+                  new Integer[]{19,21,25,1,5,8,12,14,17}, ringSetting, rotation);
+        }
+    }
+
+	/**
+	 * Rotor II as used in the Enigma Type KD
+	 * HGRBSJZETDLVPMQYCXAOKINFUW
+	 * Turnover TVZBFIMOR
+	 */
+	public static class Rotor_KD_II extends Rotor
+	{
+		public Rotor_KD_II(int rotation, int ringSetting)
+		{
+			super(61, "KD-II", "HGRBSJZETDLVPMQYCXAOKINFUW",
+				  new Integer[]{7,6,17,1,18,9,25,4,19,3,11,21,15,12,16,24,2,23,0,14,10,8,13,5,20,22},
+				  new Integer[]{18,3,16,9,7,23,1,0,21,5,20,10,13,22,19,12,14,2,4,8,24,11,25,17,15,6},
+				  new Integer[]{19,21,25,1,5,8,12,14,17}, ringSetting, rotation);
+		}
+	}
+
+	/**
+	 * Rotor III as used in the Enigma Type KD
+	 * NWLHXGRBYOJSAZDVTPKFQMEUIC
+	 * Turnover TVZBFIMOR
+	 */
+	public static class Rotor_KD_III extends Rotor
+	{
+		public Rotor_KD_III(int rotation, int ringSetting)
+		{
+			super(62, "KD-II", "NWLHXGRBYOJSAZDVTPKFQMEUIC",
+				  new Integer[]{13,22,11,7,23,6,17,1,24,14,9,18,0,25,3,21,19,15,10,5,16,12,4,20,8,2},
+				  new Integer[]{12,7,25,14,22,19,5,3,24,10,18,2,21,0,9,17,20,6,11,16,23,15,1,4,8,13},
+				  new Integer[]{19,21,25,1,5,8,12,14,17}, ringSetting, rotation);
+		}
+	}
+
     /**
      * Rotor I as used in the Enigma Type K (Switzerland)
      * P E Z U O H X S C V F M T B G L R I N Q J W A Y D K
@@ -716,7 +768,7 @@ public abstract class Rotor
     {
         public Rotor_KSwiss_Standard_I(int rotation, int ringSetting)
         {
-            super(60, "KS-I", "PEZUOHXSCVFMTBGLRINQJWAYDK",
+            super(70, "KS-I", "PEZUOHXSCVFMTBGLRINQJWAYDK",
                     new Integer[]{15,4,25,20,14,7,23,18,2,21,5,12,19,1,6,11,17,8,13,16,9,22,0,24,3,10},
                     new Integer[]{22,13,8,24,1,10,14,5,17,20,25,15,11,18,4,0,19,16,7,12,3,9,21,6,23,2},
                     new Integer[]{25}, ringSetting, rotation);
@@ -732,7 +784,7 @@ public abstract class Rotor
     {
         public Rotor_KSwiss_Standard_II(int rotation, int ringSetting)
         {
-            super(61, "KS-II", "ZOUESYDKFWPCIQXHMVBLGNJRAT",
+            super(71, "KS-II", "ZOUESYDKFWPCIQXHMVBLGNJRAT",
                     new Integer[]{25,14,20,4,18,24,3,10,5,22,15,2,8,16,23,7,12,21,1,11,6,13,9,17,0,19},
                     new Integer[]{24,18,11,6,3,8,20,15,12,22,7,19,16,21,1,10,13,23,4,25,2,17,9,14,5,0},
                     new Integer[]{5}, ringSetting, rotation);
@@ -748,7 +800,7 @@ public abstract class Rotor
     {
         public Rotor_KSwiss_Standard_III(int rotation, int ringSetting)
         {
-            super(62, "KS-III", "EHRVXGAOBQUSIMZFLYNWKTPDJC",
+            super(72, "KS-III", "EHRVXGAOBQUSIMZFLYNWKTPDJC",
                     new Integer[]{4,7,17,21,23,6,0,14,1,16,20,18,8,12,25,5,11,24,13,22,10,19,15,3,9,2},
                     new Integer[]{6,8,25,23,0,15,5,1,12,24,20,16,13,18,7,22,9,2,11,21,10,3,19,4,17,14},
                     new Integer[]{14}, ringSetting, rotation);
@@ -764,7 +816,7 @@ public abstract class Rotor
     {
         public Rotor_K_Swiss_Airforce_I(int rotation, int ringSetting)
         {
-            super(70, "KSA-I", "PEZUOHXSCVFMTBGLRINQJWAYDK",
+            super(80, "KSA-I", "PEZUOHXSCVFMTBGLRINQJWAYDK",
                     new Integer[]{15,4,25,20,14,7,23,18,2,21,5,12,19,1,6,11,17,8,13,16,9,22,0,24,3,10},
                     new Integer[]{22,13,8,24,1,10,14,5,17,20,25,15,11,18,4,0,19,16,7,12,3,9,21,6,23,2},
                     new Integer[]{25}, ringSetting, rotation);
@@ -779,7 +831,7 @@ public abstract class Rotor
     {
         public Rotor_K_Swiss_Airforce_II(int rotation, int ringSetting)
         {
-            super(71, "KSA-II", "ZOUESYDKFWPCIQXHMVBLGNJRAT",
+            super(81, "KSA-II", "ZOUESYDKFWPCIQXHMVBLGNJRAT",
                     new Integer[]{25,14,20,4,18,24,3,10,5,22,15,2,8,16,23,7,12,21,1,11,6,13,9,17,0,19},
                     new Integer[]{24,18,11,6,3,8,20,15,12,22,7,19,16,21,1,10,13,23,4,25,2,17,9,14,5,0},
                     new Integer[]{5}, ringSetting, rotation);
@@ -794,7 +846,7 @@ public abstract class Rotor
     {
         public Rotor_K_Swiss_Airforce_III(int rotation, int ringSetting)
         {
-            super(72, "KSA-III", "EHRVXGAOBQUSIMZFLYNWKTPDJC",
+            super(82, "KSA-III", "EHRVXGAOBQUSIMZFLYNWKTPDJC",
                     new Integer[]{4,7,17,21,23,6,0,14,1,16,20,18,8,12,25,5,11,24,13,22,10,19,15,3,9,2},
                     new Integer[]{6,8,25,23,0,15,5,1,12,24,20,16,13,18,7,22,9,2,11,21,10,3,19,4,17,14},
                     new Integer[]{14}, ringSetting, rotation);
@@ -810,7 +862,7 @@ public abstract class Rotor
     {
         public Rotor_R_I(int rotation, int ringSetting)
         {
-            super(80, "R-I", "JGDQOXUSCAMIFRVTPNEWKBLZYH",
+            super(90, "R-I", "JGDQOXUSCAMIFRVTPNEWKBLZYH",
                     new Integer[]{9,6,3,16,14,23,20,18,2,0,12,8,5,17,21,19,15,13,4,22,10,1,11,25,24,7},
                     new Integer[]{9,21,8,2,18,12,1,25,11,0,20,22,10,17,4,16,3,13,7,15,6,14,19,5,24,23},
                     new Integer[]{14}, ringSetting, rotation);
@@ -826,7 +878,7 @@ public abstract class Rotor
     {
         public Rotor_R_II(int rotation, int ringSetting)
         {
-            super(81, "R-II", "NTZPSFBOKMWRCJDIVLAEYUXHGQ",
+            super(91, "R-II", "NTZPSFBOKMWRCJDIVLAEYUXHGQ",
                     new Integer[]{13,19,25,15,18,5,1,14,10,12,22,17,2,9,3,8,21,11,0,4,24,20,23,7,6,16},
                     new Integer[]{18,6,12,14,19,5,24,23,15,13,8,17,9,0,7,3,25,11,4,1,21,16,10,22,20,2},
                     new Integer[]{5}, ringSetting, rotation);
@@ -842,7 +894,7 @@ public abstract class Rotor
     {
         public Rotor_R_III(int rotation, int ringSetting)
         {
-            super(82, "R-III", "JVIUBHTCDYAKEQZPOSGXNRMWFL",
+            super(92, "R-III", "JVIUBHTCDYAKEQZPOSGXNRMWFL",
                     new Integer[]{9,21,8,20,1,7,19,2,3,24,0,10,4,16,25,15,14,18,6,23,13,17,12,22,5,11},
                     new Integer[]{10,4,7,8,12,24,18,5,2,0,11,25,22,20,16,15,13,21,17,6,3,1,23,19,9,14},
                     new Integer[]{25}, ringSetting, rotation);
@@ -858,7 +910,7 @@ public abstract class Rotor
     {
         public Rotor_T_I(int rotation, int ringSetting)
         {
-            super(90, "T-I", "KPTYUELOCVGRFQDANJMBSWHZXI",
+            super(100, "T-I", "KPTYUELOCVGRFQDANJMBSWHZXI",
                     new Integer[]{10,15,19,24,20,4,11,14,2,21,6,17,5,16,3,0,13,9,12,1,18,22,7,25,23,8},
                     new Integer[]{15,19,8,14,5,12,10,22,25,17,0,6,18,16,7,1,13,11,20,2,4,9,21,24,3,23},
                     new Integer[]{23,0,5,11,17}, ringSetting, rotation);
@@ -874,7 +926,7 @@ public abstract class Rotor
     {
         public Rotor_T_II(int rotation, int ringSetting)
         {
-            super(91, "T-II", "UPHZLWEQMTDJXCAKSOIGVBYFNR",
+            super(101, "T-II", "UPHZLWEQMTDJXCAKSOIGVBYFNR",
                     new Integer[]{20,15,7,25,11,22,4,16,12,19,3,9,23,2,0,10,18,14,8,6,21,1,24,5,13,17},
                     new Integer[]{14,21,13,10,6,23,19,2,18,11,15,4,8,24,17,1,7,25,16,9,0,20,5,12,22,3},
                     new Integer[]{23,0,6,12,18}, ringSetting, rotation);
@@ -889,7 +941,7 @@ public abstract class Rotor
     public static class Rotor_T_III extends Rotor
     {
         public Rotor_T_III(int rotation, int ringSetting) {
-            super(92, "T-III", "QUDLYRFEKONVZAXWHMGPJBSICT",
+            super(102, "T-III", "QUDLYRFEKONVZAXWHMGPJBSICT",
                     new Integer[]{16,20,3,11,24,17,5,4,10,14,13,21,25,0,23,22,7,12,6,15,9,1,18,8,2,19},
                     new Integer[]{13,21,24,2,7,6,18,16,23,20,8,3,17,10,9,19,0,5,22,25,1,11,15,14,4,12},
                     new Integer[]{23,0,5,11,17}, ringSetting, rotation);
@@ -905,7 +957,7 @@ public abstract class Rotor
     {
         public Rotor_T_IV(int rotation, int ringSetting)
         {
-            super(93, "T-IV", "CIWTBKXNRESPFLYDAGVHQUOJZM",
+            super(103, "T-IV", "CIWTBKXNRESPFLYDAGVHQUOJZM",
                     new Integer[]{2,8,22,19,1,10,23,13,17,4,18,15,5,11,24,3,0,6,21,7,16,20,14,9,25,12},
                     new Integer[]{16,4,0,15,9,12,17,19,1,23,5,13,25,7,22,11,20,8,10,3,21,18,2,6,14,24},
                     new Integer[]{23,0,6,12,18}, ringSetting, rotation);
@@ -921,7 +973,7 @@ public abstract class Rotor
     {
         public Rotor_T_V(int rotation, int ringSetting)
         {
-            super(94, "T-V", "UAXGISNJBVERDYLFZWTPCKOHMQ",
+            super(104, "T-V", "UAXGISNJBVERDYLFZWTPCKOHMQ",
                     new Integer[]{20,0,23,6,8,18,13,9,1,21,4,17,3,24,11,5,25,22,19,15,2,10,14,7,12,16},
                     new Integer[]{1,8,20,12,10,15,3,23,4,7,21,14,24,6,22,19,25,11,5,18,0,9,17,2,13,16},
                     new Integer[]{25,3,6,11,18}, ringSetting, rotation);
@@ -937,7 +989,7 @@ public abstract class Rotor
     {
         public Rotor_T_VI(int rotation, int ringSetting)
         {
-            super(95, "T-VI", "XFUZGALVHCNYSEWQTDMRBKPIOJ",
+            super(105, "T-VI", "XFUZGALVHCNYSEWQTDMRBKPIOJ",
                     new Integer[]{23,5,20,25,6,0,11,21,7,2,13,24,18,4,22,16,19,3,12,17,1,10,15,8,14,9},
                     new Integer[]{5,20,9,17,13,1,4,8,23,25,21,6,18,10,24,22,15,19,12,16,2,7,14,0,11,3},
                     new Integer[]{24,5,9,13,17}, ringSetting, rotation);
@@ -953,7 +1005,7 @@ public abstract class Rotor
     {
         public Rotor_T_VII(int rotation, int ringSetting)
         {
-            super(96, "T-VII", "BJVFTXPLNAYOZIKWGDQERUCHSM",
+            super(106, "T-VII", "BJVFTXPLNAYOZIKWGDQERUCHSM",
                     new Integer[]{1,9,21,5,19,23,15,11,13,0,24,14,25,8,10,22,6,3,16,4,17,20,2,7,18,12},
                     new Integer[]{9,0,22,17,19,3,16,23,13,1,14,7,25,8,11,6,18,20,24,4,21,2,15,5,10,12},
                     new Integer[]{25,3,6,11,18}, ringSetting, rotation);
@@ -969,7 +1021,7 @@ public abstract class Rotor
     {
         public Rotor_T_VIII(int rotation, int ringSetting)
         {
-            super(97, "T-VIII", "YMTPNZHWKODAJXELUQVGCBISFR",
+            super(107, "T-VIII", "YMTPNZHWKODAJXELUQVGCBISFR",
                     new Integer[]{24,12,19,15,13,25,7,22,10,14,3,0,9,23,4,11,20,16,21,6,2,1,8,18,5,17},
                     new Integer[]{11,21,20,10,14,24,19,6,22,12,8,15,1,4,9,3,17,25,23,2,16,18,7,13,0,5},
                     new Integer[]{24,5,9,13,17}, ringSetting, rotation);

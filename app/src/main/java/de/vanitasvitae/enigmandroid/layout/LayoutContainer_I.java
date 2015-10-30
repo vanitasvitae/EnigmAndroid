@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_I;
@@ -43,13 +44,18 @@ public class LayoutContainer_I extends LayoutContainer
     public LayoutContainer_I()
     {
         super();
-        main.setContentView(R.layout.activity_main_i_m3);
         main.setTitle("I - EnigmAndroid");
         this.resetLayout();
     }
 
     @Override
-    protected void initializeLayout()
+    protected void setEnigmaLayout()
+    {
+        MainActivity.ActivitySingleton.getInstance().getActivity().setContentView(R.layout.activity_main_i_m3);
+    }
+
+    @Override
+    protected void assembleLayout()
     {
         this.rotor1View = (Spinner) main.findViewById(R.id.rotor1);
         this.rotor2View = (Spinner) main.findViewById(R.id.rotor2);

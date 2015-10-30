@@ -5,9 +5,8 @@
     <string name="action_version">Version</string>
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_random">Zufällige Konfiguration</string>
-    <string name="action_read_qr">Lese Konfiguration aus QR-Code</string>
-    <string name="action_send_qr">Teile Konfiguration per QR-Code</string>
-    <string name="action_read_passphrase">Konfiguration aus Schlüsselwort</string>
+    <string name="action_restore_configuration">Konfiguration wiederherstellen</string>
+    <string name="action_share_configuration">Konfiguration teilen</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_choose_ring_settings">Ringstellung</string>
     <string name="action_send">Senden</string>
@@ -25,15 +24,23 @@
     <string name="hint_reflector_position">Position\nUmkehr-\nWalze</string>
     <string name="hint_thin_rotor_position">Position\nWalze 4</string>
     <string name="hint_enigma_reflector_wiring">Verkabelung Umkehrwalze</string>
-    <string name="hint_passphrase">Schlüsselwort eingeben</string>
+    <string name="hint_configuration">Schlüsselwort/Konfiguration</string>
     <string name="button_crypt">Ver-/Entschlüsseln</string>
     <string name="error_no_text_to_send">Nachricht ist leer.</string>
     <string name="error_no_valid_qr">Fehler: Kein korrekter EnigmAndroid QR-Code!</string>
     <string name="title_ring_setting">Ringstellungen</string>
+
     <string name="title_plugboard_dialog">Steckbrett-\nVerbindungen</string>
     <string name="title_reflector_dialog">Verkabelung Umkehrwalze</string>
+
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Abbrechen</string>
+    <string name="dialog_title_restore_configuration">Konfiguration wiederherstellen…</string>
+    <string name="dialog_restore_code">…aus Text/Schlüsselwort</string>
+    <string name="dialog_restore_qr">…aus QR-code</string>
+    <string name="dialog_title_share_configuration">Konfiguration teilen…</string>
+    <string name="dialog_share_qr">…per QR-code</string>
+    <string name="dialog_share_code">…als kodierten Text</string>
     <string name="dialog_ring_settings_success">Setze Ringe auf %1$s.</string>
     <string name="dialog_reflector_set">Umkehrwalze verkabelt.</string>
     <string name="dialog_plugboard_set">Steckbrettverbindungen gesetzt.</string>
@@ -42,5 +49,7 @@
     <string name="dialog_abort">Keine Änderungen.</string>
     <string name="message_reset">Enigma zurückgesetzt.</string>
     <string name="message_random">Enigma auf zufällige Konfiguration gesetzt.</string>
+    <string name="dialog_whats_new_title">Was ist neu?</string>
+    <string name="message_clipboard">In Zwischenablage kopiert</string>
 
 </resources>

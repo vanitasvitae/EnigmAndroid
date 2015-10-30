@@ -14,11 +14,12 @@
         <item>K</item>
         <item>Swiss-K (Schweiz)</item>
         <item>Swiss-K (Schweiz, Luftwaffe)</item>
+        <item>KD</item>
         <item>R (\"Rocket\", Reichsbahn)</item>
         <item>T (\"Tirpitz\", Japan)</item>
     </string-array>
 
-    <string name="pref_header_input_preparation">Eingabe Vorbereitung</string>
+    <string name="pref_header_input_preparation">Klartextvorbereitung</string>
     <string name="pref_title_numeric_spelling_language">Zahlenbuchstabiersprache</string>
     <string name="pref_description_numeric_spelling_language">Sprache in der Zahlen buchstabiert werden sollen.</string>
     <string-array name="pref_list_numeric_spelling_language">

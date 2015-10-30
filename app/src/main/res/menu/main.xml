@@ -4,35 +4,30 @@
 
     <!-- RESET -->
     <item android:id="@+id/action_reset"
-        android:orderInCategory="95"
+        android:orderInCategory="96"
         android:showAsAction="ifRoom"
         android:title="@string/action_reset" />
     <!-- SEND -->
-    <item android:id="@+id/action_send"
-        android:orderInCategory="96"
+    <item android:id="@+id/action_send_message"
+        android:orderInCategory="97"
         android:showAsAction="always"
         android:title="@string/action_send"
         android:icon="@drawable/ic_send_white_48dp"/>
     <!-- RINGSETTING -->
     <item android:id="@+id/action_choose_ringsetting"
         android:title="@string/action_choose_ring_settings"
-        android:orderInCategory="97"
+        android:orderInCategory="98"
         android:showAsAction="ifRoom" />
-    <!-- ENTER SEED -->
-    <item android:id="@+id/action_enter_seed"
-        android:title="@string/action_read_passphrase"
-        android:showAsAction="ifRoom"
-        android:orderInCategory="98" />
-    <!-- RECEIVE QR -->
-    <item android:id="@+id/action_receive_scan"
-        android:title="@string/action_read_qr"
+    <!-- SHARE CONFIGURATION -->
+    <item android:id="@+id/action_share_configuration"
+        android:title="@string/action_share_configuration"
         android:showAsAction="ifRoom"
         android:orderInCategory="99" />
-    <!-- SHARE QR -->
-    <item android:id="@+id/action_share_scan"
-        android:title="@string/action_send_qr"
-        android:showAsAction="ifRoom"
-        android:orderInCategory="100" />
+    <!-- RESTORE CONFIGURATION FROM QR OR ENTER SEED-->
+    <item android:id="@+id/action_restore_configuration"
+          android:title="@string/action_restore_configuration"
+          android:showAsAction="ifRoom"
+          android:orderInCategory="100" />
     <!-- RANDOM -->
     <item android:id="@+id/action_random_configuration"
         android:orderInCategory="101"

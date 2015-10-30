@@ -166,53 +166,64 @@ public class Enigma_T extends Enigma
     }
 
     @Override
-    public void restoreState(BigInteger s)
+    public void restoreState(BigInteger s, int protocol_version)
     {
-        int r1 = getValue(s,availableRotors.size());
-        s = removeDigit(s,availableRotors.size());
-        int r2 = getValue(s,availableRotors.size());
-        s = removeDigit(s,availableRotors.size());
-        int r3 = getValue(s,availableRotors.size());
-        s = removeDigit(s,availableRotors.size());
+        switch (protocol_version)
+        {
+            case 1:
+                int r1 = getValue(s,availableRotors.size());
+                s = removeDigit(s,availableRotors.size());
+                int r2 = getValue(s,availableRotors.size());
+                s = removeDigit(s,availableRotors.size());
+                int r3 = getValue(s,availableRotors.size());
+                s = removeDigit(s,availableRotors.size());
 
-        int rot1 = getValue(s,26);
-        s = removeDigit(s,26);
-        int ring1 = getValue(s,26);
-        s = removeDigit(s,26);
-        int rot2 = getValue(s,26);
-        s = removeDigit(s,26);
-        int ring2 = getValue(s,26);
-        s = removeDigit(s,26);
-        int rot3 = getValue(s,26);
-        s = removeDigit(s,26);
-        int ring3 = getValue(s,26);
-        s = removeDigit(s,26);
-        int rotRef = getValue(s,26);
-        s = removeDigit(s,26);
-        int ringRef = getValue(s,26);
+                int rot1 = getValue(s,26);
+                s = removeDigit(s,26);
+                int ring1 = getValue(s,26);
+                s = removeDigit(s,26);
+                int rot2 = getValue(s,26);
+                s = removeDigit(s,26);
+                int ring2 = getValue(s,26);
+                s = removeDigit(s,26);
+                int rot3 = getValue(s,26);
+                s = removeDigit(s,26);
+                int ring3 = getValue(s,26);
+                s = removeDigit(s,26);
+                int rotRef = getValue(s,26);
+                s = removeDigit(s, 26);
+                int ringRef = getValue(s,26);
 
-        this.rotor1 = getRotor(r1, rot1, ring1);
-        this.rotor2 = getRotor(r2, rot2, ring2);
-        this.rotor3 = getRotor(r3, rot3, ring3);
-        this.reflector = getReflector(0, rotRef, ringRef);
+                this.rotor1 = getRotor(r1, rot1, ring1);
+                this.rotor2 = getRotor(r2, rot2, ring2);
+                this.rotor3 = getRotor(r3, rot3, ring3);
+                this.reflector = getReflector(0, rotRef, ringRef);
+                break;
+
+            default: Log.e(MainActivity.APP_ID, "Unsupported protocol version "+protocol_version);
+        }
+
     }
 
     @Override
-    public String stateToString()
+    public BigInteger getEncodedState(int protocol_version)
     {
-        BigInteger t = BigInteger.valueOf(reflector.getRingSetting());
-        t = addDigit(t, reflector.getRotation(), 26);
-        t = addDigit(t, rotor3.getRingSetting(),26);
-        t = addDigit(t, rotor3.getRotation(), 26);
-        t = addDigit(t, rotor2.getRingSetting(),26);
-        t = addDigit(t, rotor2.getRotation(), 26);
-        t = addDigit(t, rotor1.getRingSetting(), 26);
-        t = addDigit(t, rotor1.getRotation(), 26);
-        t = addDigit(t, rotor3.getIndex(), availableRotors.size());
-        t = addDigit(t, rotor2.getIndex(), availableRotors.size());
-        t = addDigit(t, rotor1.getIndex(), availableRotors.size());
-        t = addDigit(t, 11, 20); //Machine #11
+        BigInteger s = BigInteger.valueOf(reflector.getRingSetting());
+        s = addDigit(s, reflector.getRotation(), 26);
+        s = addDigit(s, rotor3.getRingSetting(),26);
+        s = addDigit(s, rotor3.getRotation(), 26);
+        s = addDigit(s, rotor2.getRingSetting(),26);
+        s = addDigit(s, rotor2.getRotation(), 26);
+        s = addDigit(s, rotor1.getRingSetting(), 26);
+        s = addDigit(s, rotor1.getRotation(), 26);
 
-        return t.toString(16);
+        s = addDigit(s, rotor3.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor2.getIndex(), availableRotors.size());
+        s = addDigit(s, rotor1.getIndex(), availableRotors.size());
+
+        s = addDigit(s, 11, 20); //Machine #11
+        s = addDigit(s, protocol_version, MainActivity.max_protocol_version);
+
+        return s;
     }
 }

@@ -7,6 +7,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_passphrase"
+        android:hint="@string/hint_configuration"
         android:id="@+id/passphrase"/>
 </LinearLayout>
