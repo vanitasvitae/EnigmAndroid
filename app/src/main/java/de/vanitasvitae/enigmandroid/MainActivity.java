@@ -202,6 +202,9 @@ public class MainActivity extends Activity
 		layoutContainer.doCrypto();
 	}
 
+	/**
+	 * Start an intent to share the configuration as QR-Code via Barcode Scanner
+	 */
 	private void shareConfigurationAsQR()
 	{
 		IntentIntegrator QRIntegrator = new IntentIntegrator(this);
@@ -211,6 +214,9 @@ public class MainActivity extends Activity
 		QRIntegrator.shareText(encoded_state);
 	}
 
+	/**
+	 * Start an intent to share the configuration as text
+	 */
 	private void shareConfigurationAsText()
 	{
 		Intent sendIntent = new Intent();
@@ -221,17 +227,26 @@ public class MainActivity extends Activity
 		startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
 	}
 
+	/**
+	 * Start the barcode app to scan a barcode for configuration
+	 */
 	private void receiveConfigurationQR()
 	{
 		IntentIntegrator integrator = new IntentIntegrator(this);
 		integrator.initiateScan();
 	}
 
+	/**
+	 * Show a dialog to restore a configuration
+	 */
 	private void receiveConfigurationText()
 	{
 		new PassphraseDialogBuilder().showDialog();
 	}
 
+	/**
+	 * Check, whether the app has been updated
+	 */
 	private void handleVersionUpdate()
 	{
 		int currentVersionNumber = 0;
@@ -250,6 +265,11 @@ public class MainActivity extends Activity
 
 	}
 
+	/**
+	 * Show a dialog that informs the user about the latest important changes in the app
+	 * The dialog appears whenever the app starts after an update or after data has been
+	 * deleted
+	 */
 	private void showWhatsNewDialog()
 	{
 		PackageInfo pInfo = null;
@@ -314,6 +334,10 @@ public class MainActivity extends Activity
 				}).show();
 	}
 
+	/**
+	 * Show a dialog where the user can choose between sharing the configuration via QR-code or
+	 * via string (intent or copy-to-clipboard)
+	 */
 	private void showShareConfigurationDialog()
 	{
 		final String configuration = APP_ID+"/"+layoutContainer.getEnigma().getEncodedState().toString(16);
@@ -345,7 +369,7 @@ public class MainActivity extends Activity
 		builder.setTitle(R.string.dialog_title_share_configuration)
 				.setView(shareView).setCancelable(true);
 		final Dialog d = builder.create();
-		Button one = (Button) shareView.findViewById(R.id.dialog_two_options_2);
+		Button one = (Button) shareView.findViewById(R.id.dialog_two_options_1);
 		one.setText(R.string.dialog_share_qr);
 		one.setOnClickListener(new View.OnClickListener()
 		{
@@ -356,7 +380,7 @@ public class MainActivity extends Activity
 				d.dismiss();
 			}
 		});
-		Button two = (Button) shareView.findViewById(R.id.dialog_two_options_1);
+		Button two = (Button) shareView.findViewById(R.id.dialog_two_options_2);
 		two.setText(R.string.dialog_share_code);
 		two.setOnClickListener(new View.OnClickListener()
 		{
@@ -370,6 +394,10 @@ public class MainActivity extends Activity
 		d.show();
 	}
 
+	/**
+	 * Show a dialog, where the user can choose between scanning QR-code and entering a string to
+	 * restore the encoded configuration
+	 */
 	private void showReceiveConfigurationDialog()
 	{
 		final View shareView = View.inflate(this, R.layout.dialog_two_options, null);
@@ -377,7 +405,7 @@ public class MainActivity extends Activity
 		builder.setTitle(R.string.dialog_title_restore_configuration)
 				.setView(shareView).setCancelable(true);
 		final Dialog d = builder.create();
-		Button one = (Button) shareView.findViewById(R.id.dialog_two_options_2);
+		Button one = (Button) shareView.findViewById(R.id.dialog_two_options_1);
 		one.setText(R.string.dialog_restore_qr);
 		one.setOnClickListener(new View.OnClickListener()
 		{
@@ -388,7 +416,7 @@ public class MainActivity extends Activity
 				d.dismiss();
 			}
 		});
-		Button two = (Button) shareView.findViewById(R.id.dialog_two_options_1);
+		Button two = (Button) shareView.findViewById(R.id.dialog_two_options_2);
 		two.setText(R.string.dialog_restore_code);
 		two.setOnClickListener(new View.OnClickListener()
 		{

@@ -49,7 +49,8 @@
     <string name="dialog_abort">Keine Änderungen.</string>
     <string name="message_reset">Enigma zurückgesetzt.</string>
     <string name="message_random">Enigma auf zufällige Konfiguration gesetzt.</string>
-    <string name="dialog_whats_new_title">Was ist neu?</string>
     <string name="message_clipboard">In Zwischenablage kopiert</string>
+
+    <string name="dialog_whats_new_title">Was ist neu?</string>
 
 </resources>
