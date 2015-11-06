@@ -8,6 +8,7 @@ import android.util.Log;
 
 /**
  * Class that represents the settings activity.
+ * Use the singleton to get an instance of this class to get preferences
  * Copyright (C) 2015  Paul Schaub
 
  This program is free software; you can redistribute it and/or modify
