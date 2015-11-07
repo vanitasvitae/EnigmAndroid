@@ -49,6 +49,7 @@ public class Plugboard
         this.plugs = conf;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public BigInteger setConfiguration(BigInteger b)
     {
         String s = "";
@@ -175,7 +176,7 @@ public class Plugboard
      * @param c array
      * @return String representation
      */
-    public static String configurationToString(int[] c)
+    private static String configurationToString(int[] c)
     {
         String out = "";
         for(int i=0; i<c.length; i++) // c.length = 26 (mostly)

@@ -32,16 +32,16 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_KD;
  */
 public class LayoutContainer_KD extends LayoutContainer
 {
-	protected Enigma enigma;
+	private Enigma enigma;
 
-	protected Spinner rotor1View;
-	protected Spinner rotor2View;
-	protected Spinner rotor3View;
+	private Spinner rotor1View;
+	private Spinner rotor2View;
+	private Spinner rotor3View;
 
-	protected Spinner rotor1PositionView;
-	protected Spinner rotor2PositionView;
-	protected Spinner rotor3PositionView;
-	protected Spinner reflectorPositionView;
+	private Spinner rotor1PositionView;
+	private Spinner rotor2PositionView;
+	private Spinner rotor3PositionView;
+	private Spinner reflectorPositionView;
 
 	public LayoutContainer_KD()
 	{

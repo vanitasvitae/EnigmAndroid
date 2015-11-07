@@ -33,10 +33,10 @@ public class LayoutContainer_D extends LayoutContainer
 {
     private Enigma_D enigma;
 
-    protected Spinner rotor1PositionView;
-    protected Spinner rotor2PositionView;
-    protected Spinner rotor3PositionView;
-    protected Spinner reflectorPositionView;
+    private Spinner rotor1PositionView;
+    private Spinner rotor2PositionView;
+    private Spinner rotor3PositionView;
+    private Spinner reflectorPositionView;
 
     public LayoutContainer_D()
     {

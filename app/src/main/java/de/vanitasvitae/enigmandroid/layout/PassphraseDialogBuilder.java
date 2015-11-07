@@ -37,9 +37,9 @@ import de.vanitasvitae.enigmandroid.R;
  */
 public class PassphraseDialogBuilder
 {
-    private MainActivity main;
-    private View passphraseDialogView;
-    private EditText passphrase;
+    private final MainActivity main;
+    private final View passphraseDialogView;
+    private final EditText passphrase;
     private Button positive;
     public PassphraseDialogBuilder()
     {

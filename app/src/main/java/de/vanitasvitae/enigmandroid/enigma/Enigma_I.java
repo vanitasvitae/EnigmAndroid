@@ -31,13 +31,13 @@ import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
  */
 public class Enigma_I extends Enigma
 {
-	protected EntryWheel entryWheel;
-	protected Rotor rotor1;
-	protected Rotor rotor2;
-	protected Rotor rotor3;
-	protected Reflector reflector;
+	EntryWheel entryWheel;
+	Rotor rotor1;
+	Rotor rotor2;
+	Rotor rotor3;
+	Reflector reflector;
 
-	protected Plugboard plugboard;
+	Plugboard plugboard;
 
 	public Enigma_I()
 	{

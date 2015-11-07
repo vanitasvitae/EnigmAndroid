@@ -1,10 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.widget.Spinner;
-
-import de.vanitasvitae.enigmandroid.R;
-import de.vanitasvitae.enigmandroid.enigma.Enigma;
-import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_K_Swiss_Airforce;
 
 /**

@@ -30,12 +30,12 @@ import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
  */
 public class Enigma_R extends Enigma
 {
-	protected EntryWheel entryWheel;
-	protected Rotor rotor1;
-	protected Rotor rotor2;
-	protected Rotor rotor3;
+	private EntryWheel entryWheel;
+	private Rotor rotor1;
+	private Rotor rotor2;
+	private Rotor rotor3;
 
-	protected Reflector reflector;
+	private Reflector reflector;
 
 	public Enigma_R()
 	{

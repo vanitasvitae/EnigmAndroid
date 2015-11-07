@@ -31,31 +31,31 @@ import de.vanitasvitae.enigmandroid.MainActivity;
 public abstract class Rotor
 {
     /** Number of the rotor (used internally to create the Rotor via createRotor() ) */
-    protected int type;
+    private final int type;
 
     /** Identifier of the Rotor */
-    protected String name;
+    private final String name;
 
     /** Index of the Rotor in the parent machine's selection Spinner */
-    protected int index;
+    private int index;
 
     /** Summary of the connections (internal wiring) */
-    protected String summary;
+    private final String summary;
 
     /** Wiring of the rotor when the signal passes the first time */
-    protected Integer[] connections;
+    private final Integer[] connections;
 
     /** Wiring of the rotor when the signal passes the second time (inverse of the first time) */
-    protected Integer[] reversedConnections;
+    private final Integer[] reversedConnections;
 
     /** When the Rotor is at this Position and jumps one over, it also turns the next */
-    protected Integer[] turnOverNotches;
+    private final Integer[] turnOverNotches;
 
     /** Offset of the labeled ring of the rotor */
-    protected int ringSetting;
+    private int ringSetting;
 
     /** Rotation of the rotor */
-    protected int rotation;
+    private int rotation;
 
     /**
      * This constructor is not accessible from outside this class file.
@@ -72,8 +72,8 @@ public abstract class Rotor
      * @param ringSetting setting of the ring that holds the letters
      * @param rotation rotation of the rotor
      */
-    protected Rotor(int type, String name, String summary, Integer[] connections, Integer[] reversedConnections,
-                    Integer[] turnOverNotches, int ringSetting, int rotation)
+    Rotor(int type, String name, String summary, Integer[] connections, Integer[] reversedConnections,
+          Integer[] turnOverNotches, int ringSetting, int rotation)
     {
         this.type = type;
         this.name = name;
@@ -289,7 +289,7 @@ public abstract class Rotor
      * Returns the positions of the turnover notches in a array
      * @return turnOverNotches
      */
-    public Integer[] getTurnOverNotches()
+    private Integer[] getTurnOverNotches()
     {
         return this.turnOverNotches;
     }
@@ -309,7 +309,7 @@ public abstract class Rotor
      * of the rotor
      * @return size
      */
-    public int getRotorSize()
+    private int getRotorSize()
     {
         return this.connections.length;
     }

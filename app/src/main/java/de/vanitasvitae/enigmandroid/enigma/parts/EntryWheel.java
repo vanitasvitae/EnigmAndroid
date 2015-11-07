@@ -20,14 +20,14 @@ package de.vanitasvitae.enigmandroid.enigma.parts;
  */
 public class EntryWheel
 {
-    protected int type;
-    protected String name;
-    protected int index;
-    protected String summary;
-    protected Integer[] connections;
-    protected Integer[] reversedConnections;
+    private final int type;
+    private final String name;
+    private int index;
+    private final String summary;
+    private final Integer[] connections;
+    private final Integer[] reversedConnections;
 
-    public EntryWheel(int type, String name, String summary, Integer[] connections, Integer[] reversedConnections)
+    EntryWheel(int type, String name, String summary, Integer[] connections, Integer[] reversedConnections)
     {
         this.type = type;
         this.name = name;
@@ -56,7 +56,7 @@ public class EntryWheel
         return this.connections[normalize(input)];
     }
 
-    public int normalize(int input)
+    private int normalize(int input)
     {
         return (input+this.connections.length)%this.connections.length;
     }
@@ -83,7 +83,7 @@ public class EntryWheel
         return this.reversedConnections[normalize(input)];
     }
 
-    public EntryWheel createEntryWheel(int type)
+    private EntryWheel createEntryWheel(int type)
     {
         switch(type)
         {

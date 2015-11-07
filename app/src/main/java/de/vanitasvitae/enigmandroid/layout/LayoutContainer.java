@@ -1,7 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -36,19 +34,19 @@ import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
  */
 public abstract class LayoutContainer
 {
-	protected EditText inputView;
-	protected EditText outputView;
+	final EditText inputView;
+	private final EditText outputView;
 
-	protected EditTextAdapter input;
-	protected EditTextAdapter output;
+	EditTextAdapter input;
+	EditTextAdapter output;
 
-	protected InputPreparer inputPreparer;
-	protected MainActivity main;
+	InputPreparer inputPreparer;
+	final MainActivity main;
 
 	public abstract Enigma getEnigma();
 	protected abstract void assembleLayout();
 	public abstract void resetLayout();
-	public abstract void setLayoutState(EnigmaStateBundle state);
+	protected abstract void setLayoutState(EnigmaStateBundle state);
 	public abstract void syncStateFromLayoutToEnigma();
 	public void syncStateFromEnigmaToLayout()
 	{
@@ -56,7 +54,7 @@ public abstract class LayoutContainer
 	}
 	public abstract void showRingSettingsDialog();
 
-	public LayoutContainer()
+	LayoutContainer()
 	{
 		main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
 		setEnigmaLayout();
@@ -99,7 +97,7 @@ public abstract class LayoutContainer
 		return createLayoutContainer(SettingsActivity.SettingsSingleton.getInstance().getPrefMachineType());
 	}
 
-	public static LayoutContainer createLayoutContainer(String enigmaType)
+	private static LayoutContainer createLayoutContainer(String enigmaType)
 	{
 		switch (enigmaType) {
 			case "I":
@@ -138,7 +136,7 @@ public abstract class LayoutContainer
 	 * @param view Spinner
 	 * @param resourceID ID of the referenced array (eg. R.array.rotor_1_8)
 	 */
-	protected void prepareSpinnerAdapter(Spinner view, int resourceID) {
+	void prepareSpinnerAdapter(Spinner view, int resourceID) {
 		MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(main, resourceID,
@@ -152,7 +150,7 @@ public abstract class LayoutContainer
 	 * @param view Spinner
 	 * @param array Character array
 	 */
-	protected void prepareSpinnerAdapter(Spinner view, Character[] array)
+	void prepareSpinnerAdapter(Spinner view, Character[] array)
 	{
 		MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
 		ArrayAdapter<Character> adapter = new ArrayAdapter<>(main.getApplicationContext(),

@@ -51,19 +51,19 @@ public class Enigma_M4 extends Enigma
 		Log.d(MainActivity.APP_ID, "Created Enigma M4");
 	}
 
-	protected void addAvailableThinRotor(Rotor r)
+	private void addAvailableThinRotor(Rotor r)
 	{
 		if(availableThinRotors == null) availableThinRotors = new ArrayList<>();
 		availableThinRotors.add(availableThinRotors.size(), r.setIndex(availableThinRotors.size()));
 	}
 
-	public Rotor getThinRotor(int index)
+	private Rotor getThinRotor(int index)
 	{
 		if(availableThinRotors == null || availableThinRotors.size() == 0) return null;
 		return availableThinRotors.get(index % availableThinRotors.size()).getInstance();
 	}
 
-	public Rotor getThinRotor(int index, int rotation, int ringSettings)
+	private Rotor getThinRotor(int index, int rotation, int ringSettings)
 	{
 		Rotor r = getThinRotor(index);
 		if(r == null) return null;

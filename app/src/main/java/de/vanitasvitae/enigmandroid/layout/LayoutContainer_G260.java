@@ -1,6 +1,5 @@
 package de.vanitasvitae.enigmandroid.layout;
 
-import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_G260;
 
 /**

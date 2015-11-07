@@ -12,6 +12,8 @@ v1.0.0-not-yet-released<
 *Added Whats-new-Dialog
 *New Icon!
 *Added Script to automatically generate icons
+*Reformated code
+*TODO: Add tips on long clicks at parts
 *TODO?: Move KD right below K
 *TODO?: Add intent filters to recognize and automatically handle shared/copied configuration Strings
  TODO:      These are Strings starting with "EnigmAndroid/"

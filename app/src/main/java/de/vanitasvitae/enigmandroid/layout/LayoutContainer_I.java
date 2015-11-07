@@ -33,13 +33,13 @@ public class LayoutContainer_I extends LayoutContainer
 {
     private Enigma_I enigma;
 
-    protected Spinner rotor1View;
-    protected Spinner rotor2View;
-    protected Spinner rotor3View;
-    protected Spinner reflectorView;
-    protected Spinner rotor1PositionView;
-    protected Spinner rotor2PositionView;
-    protected Spinner rotor3PositionView;
+    Spinner rotor1View;
+    Spinner rotor2View;
+    Spinner rotor3View;
+    Spinner reflectorView;
+    Spinner rotor1PositionView;
+    Spinner rotor2PositionView;
+    Spinner rotor3PositionView;
 
     public LayoutContainer_I()
     {

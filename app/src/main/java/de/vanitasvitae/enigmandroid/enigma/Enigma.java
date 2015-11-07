@@ -31,17 +31,17 @@ import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
  */
 public abstract class Enigma
 {
-	protected static String machineType;
+	static String machineType;
 
-	protected boolean doAnomaly = false;  //Has the time come to handle an anomaly?
+	boolean doAnomaly = false;  //Has the time come to handle an anomaly?
 
-	protected ArrayList<EntryWheel> availableEntryWheels;
-	protected ArrayList<Rotor> availableRotors;
-	protected ArrayList<Reflector> availableReflectors;
+	ArrayList<EntryWheel> availableEntryWheels;
+	ArrayList<Rotor> availableRotors;
+	ArrayList<Reflector> availableReflectors;
 
-	protected Random rand;
+	Random rand;
 
-	public Enigma()
+	Enigma()
 	{
 		establishAvailableParts();
 		initialize();
@@ -57,19 +57,19 @@ public abstract class Enigma
 	 * Also set the index of the Rotor.
 	 * @param r Rotor
 	 */
-	protected void addAvailableRotor(Rotor r)
+	void addAvailableRotor(Rotor r)
 	{
 		if(availableRotors == null) availableRotors = new ArrayList<>();
 		availableRotors.add(availableRotors.size(), r.setIndex(availableRotors.size()));
 	}
 
-	protected void addAvailableEntryWheel(EntryWheel e)
+	void addAvailableEntryWheel(EntryWheel e)
 	{
 		if(availableEntryWheels == null) availableEntryWheels = new ArrayList<>();
 		availableEntryWheels.add(availableEntryWheels.size(), e.setIndex(availableEntryWheels.size()));
 	}
 
-	protected void addAvailableReflector(Reflector r)
+	void addAvailableReflector(Reflector r)
 	{
 		if(availableReflectors == null) availableReflectors = new ArrayList<>();
 		availableReflectors.add(availableReflectors.size(), r.setIndex(availableReflectors.size()));
@@ -90,30 +90,30 @@ public abstract class Enigma
 		return availableReflectors;
 	}
 
-	public EntryWheel getEntryWheel(int index)
+	EntryWheel getEntryWheel(int index)
 	{
 		if(availableEntryWheels == null || availableEntryWheels.size() == 0) return null;
 		return availableEntryWheels.get(index % availableEntryWheels.size()).getInstance();
 	}
 
-	public Rotor getRotor(int index)
+	Rotor getRotor(int index)
 	{
 		if(availableRotors == null || availableRotors.size() == 0) return null;
 		return availableRotors.get(index % availableRotors.size()).getInstance();
 	}
 
-	public Rotor getRotor(int index, int rotation, int ringSetting)
+	Rotor getRotor(int index, int rotation, int ringSetting)
 	{
 		return getRotor(index).setRotation(rotation).setRingSetting(ringSetting);
 	}
 
-	public Reflector getReflector(int index)
+	Reflector getReflector(int index)
 	{
 		if(availableReflectors == null || availableReflectors.size() == 0) return null;
 		return availableReflectors.get(index%availableReflectors.size()).getInstance();
 	}
 
-	public Reflector getReflector(int index, int rotation, int ringSetting)
+	Reflector getReflector(int index, int rotation, int ringSetting)
 	{
 		return getReflector(index).setRotation(rotation).setRingSetting(ringSetting);
 	}
@@ -121,7 +121,7 @@ public abstract class Enigma
 	/**
 	 * Set the enigma to an initial state
 	 */
-	public abstract void initialize();
+	protected abstract void initialize();
 
 	/**
 	 * Encrypt / Decrypt a given String w.
@@ -177,7 +177,7 @@ public abstract class Enigma
 	 * @param k input char
 	 * @return substituted output char
 	 */
-	public abstract char encryptChar(char k);
+	protected abstract char encryptChar(char k);
 
 	/**
 	 * Set the state of the enigma
@@ -208,9 +208,9 @@ public abstract class Enigma
 	{
 		return getEncodedState(MainActivity.latest_protocol_version);
 	}
-	public abstract BigInteger getEncodedState(int protocol_version);
+	protected abstract BigInteger getEncodedState(int protocol_version);
 
-	public static String numToMachineType(int n)
+	private static String numToMachineType(int n)
 	{
 		int m = 13;
 		n = (m+(n+m)%m)%m; //Problem? Trolololo

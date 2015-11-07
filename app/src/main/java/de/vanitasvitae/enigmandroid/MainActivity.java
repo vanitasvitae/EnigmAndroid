@@ -104,11 +104,6 @@ public class MainActivity extends Activity
 		}
 	}
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	}
-
 	public SecureRandom getSecureRandom()
 	{
 		return this.secureRandom;

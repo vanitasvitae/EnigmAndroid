@@ -27,7 +27,7 @@ import de.vanitasvitae.enigmandroid.SettingsActivity;
  * @author vanitasvitae
  */
 public abstract class InputPreparer {
-    protected InputPreparer child;
+    InputPreparer child;
 
     public String prepareString(String in) {
         if (child != null)

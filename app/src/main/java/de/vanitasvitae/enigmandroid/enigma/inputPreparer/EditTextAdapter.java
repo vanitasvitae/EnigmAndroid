@@ -8,10 +8,10 @@ import android.widget.EditText;
  */
 public abstract class EditTextAdapter
 {
-    protected EditText editText;
-    protected String content;
+    EditText editText;
+    String content;
 
-    public EditTextAdapter(EditText editText)
+    EditTextAdapter(EditText editText)
     {
         this.editText = editText;
     }
@@ -79,7 +79,7 @@ public abstract class EditTextAdapter
 
     public static class EditTextAdapterGap extends EditTextAdapter
     {
-        protected int blockSize;
+        int blockSize;
         public EditTextAdapterGap(EditText editText, int blockSize)
         {
             super(editText);

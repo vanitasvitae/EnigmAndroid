@@ -42,8 +42,8 @@ public class SettingsActivity extends PreferenceActivity
 	private boolean previousPrefReplaceSpecialCharacters;
 	private String previousPrefSavedEnigmaState;
 
-	SharedPreferences prefs;
-	Resources res;
+	private SharedPreferences prefs;
+	private Resources res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -106,11 +106,14 @@ public class SettingsActivity extends PreferenceActivity
 		return false;
 	}
 
+	/**
+	 * Return whether special characters will be replaced.
+	 * If the SettingsActivity is not fully initialized return false and ignore preference.
+	 * @return boolean
+	 */
 	public boolean getPrefReplaceSpecialCharacters()
 	{
-		if (isFullyInitilaized())
-			return prefs.getBoolean(PREF_REPLACE_SPECIAL_CHARACTERS, true);
-		else return false;
+		return isFullyInitilaized() && prefs.getBoolean(PREF_REPLACE_SPECIAL_CHARACTERS, true);
 	}
 
 	public void setPrefReplaceSpecialCharacters(boolean replace)

@@ -31,13 +31,13 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma;
  */
 public class Reflector
 {
-	protected int type;
-	protected String name;
-	protected int index;
-	protected String summary;
-	protected int[] connections;
-	protected int rotation;
-	protected int ringSetting;
+	private final int type;
+	private final String name;
+	private int index;
+	private final String summary;
+	private int[] connections;
+	private int rotation;
+	private int ringSetting;
 
 	/**
 	 * This constructor is not accessible from outside this class file.
@@ -46,7 +46,7 @@ public class Reflector
 	 * @param type name indicator of the reflector
 	 * @param connections wiring of the reflector as Integer array
 	 */
-	protected Reflector(int type, String name, String summary, int[] connections)
+	Reflector(int type, String name, String summary, int[] connections)
 	{
 		this.type = type;
 		this.name = name;
@@ -106,6 +106,7 @@ public class Reflector
 		return this;
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public BigInteger setConfiguration(BigInteger b)
 	{
 		String s = "";
@@ -143,7 +144,7 @@ public class Reflector
 	 *             default -> ReflectorB
 	 * @return Reflector
 	 */
-	public static Reflector createReflector(int type)
+	private static Reflector createReflector(int type)
 	{
 		switch (type)
 		{
