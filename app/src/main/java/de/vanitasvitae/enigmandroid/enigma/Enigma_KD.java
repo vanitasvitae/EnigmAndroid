@@ -5,9 +5,10 @@ import android.util.Log;
 import java.math.BigInteger;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
-import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
+import de.vanitasvitae.enigmandroid.enigma.parts.EntryWheel;
+import de.vanitasvitae.enigmandroid.enigma.parts.Plugboard;
+import de.vanitasvitae.enigmandroid.enigma.parts.Reflector;
+import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
 
 /**
  * Concrete implementation of an enigma machine of name D
@@ -47,7 +48,7 @@ public class Enigma_KD extends Enigma {
 	@Override
 	protected void establishAvailableParts()
 	{
-		addAvailableEntryWheel(new EntryWheel.EntryWheel_QWERTZ()); //TODO: Really?
+		addAvailableEntryWheel(new EntryWheel.EntryWheel_QWERTZ());
 
 		addAvailableRotor(new Rotor.Rotor_KD_I(0, 0));
 		addAvailableRotor(new Rotor.Rotor_KD_II(0, 0));
@@ -232,7 +233,7 @@ public class Enigma_KD extends Enigma {
 		s = addDigit(s, rotor2.getIndex(), availableRotors.size());
 		s = addDigit(s, rotor1.getIndex(), availableRotors.size());
 
-		s = addDigit(s, 12, 20); //Machine #12 TODO: Reorder?
+		s = addDigit(s, 12, 20); //Machine #12
 		s = addDigit(s, protocol_version, MainActivity.max_protocol_version);
 
 		return s;

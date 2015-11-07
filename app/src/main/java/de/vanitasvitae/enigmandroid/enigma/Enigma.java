@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
-import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
+import de.vanitasvitae.enigmandroid.enigma.parts.EntryWheel;
+import de.vanitasvitae.enigmandroid.enigma.parts.Reflector;
+import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
 
 /**
  * Main component of the Enigma machine

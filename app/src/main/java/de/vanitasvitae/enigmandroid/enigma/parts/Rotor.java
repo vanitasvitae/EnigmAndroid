@@ -1,4 +1,4 @@
-package de.vanitasvitae.enigmandroid.enigma.rotors;
+package de.vanitasvitae.enigmandroid.enigma.parts;
 
 import android.util.Log;
 

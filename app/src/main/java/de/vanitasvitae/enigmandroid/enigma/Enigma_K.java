@@ -5,9 +5,9 @@ import android.util.Log;
 import java.math.BigInteger;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
-import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
+import de.vanitasvitae.enigmandroid.enigma.parts.EntryWheel;
+import de.vanitasvitae.enigmandroid.enigma.parts.Reflector;
+import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
 
 /**
  * Implementation of the Enigma machine of name K

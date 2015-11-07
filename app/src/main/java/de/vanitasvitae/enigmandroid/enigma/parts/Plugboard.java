@@ -1,4 +1,4 @@
-package de.vanitasvitae.enigmandroid.enigma;
+package de.vanitasvitae.enigmandroid.enigma.parts;
 
 import android.util.Log;
 
@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
+import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 
 /**

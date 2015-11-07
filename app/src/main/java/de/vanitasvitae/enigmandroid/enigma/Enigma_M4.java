@@ -6,9 +6,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import de.vanitasvitae.enigmandroid.MainActivity;
-import de.vanitasvitae.enigmandroid.enigma.rotors.EntryWheel;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Reflector;
-import de.vanitasvitae.enigmandroid.enigma.rotors.Rotor;
+import de.vanitasvitae.enigmandroid.enigma.parts.EntryWheel;
+import de.vanitasvitae.enigmandroid.enigma.parts.Plugboard;
+import de.vanitasvitae.enigmandroid.enigma.parts.Reflector;
+import de.vanitasvitae.enigmandroid.enigma.parts.Rotor;
 
 /**
  * Concrete Implementation of the Enigma Machine name M4 of the german Kriegsmarine
