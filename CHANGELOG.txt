@@ -10,8 +10,10 @@ v1.0.0-not-yet-released<
 *Same for receiving
 *Added TextBox to configuration-share-dialog that lets the user see and copy the configuration string.
 *Added Whats-new-Dialog
-*TODO: Move KD right below K?
-*TODO: Add intent filters to recognize and automatically handle shared/copied configuration Strings
+*New Icon!
+*Added Script to automatically generate icons
+*TODO?: Move KD right below K
+*TODO?: Add intent filters to recognize and automatically handle shared/copied configuration Strings
  TODO:      These are Strings starting with "EnigmAndroid/"
 *TODO: Write tests to ensure correct functionality (Pull Requests welcome)
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
