@@ -7,4 +7,4 @@
 Android implementation of the famous Enigma machine
 
 If you want to support me with a donation, feel free to do so :)
-btc: 1EqhcKs1pZJhEmyCtbH3qtkHT3Y48MCoAT
+btc: 1MW2DobbNFfcjxTSYzJhtkmiNS7efwaWFX
