@@ -2,6 +2,7 @@ package de.vanitasvitae.enigmandroid.layout;
 
 import android.widget.Spinner;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.Enigma;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
@@ -31,14 +32,14 @@ public class LayoutContainer_T extends LayoutContainer
 {
     private Enigma_T enigma;
 
-    protected Spinner rotor1View;
-    protected Spinner rotor2View;
-    protected Spinner rotor3View;
+    private Spinner rotor1View;
+    private Spinner rotor2View;
+    private Spinner rotor3View;
 
-    protected Spinner rotor1PositionView;
-    protected Spinner rotor2PositionView;
-    protected Spinner rotor3PositionView;
-    protected Spinner reflectorPositionView;
+    private Spinner rotor1PositionView;
+    private Spinner rotor2PositionView;
+    private Spinner rotor3PositionView;
+    private Spinner reflectorPositionView;
 
     public LayoutContainer_T()
     {
@@ -66,12 +67,19 @@ public class LayoutContainer_T extends LayoutContainer
     }
 
     @Override
+    protected void setEnigmaLayout()
+    {
+        MainActivity.ActivitySingleton.getInstance().getActivity().setContentView(
+            R.layout.activity_main_g_k_r_t);
+    }
+
+    @Override
     public Enigma getEnigma() {
         return this.enigma;
     }
 
     @Override
-    protected void initializeLayout() {
+    protected void assembleLayout() {
         this.rotor1View = (Spinner) main.findViewById(R.id.rotor1);
         this.rotor2View = (Spinner) main.findViewById(R.id.rotor2);
         this.rotor3View = (Spinner) main.findViewById(R.id.rotor3);

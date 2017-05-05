@@ -4,9 +4,8 @@
     <string name="action_version">Version</string>
     <string name="action_reset">Reset</string>
     <string name="action_random">Random configuration</string>
-    <string name="action_read_qr">Read configuration from QR-Code</string>
-    <string name="action_send_qr">Share configuration via QR-Code</string>
-    <string name="action_read_passphrase">Create configuration from passphrase</string>
+    <string name="action_restore_configuration">Restore configuration</string>
+    <string name="action_share_configuration">Share configuration</string>
     <string name="action_choose_ring_settings">Ring-Settings</string>
     <string name="action_settings">Settings</string>
     <string name="action_send">Send</string>
@@ -24,7 +23,7 @@
     <string name="hint_reflector_position">Position\nReflector</string>
     <string name="hint_thin_rotor_position">Position\nRotor 4</string>
     <string name="hint_enigma_reflector_wiring">Wiring Reflector</string>
-    <string name="hint_passphrase">Enter passphrase</string>
+    <string name="hint_configuration">Passphrase/Configuration</string>
     <string name="button_crypt">En-/Decrypt!</string>
     <string name="error_no_text_to_send">Can\'t send empty text.</string>
     <string name="error_no_valid_qr">Error: Not a valid EnigmAndroid QR-Code!</string>
@@ -33,6 +32,12 @@
     <string name="title_reflector_dialog">Reflector Wiring</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
+    <string name="dialog_title_restore_configuration">Restore configuration…</string>
+    <string name="dialog_restore_code">…from text</string>
+    <string name="dialog_restore_qr">…from QR-code</string>
+    <string name="dialog_title_share_configuration">Share configuration…</string>
+    <string name="dialog_share_qr">…as QR-code</string>
+    <string name="dialog_share_code">…encoded in text</string>
     <string name="dialog_ring_settings_success">Set Ring-Settings to %1$s.</string>
     <string name="dialog_reflector_set">Rewired Reflector.</string>
     <string name="dialog_plugboard_set">Set Plugboard configuration.</string>
@@ -41,8 +46,9 @@
     <string name="dialog_abort">No changes.</string>
     <string name="message_reset">Enigma reset.</string>
     <string name="message_random">Enigma set to random configuration.</string>
+    <string name="message_clipboard">Copied to clipboard</string>
 
-    <string name="button_plug_title">%1$s:%2$s</string>
+    <string translatable="false" name="button_plug_title">%1$s:%2$s</string>
 
     <string-array translatable="false" name="rotors_1_3">
         <item>I</item>

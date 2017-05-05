@@ -49,15 +49,19 @@ public class EnigmaStateBundle{
 
     private int[] configurationReflector;
 
-    public String getMachineType()
-    {
-        return this.machineType;
-    }
+// --Commented out by Inspection START (07.11.15 19:46):
+//    public String getMachineType()
+//    {
+//        return this.machineType;
+//    }
+// --Commented out by Inspection STOP (07.11.15 19:46)
 
-    public void setMachineType(String type)
-    {
-        this.machineType = type;
-    }
+// --Commented out by Inspection START (07.11.15 19:46):
+//    public void setMachineType(String type)
+//    {
+//        this.machineType = type;
+//    }
+// --Commented out by Inspection STOP (07.11.15 19:46)
 
     public int getTypeRotor1() {
         return typeRotor1;

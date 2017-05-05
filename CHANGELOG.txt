@@ -1,15 +1,34 @@
 CHANGELOG ENIGMANDROID
+v1.0.0-not-yet-released<
+*Added Enigma KD
+*Added "protocol version" to QR-Code-shared configuration strings.
+    This breaks backwards compatibility to older versions, but I added it to enable backwards-
+    compatibility in upcoming releases.
+*Configurations can now be shared to EnigmAndroid as text
+*Moved preference management to SettingsActivity
+*Added dialog to choose whether to share configuration via text or via QR-code
+*Same for receiving
+*Added TextBox to configuration-share-dialog that lets the user see and copy the configuration string.
+*Added Whats-new-Dialog
+*New Icon!
+*Added Script to automatically generate icons
+*Reformatted code
+*TODO: Add tips on long clicks at parts
+*TODO?: Move KD right below K
+*TODO?: Add intent filters to recognize and automatically handle shared/copied configuration Strings
+ TODO:      These are Strings starting with "EnigmAndroid/"
+*TODO: Write tests to ensure correct functionality (Pull Requests welcome)
+*TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
+
+
 v0.1.9-09.10.2015<
 *Added option to share/receive configurations via QR-Code (ZXing Barcode Scanner)
 *Prevent user from setting incomplete reflector wiring
 *Add option to generate configuration from passphrase
-*Reworked Enigma definition (available Rotors/Reflectors/Entrywheels
+*Reworked Enigma definition (available Rotors/Reflectors/ Entrywheels
 *Completely verified correct functionality of Enigma T
 *Added number spelling in spanish, italian
 *Added backwards compatibility to API level 10 (Gingerbread 2.3.3)
-*TODO: Write tests to ensure correct functionality
-*TODO: Migrate preferences to SettingsActivity
-*TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
 
 v0.1.8-27.09.2015<
 *Added Enigma G31

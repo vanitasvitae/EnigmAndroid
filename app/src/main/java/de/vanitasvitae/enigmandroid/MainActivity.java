@@ -1,20 +1,27 @@
 package de.vanitasvitae.enigmandroid;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,418 +58,514 @@ import de.vanitasvitae.enigmandroid.layout.PassphraseDialogBuilder;
  */
 public class MainActivity extends Activity
 {
-    private static final int RESULT_SETTINGS = 1;
-    private static final String URI_CHANGELOG =
-            "https://github.com/vanitasvitae/EnigmAndroid/blob/master/CHANGELOG.txt";
-    public static final String APP_ID = "EnigmAndroid";
+	private static final int RESULT_SETTINGS = 1;
+	private static final String URI_CHANGELOG =
+			"https://github.com/vanitasvitae/EnigmAndroid/blob/master/CHANGELOG.txt";
+	public static final String APP_ID = "EnigmAndroid";
+	public static final int latest_protocol_version = 1;
+	public static final int max_protocol_version = 256;
 
-    private LayoutContainer layoutContainer;
-    private String prefMachineType;
-    private String prefNumericLanguage;
-    private String prefMessageFormatting;
+	private LayoutContainer layoutContainer;
 
-    private SecureRandom secureRandom;
+	private SecureRandom secureRandom;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        secureRandom = new SecureRandom();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
-                getStringArray(R.array.pref_alias_machine_type)[0]);
-        ActivitySingleton singleton = ActivitySingleton.getInstance();
-        singleton.setActivity(this);
-        updateContentView();
-        layoutContainer = LayoutContainer.createLayoutContainer(prefMachineType);
-        updatePreferenceValues();
-        //Handle shared text
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		secureRandom = new SecureRandom();
+		ActivitySingleton.getInstance().setActivity(this);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SettingsActivity.SettingsSingleton.getInstance(prefs, getResources());
+		layoutContainer = LayoutContainer.createLayoutContainer();
 
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if ("text/plain".equals(type))
-            {
-                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                if (sharedText != null)
-                {
-                    layoutContainer.getInput().setRawText(sharedText);
-                }
-            }
-        }
-    }
+		//Handle whats-new dialog
+		handleVersionUpdate();
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        this.updateContentView();
-    }
+		//Handle shared text
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		String type = intent.getType();
+		if (Intent.ACTION_SEND.equals(action) && type != null) {
+			if ("text/plain".equals(type))
+			{
+				String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+				if (sharedText != null)
+				{
+					//If shared text consists of an encoded configuration, try to restore it
+					if(sharedText.startsWith(APP_ID+"/"))
+						restoreStateFromCode(sharedText);
+						//Else put it in the input text box
+					else
+						layoutContainer.getInput().setRawText(sharedText);
+				}
+			}
+		}
+	}
 
-    private void updateContentView()
-    {
-        switch (prefMachineType)
-        {
-            case "I":
-                setContentView(R.layout.activity_main_i_m3);
-                break;
-            case "M3":
-                this.setContentView(R.layout.activity_main_i_m3);
-                break;
-            case "M4":
-                this.setContentView(R.layout.activity_main_m4);
-                break;
-            case "D":
-                this.setContentView(R.layout.activity_main_d);
-                break;
-            case "K":
-            case "KS":
-            case "KSA":
-            case "T":
-            case "R":
-            case "G31":
-            case "G312":
-            case "G260":
-                this.setContentView(R.layout.activity_main_g_k_r_t);
-                break;
-            default:
-                this.setContentView(R.layout.activity_main_i_m3);
-                break;
-        }
-    }
+	public SecureRandom getSecureRandom()
+	{
+		return this.secureRandom;
+	}
 
-    private void updatePreferenceValues()
-    {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.setPrefMachineType(sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
-                getStringArray(R.array.pref_alias_machine_type)[0]));
-        this.setPrefNumericLanguage(sharedPreferences.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
-                getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
-        this.setPrefMessageFormatting(sharedPreferences.getString(SettingsActivity.PREF_MESSAGE_FORMATTING, getResources().
-                getStringArray(R.array.pref_alias_message_formatting)[0]));
-    }
+	public void onDialogFinished(EnigmaStateBundle state)
+	{
+		layoutContainer.getEnigma().setState(state);
+	}
 
-    private void setPrefMachineType(String type)
-    {
-        if(prefMachineType == null || !prefMachineType.equals(type))
-        {
-            prefMachineType = type;
-            String savedInput = "";
-            if(layoutContainer != null)
-            {
-                savedInput = layoutContainer.getInput().getText();
-            }
-            updateContentView();
-            layoutContainer = LayoutContainer.createLayoutContainer(prefMachineType);
-            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
-            layoutContainer.getInput().setText(savedInput);
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            sharedPreferences.edit().putString(SettingsActivity.PREF_MACHINE_TYPE, type).apply();
-        }
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		this.getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 
-    public String getPrefMachineType()
-    {
-        if(prefMachineType != null) return prefMachineType;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefMachineType = sharedPreferences.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources().
-                    getStringArray(R.array.pref_alias_machine_type)[0]);
-        return prefMachineType;
-    }
+	@Override
+	/**
+	 * Handle Options menu clicks
+	 */
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		int id = item.getItemId();
+		if (id == R.id.action_reset)
+		{
+			layoutContainer.resetLayout();
+			Toast.makeText(getApplicationContext(), R.string.message_reset,
+						   Toast.LENGTH_SHORT).show();
+			return true;
+		}
+		else if (id == R.id.action_send_message)
+		{
+			if(layoutContainer.getOutput().getText().length() == 0)
+			{
+				Toast.makeText(this, R.string.error_no_text_to_send, Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Intent sendIntent = new Intent();
+				sendIntent.setAction(Intent.ACTION_SEND);
+				sendIntent.putExtra(Intent.EXTRA_TEXT, layoutContainer.getOutput().getModifiedText());
+				sendIntent.setType("text/plain");
+				startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+			}
+		}
+		else if (id == R.id.action_choose_ringsetting)
+		{
+			layoutContainer.showRingSettingsDialog();
+			return true;
+		}
+		else if(id == R.id.action_share_configuration)
+		{
+			showShareConfigurationDialog();
+		}
+		else if (id == R.id.action_restore_configuration)
+		{
+			showReceiveConfigurationDialog();
+			return true;
+		}
+		else if (id == R.id.action_random_configuration)
+		{
+			layoutContainer.getEnigma().randomState();
+			layoutContainer.syncStateFromEnigmaToLayout();
+			Toast.makeText(getApplicationContext(), R.string.message_random,
+						   Toast.LENGTH_SHORT).show();
+			layoutContainer.getOutput().setText("");
+			return true;
+		}
+		else if (id == R.id.action_settings)
+		{
+			Intent i = new Intent(this, SettingsActivity.class);
+			startActivityForResult(i, RESULT_SETTINGS);
+		}
+		else if (id == R.id.action_about)
+		{
+			showAboutDialog();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
-    public void setPrefNumericLanguage(String lang)
-    {
-        if(prefNumericLanguage == null || !prefNumericLanguage.equals(lang))
-        {
-            prefNumericLanguage = lang;
-            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
-        }
-    }
+	/**
+	 * Set the chosen Configuration to the enigma, get the input string from the input text box and
+	 * prepare it, set the input to the prepared text, encrypt the prepared input and set the
+	 * encrypted string to the output text box and update the spinners to their new positions.
+	 * @param v View
+	 */
+	public void doCrypto(View v)
+	{
+		layoutContainer.doCrypto();
+	}
 
-    public String getPrefNumericLanguage()
-    {
-        if(prefNumericLanguage != null) return prefNumericLanguage;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefNumericLanguage = sharedPreferences.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
-                getStringArray(R.array.pref_alias_numeric_spelling_language)[0]);
-        return prefNumericLanguage;
-    }
+	/**
+	 * Start an intent to share the configuration as QR-Code via Barcode Scanner
+	 */
+	private void shareConfigurationAsQR()
+	{
+		IntentIntegrator QRIntegrator = new IntentIntegrator(this);
+		layoutContainer.syncStateFromLayoutToEnigma();
+		String encoded_state = APP_ID+"/"+layoutContainer.getEnigma().getEncodedState().toString(16);
+		Log.d(APP_ID, "Sharing configuration to QR: "+encoded_state);
+		QRIntegrator.shareText(encoded_state);
+	}
 
-    public void setPrefMessageFormatting(String messageFormatting)
-    {
-        if(prefMessageFormatting == null || !prefMessageFormatting.equals(messageFormatting))
-        {
-            prefMessageFormatting = messageFormatting;
-            layoutContainer.setEditTextAdapter(messageFormatting);
-        }
-    }
+	/**
+	 * Start an intent to share the configuration as text
+	 */
+	private void shareConfigurationAsText()
+	{
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND);
+		sendIntent.putExtra(Intent.EXTRA_TEXT,
+							APP_ID+"/"+layoutContainer.getEnigma().getEncodedState().toString(16));
+		sendIntent.setType("text/plain");
+		startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+	}
 
-    public String getPrefMessageFormatting()
-    {
-        if(prefMessageFormatting != null) return prefMessageFormatting;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.prefMessageFormatting = sharedPreferences.getString(SettingsActivity.PREF_MESSAGE_FORMATTING, getResources().
-                getStringArray(R.array.pref_alias_message_formatting)[0]);
-        return prefMessageFormatting;
-    }
+	/**
+	 * Start the barcode app to scan a barcode for configuration
+	 */
+	private void receiveConfigurationQR()
+	{
+		IntentIntegrator integrator = new IntentIntegrator(this);
+		integrator.initiateScan();
+	}
 
-    public SecureRandom getSecureRandom()
-    {
-        return this.secureRandom;
-    }
+	/**
+	 * Show a dialog to restore a configuration
+	 */
+	private void receiveConfigurationText()
+	{
+		new PassphraseDialogBuilder().showDialog();
+	}
 
-    public void onDialogFinished(EnigmaStateBundle state)
-    {
-        layoutContainer.getEnigma().setState(state);
-    }
+	/**
+	 * Check, whether the app has been updated
+	 */
+	private void handleVersionUpdate()
+	{
+		int currentVersionNumber = 0;
+		int savedVersionNumber = SettingsActivity.SettingsSingleton.getInstance().getVersionNumber();
+		try
+		{
+			PackageInfo p = getPackageManager().getPackageInfo(getPackageName(), 0);
+			currentVersionNumber = p.versionCode;
+		}
+		catch (Exception ignored) {}
+		if(currentVersionNumber > savedVersionNumber)
+		{
+			showWhatsNewDialog();
+			SettingsActivity.SettingsSingleton.getInstance().setVersionNumber(currentVersionNumber);
+		}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        this.getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+	}
 
-    @Override
-    /**
-     * Handle Options menu clicks
-     */
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        if (id == R.id.action_reset)
-        {
-            layoutContainer.resetLayout();
-            Toast.makeText(getApplicationContext(), R.string.message_reset,
-                    Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if (id == R.id.action_random_configuration)
-        {
-            layoutContainer.getEnigma().randomState();
-            layoutContainer.syncStateFromEnigmaToLayout();
-            Toast.makeText(getApplicationContext(), R.string.message_random,
-                    Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if (id == R.id.action_choose_ringsetting)
-        {
-            layoutContainer.showRingSettingsDialog();
-            return true;
-        }
-        else if (id == R.id.action_settings)
-        {
-            Intent i = new Intent(this, SettingsActivity.class);
-            startActivityForResult(i, RESULT_SETTINGS);
-        }
-        else if (id == R.id.action_about)
-        {
-            showAboutDialog();
-            return true;
-        }
-        else if (id == R.id.action_send)
-        {
-            if(layoutContainer.getOutput().getText().length() == 0)
-            {
-                Toast.makeText(this, R.string.error_no_text_to_send, Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, layoutContainer.getOutput().getModifiedText());
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
-            }
-        }
-        else if (id == R.id.action_receive_scan)
-        {
-            IntentIntegrator integrator = new IntentIntegrator(this);
-            integrator.initiateScan();
-            return true;
-        }
-        else if(id == R.id.action_share_scan)
-        {
-            IntentIntegrator QRIntegrator = new IntentIntegrator(this);
-            layoutContainer.syncStateFromLayoutToEnigma();
-            Log.d(APP_ID, "Sharing configuration to QR: " + layoutContainer.getEnigma().stateToString());
-            QRIntegrator.shareText(APP_ID+"/"+layoutContainer.getEnigma().stateToString());
-            return true;
-        }
-        else if(id == R.id.action_enter_seed)
-        {
-            new PassphraseDialogBuilder().showDialog();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Set the chosen Configuration to the enigma, get the input string from the input text box and
-     * prepare it, set the input to the prepared text, encrypt the prepared input and set the
-     * encrypted string to the output text box and update the spinners to their new positions.
-     * @param v View
-     */
-    public void doCrypto(View v)
-    {
-        layoutContainer.doCrypto();
-    }
-
-    /**
-     * Show a Dialog containing information about the app, license, usage, author and a link
-     * to the changelog
-     */
-    private void showAboutDialog()
-    {
-        final View aboutView = View.inflate(this, R.layout.dialog_about, null);
+	/**
+	 * Show a dialog that informs the user about the latest important changes in the app
+	 * The dialog appears whenever the app starts after an update or after data has been
+	 * deleted
+	 */
+	private void showWhatsNewDialog()
+	{
+		PackageInfo pInfo = null;
+		try{ pInfo = getPackageManager().getPackageInfo(this.getPackageName(), 0);}
+		catch (PackageManager.NameNotFoundException e){ e.printStackTrace();}
+		assert pInfo != null;
+		String version = pInfo.versionName;
+		LayoutInflater li = LayoutInflater.from(this);
+		@SuppressLint("InflateParams")
+		View dialog = li.inflate(R.layout.dialog_whats_new, null);
+		((TextView) dialog.findViewById(R.id.dialog_whats_new_header)).setText(
+				String.format(getResources().getText(R.string.dialog_whats_new_header).toString(),version));
+		((TextView) dialog.findViewById(R.id.dialog_whats_new_details)).setText(
+				R.string.dialog_whats_new_content);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setView(dialog).setTitle(R.string.dialog_whats_new_title)
+				.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+	}
+	/**
+	 * Show a Dialog containing information about the app, license, usage, author and a link
+	 * to the changelog
+	 */
+	private void showAboutDialog()
+	{
+		final View aboutView = View.inflate(this, R.layout.dialog_about, null);
 		//Get and set Version code
-        PackageInfo pInfo = null;
-        try{ pInfo = getPackageManager().getPackageInfo(this.getPackageName(), 0);}
-        catch (PackageManager.NameNotFoundException e){ e.printStackTrace();}
-        String version = pInfo.versionName+ " ("+pInfo.versionCode+")";
-        TextView versionText = (TextView) aboutView.findViewById(R.id.about_version_section);
-        versionText.setText(version);
+		PackageInfo pInfo = null;
+		try{ pInfo = getPackageManager().getPackageInfo(this.getPackageName(), 0);}
+		catch (PackageManager.NameNotFoundException e){ e.printStackTrace();}
+		assert pInfo != null;
+		String version = pInfo.versionName+ " ("+pInfo.versionCode+")";
+		TextView versionText = (TextView) aboutView.findViewById(R.id.about_version_section);
+		versionText.setText(version);
 
 		//Build and show dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title_about_dialog);
-        builder.setView(aboutView)
-                .setCancelable(true)
-                .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        dialog.dismiss();
-                    }
-                })
-                .setNegativeButton(R.string.button_show_changelog, new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        dialog.cancel();
-                        openWebPage(URI_CHANGELOG);
-                    }
-                }).show();
-    }
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.title_about_dialog);
+		builder.setView(aboutView)
+				.setCancelable(true)
+				.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						dialog.dismiss();
+					}
+				})
+				.setNegativeButton(R.string.button_show_changelog, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						dialog.cancel();
+						openWebPage(URI_CHANGELOG);
+					}
+				}).show();
+	}
 
-    /**
-     * Handle preference changes
-     * @param requestCode requestCode
-     * @param resultCode resultCode (RESULT_SETTINGS is defined at the top)
-     * @param data data (not important here)
-     */
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+	/**
+	 * Show a dialog where the user can choose between sharing the configuration via QR-code or
+	 * via string (intent or copy-to-clipboard)
+	 */
+	private void showShareConfigurationDialog()
+	{
+		final String configuration = APP_ID+"/"+layoutContainer.getEnigma().getEncodedState().toString(16);
+		final View shareView = View.inflate(this, R.layout.dialog_two_options, null);
+		LinearLayout l = (LinearLayout) shareView.findViewById(R.id.dialog_two_options_lay);
+		EditText e = new EditText(this);
+		e.setText(configuration);
+		e.setInputType(InputType.TYPE_NULL);
+		e.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB){
+					android.content.ClipboardManager clipboard =  (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+					ClipData clip;
+					clip = ClipData.newPlainText("label", configuration);
+					clipboard.setPrimaryClip(clip);
+				} else{
+					@SuppressWarnings("deprecation")
+					android.text.ClipboardManager clipboard = (android.text.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+					clipboard.setText(configuration);
+				}
+				Toast.makeText(getApplicationContext(), R.string.message_clipboard, Toast.LENGTH_SHORT).show();
+			}
+		});
+		l.addView(e);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.dialog_title_share_configuration)
+				.setView(shareView).setCancelable(true);
+		final Dialog d = builder.create();
+		Button one = (Button) shareView.findViewById(R.id.dialog_two_options_1);
+		one.setText(R.string.dialog_share_qr);
+		one.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				shareConfigurationAsQR();
+				d.dismiss();
+			}
+		});
+		Button two = (Button) shareView.findViewById(R.id.dialog_two_options_2);
+		two.setText(R.string.dialog_share_code);
+		two.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				shareConfigurationAsText();
+				d.dismiss();
+			}
+		});
+		d.show();
+	}
 
-        switch (requestCode) {
-            case RESULT_SETTINGS:
-            {
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-                this.setPrefMachineType(sharedPrefs.getString(SettingsActivity.PREF_MACHINE_TYPE, getResources()
-                        .getStringArray(R.array.pref_alias_machine_type)[0]));
-                this.setPrefNumericLanguage(sharedPrefs.getString(SettingsActivity.PREF_NUMERIC_LANGUAGE, getResources().
-                        getStringArray(R.array.pref_alias_numeric_spelling_language)[0]));
-                this.setPrefMessageFormatting(sharedPrefs.getString(SettingsActivity.PREF_MESSAGE_FORMATTING,
-                        getResources().getStringArray(R.array.pref_alias_message_formatting)[0]));
-                break;
-            }
-            case IntentIntegrator.REQUEST_CODE:
-                IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-                if (scanResult != null) {
-                    String content = scanResult.getContents();
-                    if(content == null) Log.e(APP_ID, "Error! Received nothing from QR-Code!");
-                    else {
-                        Log.d(APP_ID, "Received " + content + " from QR-Code!");
-                        restoreStateFromCode(content);
-                    }
-                }
-        }
-    }
+	/**
+	 * Show a dialog, where the user can choose between scanning QR-code and entering a string to
+	 * restore the encoded configuration
+	 */
+	private void showReceiveConfigurationDialog()
+	{
+		final View shareView = View.inflate(this, R.layout.dialog_two_options, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.dialog_title_restore_configuration)
+				.setView(shareView).setCancelable(true);
+		final Dialog d = builder.create();
+		Button one = (Button) shareView.findViewById(R.id.dialog_two_options_1);
+		one.setText(R.string.dialog_restore_qr);
+		one.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				receiveConfigurationQR();
+				d.dismiss();
+			}
+		});
+		Button two = (Button) shareView.findViewById(R.id.dialog_two_options_2);
+		two.setText(R.string.dialog_restore_code);
+		two.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				receiveConfigurationText();
+				d.dismiss();
+			}
+		});
+		d.show();
+	}
 
-    /**
-     * Set EnigmAndroid into a certain state as described in the QR-Code
-     * @param mem content of the QR-Code
-     */
-    public void restoreStateFromCode(String mem)
-    {
-        if(!mem.startsWith(APP_ID+"/"))
-        {
-            Toast.makeText(this, R.string.error_no_valid_qr, Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            mem = mem.substring((APP_ID+"/").length());
-            BigInteger s = new BigInteger(mem, 16);
-            Log.d(APP_ID, "Try to restore configuration from BigInteger value "+ s.toString());
-            setPrefMachineType(Enigma.chooseEnigmaFromSave(s));
-            updateContentView();
-            layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
-            layoutContainer.getEnigma().restoreState(Enigma.removeDigit(s,20));
-            layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
-            layoutContainer.syncStateFromEnigmaToLayout();
-        }
-    }
+	/**
+	 * Handle Activity Results
+	 * @param requestCode requestCode
+	 * @param resultCode resultCode (RESULT_SETTINGS is defined at the top)
+	 * @param data data
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			//Come back from Settings
+			case RESULT_SETTINGS:
+			{
+				applyPreferenceChanges();
+				break;
+			}
+			// Receive from QR
+			case IntentIntegrator.REQUEST_CODE:
+				IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+				if (scanResult != null) {
+					String content = scanResult.getContents();
+					if(content == null) Log.e(APP_ID, "Error! Received nothing from QR-Code!");
+					else {
+						Log.d(APP_ID, "Received " + content + " from QR-Code!");
+						restoreStateFromCode(content);
+					}
+				}
+		}
+	}
 
-    /**
-     * Set EnigmAndroid into a state calculated from the seed.
-     * @param seed seed
-     */
-    public void createStateFromSeed(String seed)
-    {
-        setPrefMachineType(Enigma.chooseEnigmaFromSeed(seed));
-        updateContentView();
-        layoutContainer = LayoutContainer.createLayoutContainer(getPrefMachineType());
-        layoutContainer.getEnigma().setStateFromSeed(seed);
-        layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
-        layoutContainer.syncStateFromEnigmaToLayout();
-    }
+	/**
+	 * Handle changes in preferences and apply those changes to the app
+	 */
+	private void applyPreferenceChanges()
+	{
+		SettingsActivity s = SettingsActivity.SettingsSingleton.getInstance();
+		if(s.prefMachineTypeChanged())
+		{
+			layoutContainer = LayoutContainer.createLayoutContainer();
+		}
+		if(s.prefMessageFormattingChanged())
+		{
+			layoutContainer.setEditTextAdapter(s.getPrefMessageFormatting());
+		}
+		if(s.prefNumericLanguageChanged())
+		{
+			layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
+		}
+	}
 
-    /**
-     * Open the web page with the URL url
-     * @param url URL of the website
-     */
-    private void openWebPage(String url) {
-        Uri webPage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
+	/**
+	 * Set EnigmAndroid into a certain state as described in the QR-Code
+	 * @param mem content of the QR-Code
+	 */
+	public void restoreStateFromCode(String mem)
+	{
+		if(!mem.startsWith(APP_ID+"/"))
+		{
+			Toast.makeText(this, R.string.error_no_valid_qr, Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String inputString = layoutContainer.getInput().getText();
+			mem = mem.substring((APP_ID+"/").length());
+			BigInteger s = new BigInteger(mem, 16);
+			int protocol_version = Enigma.getValue(s, max_protocol_version);
+			s = Enigma.removeDigit(s, max_protocol_version);
+			Log.d(APP_ID,
+				  "Try to restore configuration from BigInteger value "+s.toString()+" in protocol version "+protocol_version+".");
+			SettingsActivity.SettingsSingleton.getInstance()
+					.setPrefMachineType(Enigma.chooseEnigmaFromSave(s));
+			layoutContainer = LayoutContainer.createLayoutContainer();
+			layoutContainer.getEnigma().restoreState(Enigma.removeDigit(s,20), protocol_version);
+			layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
+			layoutContainer.syncStateFromEnigmaToLayout();
+			layoutContainer.getInput().setText(inputString);
+			layoutContainer.getOutput().setText("");
+		}
+	}
 
-/**
- * Singleton that grants access to an Activity from anywhere within the app
- */
-public static class ActivitySingleton
-{
-    private static ActivitySingleton instance = null;
-    private Activity activity;
+	/**
+	 * Set EnigmAndroid into a state calculated from the seed.
+	 * @param seed seed
+	 */
+	public void applyStateFromSeed(String seed)
+	{
+		String inputString = layoutContainer.getInput().getText();
+		SettingsActivity.SettingsSingleton.getInstance()
+		.setPrefMachineType(Enigma.chooseEnigmaFromSeed(seed));
+		layoutContainer = LayoutContainer.createLayoutContainer();
+		layoutContainer.getEnigma().setStateFromSeed(seed);
+		layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
+		layoutContainer.syncStateFromEnigmaToLayout();
+		layoutContainer.getInput().setText(inputString);
+		layoutContainer.getOutput().setText("");
+	}
 
-    //private constructor
-    private ActivitySingleton(){}
-    //Singleton method
-    public static ActivitySingleton getInstance()
-    {
-        if(instance == null) instance = new ActivitySingleton();
-        return instance;
-    }
+	/**
+	 * Open the web page with the URL url
+	 * @param url URL of the website
+	 */
+	private void openWebPage(String url) {
+		Uri webPage = Uri.parse(url);
+		Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
+		if (intent.resolveActivity(getPackageManager()) != null) {
+			startActivity(intent);
+		}
+	}
 
-    /**
-     * Set an Activity that the Singleton returns
-     * @param activity activity that's stored
-     */
-    public void setActivity(Activity activity)
-    {
-        this.activity = activity;
-    }
+	/**
+	 * Singleton that grants access to an Activity from anywhere within the app
+	 */
+	public static class ActivitySingleton
+	{
+		private static ActivitySingleton instance = null;
+		private Activity activity;
 
-    /**
-     * Returns the stored Activity
-     * @return stored Activity
-     */
-    public Activity getActivity()
-    {
-        return activity;
-    }
+		//private constructor
+		private ActivitySingleton(){}
+		//Singleton method
+		public static ActivitySingleton getInstance()
+		{
+			if(instance == null) instance = new ActivitySingleton();
+			return instance;
+		}
 
-}
+		/**
+		 * Set an Activity that the Singleton returns
+		 * @param activity activity that's stored
+		 */
+		public void setActivity(Activity activity)
+		{
+			this.activity = activity;
+		}
+
+		/**
+		 * Returns the stored Activity
+		 * @return stored Activity
+		 */
+		public Activity getActivity()
+		{
+			return activity;
+		}
+
+	}
 }

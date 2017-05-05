@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/media/vanitas/Daten/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/home/vanitas/Programmierung/androidstudio/EnigmAndroid/app/build/intermediates/pre-dexed/release/support-annotations-23.1.1_62dd074f617ab454457fb3baa101c7c9cdf938f1.jar" />
+    </item>
+    <item
+        jar="/home/vanitas/Programmierung/androidstudio/EnigmAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/home/vanitas/Programmierung/androidstudio/EnigmAndroid/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-23.1.1_2319dd38ea58f11772bfa2b284414bf370757e05.jar" />
+    </item>
+    <item
+        jar="/home/vanitas/Programmierung/androidstudio/EnigmAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/home/vanitas/Programmierung/androidstudio/EnigmAndroid/app/build/intermediates/pre-dexed/release/internal_impl-23.1.1_3c279e935a16ef82d14e6d51ca8f0d594e6aca98.jar" />
+    </item>
+
+</items>

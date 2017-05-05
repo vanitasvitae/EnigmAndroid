@@ -27,7 +27,7 @@ import de.vanitasvitae.enigmandroid.SettingsActivity;
  * @author vanitasvitae
  */
 public abstract class InputPreparer {
-    protected InputPreparer child;
+    InputPreparer child;
 
     public String prepareString(String in) {
         if (child != null)
@@ -67,9 +67,11 @@ public abstract class InputPreparer {
     }
 
     public static class ReplaceSpecialCharacters extends InputPreparer {
-        public ReplaceSpecialCharacters() {
-            this.child = null;
-        }
+// --Commented out by Inspection START (07.11.15 19:47):
+//        public ReplaceSpecialCharacters() {
+//            this.child = null;
+//        }
+// --Commented out by Inspection STOP (07.11.15 19:47)
 
         public ReplaceSpecialCharacters(InputPreparer child) {
             this.child = child;
@@ -85,9 +87,11 @@ public abstract class InputPreparer {
      * Concrete implementation of a german InputPreparer
      */
     public static class ReplaceNumbersGerman extends InputPreparer {
-        public ReplaceNumbersGerman() {
-            this.child = null;
-        }
+// --Commented out by Inspection START (07.11.15 19:47):
+//        public ReplaceNumbersGerman() {
+//            this.child = null;
+//        }
+// --Commented out by Inspection STOP (07.11.15 19:47)
 
         public ReplaceNumbersGerman(InputPreparer child) {
             this.child = child;
@@ -112,9 +116,11 @@ public abstract class InputPreparer {
      * Concrete implementation of a french InputPreparer
      */
     public static class ReplaceNumbersFrench extends InputPreparer {
-        public ReplaceNumbersFrench() {
-            this.child = null;
-        }
+// --Commented out by Inspection START (07.11.15 19:47):
+//        public ReplaceNumbersFrench() {
+//            this.child = null;
+//        }
+// --Commented out by Inspection STOP (07.11.15 19:47)
 
         public ReplaceNumbersFrench(InputPreparer child) {
             this.child = child;
@@ -139,9 +145,11 @@ public abstract class InputPreparer {
      * Concrete implementation of an english InputPreparer
      */
     public static class ReplaceNumbersEnglish extends InputPreparer {
-        public ReplaceNumbersEnglish() {
-            this.child = null;
-        }
+// --Commented out by Inspection START (07.11.15 19:47):
+//        public ReplaceNumbersEnglish() {
+//            this.child = null;
+//        }
+// --Commented out by Inspection STOP (07.11.15 19:47)
 
         public ReplaceNumbersEnglish(InputPreparer child) {
             this.child = child;
@@ -166,9 +174,11 @@ public abstract class InputPreparer {
      * Concrete implementation of a spanish InputPreparer
      */
     public static class ReplaceNumbersSpanish extends InputPreparer {
-        public ReplaceNumbersSpanish() {
-            this.child = null;
-        }
+// --Commented out by Inspection START (07.11.15 19:47):
+//        public ReplaceNumbersSpanish() {
+//            this.child = null;
+//        }
+// --Commented out by Inspection STOP (07.11.15 19:47)
 
         public ReplaceNumbersSpanish(InputPreparer child) {
             this.child = child;
@@ -193,9 +203,11 @@ public abstract class InputPreparer {
 	 * Concrete implementation of a spanish InputPreparer
 	 */
 	public static class ReplaceNumbersItalian extends InputPreparer {
-		public ReplaceNumbersItalian() {
-			this.child = null;
-		}
+// --Commented out by Inspection START (07.11.15 19:47):
+//		public ReplaceNumbersItalian() {
+//			this.child = null;
+//		}
+// --Commented out by Inspection STOP (07.11.15 19:47)
 
 		public ReplaceNumbersItalian(InputPreparer child) {
 			this.child = child;

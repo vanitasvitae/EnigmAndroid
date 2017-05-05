@@ -24,18 +24,18 @@ import de.vanitasvitae.enigmandroid.enigma.Enigma_G260;
  */
 public class LayoutContainer_G260 extends LayoutContainer_G31
 {
-    public LayoutContainer_G260()
-    {
-        super();
-        main.setTitle("G260 - EnigmAndroid");
-        this.resetLayout();
-    }
+	public LayoutContainer_G260()
+	{
+		super();
+		main.setTitle("G260 - EnigmAndroid");
+		this.resetLayout();
+	}
 
-    @Override
-    public void resetLayout() {
-        enigma = new Enigma_G260();
-        setLayoutState(enigma.getState());
-        output.setText("");
-        input.setText("");
-    }
+	@Override
+	public void resetLayout() {
+		enigma = new Enigma_G260();
+		setLayoutState(enigma.getState());
+		output.setText("");
+		input.setText("");
+	}
 }

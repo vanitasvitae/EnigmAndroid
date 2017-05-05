@@ -37,7 +37,7 @@ public abstract class RingSettingsDialogBuilder
     protected abstract void showDialog(EnigmaStateBundle stateBundle, ArrayAdapter[] adapters, int[] rIDs, Actions actions);
     public abstract void createRingSettingsDialog(EnigmaStateBundle stateBundle);
 
-    public static ArrayAdapter createAdapter(Integer[] array)
+    private static ArrayAdapter createAdapter(Integer[] array)
     {
         ArrayAdapter adapter = new ArrayAdapter<>(
                 MainActivity.ActivitySingleton.getInstance().getActivity(),
@@ -50,7 +50,7 @@ public abstract class RingSettingsDialogBuilder
      * Creates a ArrayAdapter working over an array of numbers 1 to 26.
      * @return ArrayAdapter
      */
-    public static ArrayAdapter createAdapter1_26()
+    private static ArrayAdapter createAdapter1_26()
     {
         Integer[] ringArray = new Integer[26];
         for(int i=1; i<=26; i++) {ringArray[i-1] = i;}
@@ -365,7 +365,7 @@ public abstract class RingSettingsDialogBuilder
      */
     public static abstract class Actions
     {
-        protected EnigmaStateBundle stateBundle;
+        final EnigmaStateBundle stateBundle;
         public Actions(EnigmaStateBundle bundle)
         {
             this.stateBundle = bundle;

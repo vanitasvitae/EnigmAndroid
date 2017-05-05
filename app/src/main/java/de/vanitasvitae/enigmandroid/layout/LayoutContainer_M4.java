@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import de.vanitasvitae.enigmandroid.MainActivity;
 import de.vanitasvitae.enigmandroid.R;
 import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
 import de.vanitasvitae.enigmandroid.enigma.Enigma_M4;
@@ -49,6 +50,11 @@ public class LayoutContainer_M4 extends LayoutContainer
         this.resetLayout();
     }
 
+    @Override
+    protected void setEnigmaLayout()
+    {
+        MainActivity.ActivitySingleton.getInstance().getActivity().setContentView(R.layout.activity_main_m4);
+    }
 
 
     public Enigma_M4 getEnigma()
@@ -57,7 +63,7 @@ public class LayoutContainer_M4 extends LayoutContainer
     }
 
     @Override
-    protected void initializeLayout() {
+    protected void assembleLayout() {
         this.rotor1View = (Spinner) main.findViewById(R.id.rotor1);
         this.rotor2View = (Spinner) main.findViewById(R.id.rotor2);
         this.rotor3View = (Spinner) main.findViewById(R.id.rotor3);
@@ -68,7 +74,7 @@ public class LayoutContainer_M4 extends LayoutContainer
         this.rotor4PositionView = (Spinner) main.findViewById(R.id.thin_rotor_position);
         this.reflectorView = (Spinner) main.findViewById(R.id.reflector);
         Button setPlugboardButton = (Button) main.findViewById(R.id.button_plugboard);
-        setPlugboardButton.setOnClickListener(new View.OnClickListener() {
+        if(setPlugboardButton != null) setPlugboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new PluggableDialogBuilder(getEnigma().getState()).showDialogPlugboard();

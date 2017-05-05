@@ -37,9 +37,9 @@ import de.vanitasvitae.enigmandroid.R;
  */
 public class PassphraseDialogBuilder
 {
-    private MainActivity main;
-    private View passphraseDialogView;
-    private EditText passphrase;
+    private final MainActivity main;
+    private final View passphraseDialogView;
+    private final EditText passphrase;
     private Button positive;
     public PassphraseDialogBuilder()
     {
@@ -74,7 +74,7 @@ public class PassphraseDialogBuilder
     {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(main);
-        builder.setTitle(R.string.hint_passphrase);
+        builder.setTitle(R.string.hint_configuration);
         Dialog d = builder.setView(passphraseDialogView)
                 .setCancelable(true)
                 .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
@@ -89,7 +89,7 @@ public class PassphraseDialogBuilder
 						}
 						else
 						{
-							main.createStateFromSeed(pass);
+							main.applyStateFromSeed(pass);
                             String message = String.format(main.getResources().getString(
                                     R.string.dialog_passphrase_set), " \'"+pass+"\'");
 							Toast.makeText(main, message, Toast.LENGTH_LONG).show();

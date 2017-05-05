@@ -15,6 +15,7 @@
         <item>K</item>
         <item>Swiss-K</item>
         <item>Swiss-K (Airforce)</item>
+        <item>KD</item>
         <item>R (\"Rocket\", Railway)</item>
         <item>T (\"Tirpitz\", Japan)</item>
     </string-array>
@@ -29,6 +30,7 @@
         <item>K</item>
         <item>KS</item>
         <item>KSA</item>
+        <item>KD</item>
         <item>R</item>
         <item>T</item>
     </string-array>

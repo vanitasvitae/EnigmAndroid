@@ -37,19 +37,19 @@ import de.vanitasvitae.enigmandroid.enigma.EnigmaStateBundle;
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  * @author vanitasvitae
  */
-public class PluggableDialogBuilder
+class PluggableDialogBuilder
 {
-    protected ArrayList<ButtonWrapper> buttons;
-    protected View dialogView;
-    protected MainActivity main;
-    protected EnigmaStateBundle state;
+    private ArrayList<ButtonWrapper> buttons;
+    private View dialogView;
+    private final MainActivity main;
+    private final EnigmaStateBundle state;
 
-    protected boolean allowIncompleteConnections;
-    protected Button positive;
+    private boolean allowIncompleteConnections;
+    private Button positive;
 
-    protected HashSet<Integer> colors;
+    private HashSet<Integer> colors;
 
-    protected int previouslyPressedButton = -1;
+    private int previouslyPressedButton = -1;
 
     /**
      * Constructor that prepares layout and buttons.
@@ -148,7 +148,7 @@ public class PluggableDialogBuilder
     /**
      * Initialize array of buttons, initialize background-color hashset.
      */
-    public void initializeLayout()
+    private void initializeLayout()
     {
         buttons = new ArrayList<>();
         dialogView = View.inflate(main, R.layout.dialog_plugs, null);
@@ -199,7 +199,7 @@ public class PluggableDialogBuilder
     /**
      * Set listeners for all buttons
      */
-    public void setButtonListeners()
+    private void setButtonListeners()
     {
         for(int i=0; i<26; i++)
         {
@@ -219,7 +219,7 @@ public class PluggableDialogBuilder
      * return false otherwise
      * @return boolean
      */
-    protected boolean allConnectionsDone()
+    private boolean allConnectionsDone()
     {
         for(int i=0; i<buttons.size(); i++)
         {
@@ -232,7 +232,7 @@ public class PluggableDialogBuilder
     /**
      * restore the connections according to the plugboard
      */
-    protected void restoreConfigurationPlugboard()
+    private void restoreConfigurationPlugboard()
     {
         restoreConfiguration(state.getConfigurationPlugboard());
     }
@@ -240,7 +240,7 @@ public class PluggableDialogBuilder
     /**
      * restore the connections according to the reflector
      */
-    protected void restoreConfigurationReflector()
+    private void restoreConfigurationReflector()
     {
         restoreConfiguration(state.getConfigurationReflector());
     }
@@ -249,7 +249,7 @@ public class PluggableDialogBuilder
      * Connect all the buttons according to c.
      * @param c array of connections
      */
-    protected void restoreConfiguration(int[] c)
+    private void restoreConfiguration(int[] c)
     {
         for(int i=0; i<26; i++)
         {
@@ -265,7 +265,7 @@ public class PluggableDialogBuilder
      * @param button1 first and
      * @param button2 second button
      */
-    public void setPlug(int button1, int button2)
+    private void setPlug(int button1, int button2)
     {
         if(button1 == button2)
         {
@@ -303,7 +303,7 @@ public class PluggableDialogBuilder
      * Update state of positive button. Check, if all connections are done and if so, enable positive
      * button. Otherwise disable it.
      */
-    protected void updatePositiveButton()
+    private void updatePositiveButton()
     {
         if(!allowIncompleteConnections && positive != null)
         {
@@ -331,7 +331,7 @@ public class PluggableDialogBuilder
      * Handle button pressed events.
      * @param button button that got pressed
      */
-    public void buttonPressed(int button)
+    private void buttonPressed(int button)
     {
         if(previouslyPressedButton != -1)
         {

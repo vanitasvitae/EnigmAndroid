@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_whats_new_title">What\'s new?</string>
+    <string translatable="false" name="dialog_whats_new_header">%1$s:</string> <!--Version-->
+    <string translatable="false" name="dialog_whats_new_content">
+        - This splash screen!
+        \n- Protocol-versioning to ensure compatibility to upcoming releases/new functions.\n
+        Unfortunately we had to break backwards compatibility to older versions :/
+        \n- Enigma KD!
+        \n- New Icon!
+
+    </string>
+</resources>
