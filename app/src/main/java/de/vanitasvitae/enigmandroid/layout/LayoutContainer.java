@@ -139,10 +139,13 @@ public abstract class LayoutContainer
 	void prepareSpinnerAdapter(Spinner view, int resourceID) {
 		MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
 
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(main, resourceID,
-																			 android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		view.setAdapter(adapter);
+		ArrayAdapter<CharSequence> ad = new ArrayAdapter<CharSequence>(main,
+				android.R.layout.simple_spinner_item,
+				main.getResources().getTextArray(resourceID));
+
+		ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ad.setDropDownViewTheme(main.getTheme());
+		view.setAdapter(ad);
 	}
 
 	/**
@@ -153,10 +156,11 @@ public abstract class LayoutContainer
 	void prepareSpinnerAdapter(Spinner view, Character[] array)
 	{
 		MainActivity main = (MainActivity) MainActivity.ActivitySingleton.getInstance().getActivity();
-		ArrayAdapter<Character> adapter = new ArrayAdapter<>(main.getApplicationContext(),
+		ArrayAdapter<Character> adapter = new ArrayAdapter<>(main,
 															 android.R.layout.simple_spinner_item, array);
 		adapter.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
+		adapter.setDropDownViewTheme(main.getTheme());
 		view.setAdapter(adapter);
 	}
 

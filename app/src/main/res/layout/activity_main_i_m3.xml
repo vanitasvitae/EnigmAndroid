@@ -174,12 +174,13 @@
             android:layout_weight="50"
             android:text="@string/title_plugboard_dialog"
             android:id="@+id/button_plugboard"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_grey"
             tools:ignore="ButtonStyle"/>
         <Button
             android:layout_width="0dp"
             android:layout_weight="50"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
             android:text="@string/button_crypt"

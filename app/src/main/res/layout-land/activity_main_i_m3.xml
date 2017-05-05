@@ -156,16 +156,17 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="50"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:text="@string/title_plugboard_dialog"
+            android:background="@drawable/button_grey"
             android:id="@+id/button_plugboard"
             tools:ignore="ButtonStyle"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="50"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:id="@+id/button_crypt"
             android:onClick="doCrypto"
