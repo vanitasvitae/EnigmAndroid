@@ -9,6 +9,7 @@ out/
 *.ipr
 *.iws
 .gradle
+app/build/
 build/
 gradle-app.setting
 !gradle-wrapper.jar
