@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EnigmAndroid</string>
+    <string name="action_version">Versão</string>
+    <string name="action_reset">Restaurar</string>
+    <string name="action_random">Configuração aleatória</string>
+    <string name="action_restore_configuration">Restaurar configuração</string>
+    <string name="action_share_configuration">Compartilhar configuração</string>
+    <string name="action_choose_ring_settings">Configurações de toque</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_send">Enviar</string>
+    <string name="send_to">Enviar para…</string>
+    <string name="hint_enigma_type_here">Escreva aqui</string>
+    <string name="hint_enigma_code">EnigmaCode</string>
+    <string name="hint_rotor1">Rotor 1</string>
+    <string name="hint_rotor2">Rotor 2</string>
+    <string name="hint_rotor3">Rotor 3</string>
+    <string name="hint_thin_rotor">Rotor 4</string>
+    <string name="hint_reflector">Refletor</string>
+    <string name="hint_rotor1_position">Posição\nRotor 1</string>
+    <string name="hint_rotor2_position">Posição\nRotor 2</string>
+    <string name="hint_rotor3_position">Posição\nRotor 3</string>
+    <string name="hint_reflector_position">Posição\nRefletor</string>
+    <string name="hint_thin_rotor_position">Posição\nRotor 4</string>
+    <string name="hint_enigma_reflector_wiring">Refletor de Fios</string>
+    <string name="hint_configuration">Senha/Configuração</string>
+    <string name="button_crypt">En-/Decriptar!</string>
+    <string name="error_no_text_to_send">Impossível enviar texto vazio.</string>
+    <string name="error_no_valid_qr">Erro: Não é um QR-Code válido do EnigmAndroid!</string>
+    <string name="title_ring_setting">Configurações de Toque</string>
+    <string name="title_plugboard_dialog">Configurações do Quadro de Conexões</string>
+    <string name="title_reflector_dialog">Cabos do Refletor</string>
+    <string name="dialog_positive">OK</string>
+    <string name="dialog_negative">Cancelar</string>
+    <string name="dialog_title_restore_configuration">Restaurar configurações…</string>
+    <string name="dialog_restore_code">…a partir de texto</string>
+    <string name="dialog_restore_qr">…a partir de QR-code</string>
+    <string name="dialog_title_share_configuration">Compartilhar configurações…</string>
+    <string name="dialog_share_qr">…como QR-code</string>
+    <string name="dialog_share_code">…criptografadas em texto</string>
+    <string name="dialog_ring_settings_success">Definir as Configurações de Toque para %1$s.</string>
+    <string name="dialog_reflector_set">Refletor Religado.</string>
+    <string name="dialog_plugboard_set">Definir configurações do Quadro de Conexões.</string>
+    <string name="dialog_passphrase_set">Gerar configurações a partir de senha %1$s.</string>
+    <string name="dialog_passphrase_was_coded_state">Configurações restauradas do estado codificado.</string>
+    <string name="dialog_abort">Sem alterações.</string>
+    <string name="message_reset">Restaurar o Enigma.</string>
+    <string name="message_random">Enigma definido para configurações aleatórias.</string>
+    <string name="message_clipboard">Copiado para a área de transferência</string>
+
+    <string translatable="false" name="button_plug_title">%1$s:%2$s</string>
+
+    <string-array translatable="false" name="rotors_1_3">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+    </string-array>
+    <string-array translatable="false" name="rotors_1_5">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+    </string-array>
+    <string-array translatable="false" name="rotors_1_8">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+        <item>VI</item>
+        <item>VII</item>
+        <item>VIII</item>
+    </string-array>
+    <string-array translatable="false" name="reflectors_a_c">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+    <string-array translatable="false" name="reflectors_b_c">
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+    <string-array translatable="false" name="rotors_beta_gamma">
+        <item>\u03B2</item>
+        <item>\u03B3</item>
+    </string-array>
+
+</resources>
