@@ -48,42 +48,4 @@
     <string name="message_random">Enigma definido para configurações aleatórias.</string>
     <string name="message_clipboard">Copiado para a área de transferência</string>
 
-    <string translatable="false" name="button_plug_title">%1$s:%2$s</string>
-
-    <string-array translatable="false" name="rotors_1_3">
-        <item>I</item>
-        <item>II</item>
-        <item>III</item>
-    </string-array>
-    <string-array translatable="false" name="rotors_1_5">
-        <item>I</item>
-        <item>II</item>
-        <item>III</item>
-        <item>IV</item>
-        <item>V</item>
-    </string-array>
-    <string-array translatable="false" name="rotors_1_8">
-        <item>I</item>
-        <item>II</item>
-        <item>III</item>
-        <item>IV</item>
-        <item>V</item>
-        <item>VI</item>
-        <item>VII</item>
-        <item>VIII</item>
-    </string-array>
-    <string-array translatable="false" name="reflectors_a_c">
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-    </string-array>
-    <string-array translatable="false" name="reflectors_b_c">
-        <item>B</item>
-        <item>C</item>
-    </string-array>
-    <string-array translatable="false" name="rotors_beta_gamma">
-        <item>\u03B2</item>
-        <item>\u03B3</item>
-    </string-array>
-
 </resources>
