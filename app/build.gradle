@@ -8,8 +8,8 @@ android {
         applicationId "de.vanitasvitae.enigmandroid"
         minSdkVersion 11
         targetSdkVersion 25
-        versionCode 16
-        versionName "1.0.0-05.05.2017"
+        versionCode 17
+        versionName "1.0.1-12.01.2018"
     }
     buildTypes {
         release {

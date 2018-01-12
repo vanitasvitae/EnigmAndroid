@@ -1,5 +1,8 @@
 CHANGELOG ENIGMANDROID
-v1.0.0-not-yet-released<
+v1.0.1-12.01.2018<
+*Added language: Brazilian-Portuguese
+
+v1.0.0-05.05.2017<
 *Added Enigma KD
 *Added "protocol version" to QR-Code-shared configuration strings.
     This breaks backwards compatibility to older versions, but I added it to enable backwards-
@@ -19,7 +22,6 @@ v1.0.0-not-yet-released<
  TODO:      These are Strings starting with "EnigmAndroid/"
 *TODO: Write tests to ensure correct functionality (Pull Requests welcome)
 *TODO: Add multi-Enigma (select any rotor/reflector etc. Probably wont happen too soon)
-
 
 v0.1.9-09.10.2015<
 *Added option to share/receive configurations via QR-Code (ZXing Barcode Scanner)
