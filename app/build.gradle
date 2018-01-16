@@ -11,9 +11,14 @@ android {
         versionCode 17
         versionName "1.0.1-12.01.2018"
     }
+
     buildTypes {
         release {
         }
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
     }
 }
 
