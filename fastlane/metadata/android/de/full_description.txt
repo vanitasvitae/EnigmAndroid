@@ -1,0 +1,13 @@
+EnigmAndroid ist eine Simulation der berühmten Enigma Verschlüsselungsmaschine bekannt aus dem zweiten Weltkrieg.
+
+Die Enigma war eine Schreibmaschinen-ähnliches Gerät, welches eine Reihe von Walzen und Steckern besaß,
+mit denen per polyalphabetischer Ersetzung Texte und Nachrichten verschlüsselt wurden.
+
+Funktionen:
+
+* Wachsende Anzahl an authentischen Enigma Modellen
+* Verschlüssle beliebige Texte indem du sie aus anderen Anwendungen heraus mit EnigmAndroid teilst
+* Teile verschlüsselte Texte mit anderen Apps
+
+Weitere Informationen über die histosche Enigma Maschine können unter anderem auf [https://de.wikipedia.org/wiki/Enigma_%28Maschine%29 Wikipedia] gefunden werden.
+
