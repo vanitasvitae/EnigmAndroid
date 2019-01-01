@@ -1,4 +1,8 @@
 CHANGELOG ENIGMANDROID
+v1.0.2-01.01.2019<
+*Added support for fastlane metadata
+*Remove What's new dialog
+
 v1.0.1-12.01.2018<
 *Added language: Brazilian-Portuguese
 
