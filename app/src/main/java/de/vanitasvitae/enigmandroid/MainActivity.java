@@ -1,6 +1,5 @@
 package de.vanitasvitae.enigmandroid;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,7 +14,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,9 +76,6 @@ public class MainActivity extends Activity
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		SettingsActivity.SettingsSingleton.getInstance(prefs, getResources());
 		layoutContainer = LayoutContainer.createLayoutContainer();
-
-		//Handle whats-new dialog
-		handleVersionUpdate();
 
 		//Handle shared text
 		Intent intent = getIntent();
@@ -238,58 +233,6 @@ public class MainActivity extends Activity
 		new PassphraseDialogBuilder().showDialog();
 	}
 
-	/**
-	 * Check, whether the app has been updated
-	 */
-	private void handleVersionUpdate()
-	{
-		int currentVersionNumber = 0;
-		int savedVersionNumber = SettingsActivity.SettingsSingleton.getInstance().getVersionNumber();
-		try
-		{
-			PackageInfo p = getPackageManager().getPackageInfo(getPackageName(), 0);
-			currentVersionNumber = p.versionCode;
-		}
-		catch (Exception ignored) {}
-		if(currentVersionNumber > savedVersionNumber)
-		{
-			showWhatsNewDialog();
-			SettingsActivity.SettingsSingleton.getInstance().setVersionNumber(currentVersionNumber);
-		}
-
-	}
-
-	/**
-	 * Show a dialog that informs the user about the latest important changes in the app
-	 * The dialog appears whenever the app starts after an update or after data has been
-	 * deleted
-	 */
-	private void showWhatsNewDialog()
-	{
-		PackageInfo pInfo = null;
-		try{ pInfo = getPackageManager().getPackageInfo(this.getPackageName(), 0);}
-		catch (PackageManager.NameNotFoundException e){ e.printStackTrace();}
-		assert pInfo != null;
-		String version = pInfo.versionName;
-		LayoutInflater li = LayoutInflater.from(this);
-		@SuppressLint("InflateParams")
-		View dialog = li.inflate(R.layout.dialog_whats_new, null);
-		((TextView) dialog.findViewById(R.id.dialog_whats_new_header)).setText(
-				String.format(getResources().getText(R.string.dialog_whats_new_header).toString(),version));
-		((TextView) dialog.findViewById(R.id.dialog_whats_new_details)).setText(
-				R.string.dialog_whats_new_content);
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setView(dialog).setTitle(R.string.dialog_whats_new_title)
-				.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog, int which)
-					{
-						dialog.dismiss();
-					}
-				});
-		builder.create().show();
-	}
 	/**
 	 * Show a Dialog containing information about the app, license, usage, author and a link
 	 * to the changelog
