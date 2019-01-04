@@ -1,3 +1,17 @@
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.vanitasvitae.enigmandroid;
 
 import android.app.Activity;
@@ -35,25 +49,6 @@ import de.vanitasvitae.enigmandroid.enigma.inputPreparer.InputPreparer;
 import de.vanitasvitae.enigmandroid.layout.LayoutContainer;
 import de.vanitasvitae.enigmandroid.layout.PassphraseDialogBuilder;
 
-/**
- * Main Android Activity of the app
- * Copyright (C) 2015  Paul Schaub
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along
- with this program; if not, write to the Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- * @author vanitasvitae
- */
 public class MainActivity extends Activity
 {
 	private static final int RESULT_SETTINGS = 1;
@@ -126,7 +121,7 @@ public class MainActivity extends Activity
 		{
 			layoutContainer.resetLayout();
 			Toast.makeText(getApplicationContext(), R.string.message_reset,
-						   Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		else if (id == R.id.action_send_message)
@@ -163,7 +158,7 @@ public class MainActivity extends Activity
 			layoutContainer.getEnigma().randomState();
 			layoutContainer.syncStateFromEnigmaToLayout();
 			Toast.makeText(getApplicationContext(), R.string.message_random,
-						   Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_SHORT).show();
 			layoutContainer.getOutput().setText("");
 			return true;
 		}
@@ -211,7 +206,7 @@ public class MainActivity extends Activity
 		Intent sendIntent = new Intent();
 		sendIntent.setAction(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_TEXT,
-							APP_ID+"/"+layoutContainer.getEnigma().getEncodedState().toString(16));
+				APP_ID+"/"+layoutContainer.getEnigma().getEncodedState().toString(16));
 		sendIntent.setType("text/plain");
 		startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
 	}
@@ -434,7 +429,7 @@ public class MainActivity extends Activity
 			int protocol_version = Enigma.getValue(s, max_protocol_version);
 			s = Enigma.removeDigit(s, max_protocol_version);
 			Log.d(APP_ID,
-				  "Try to restore configuration from BigInteger value "+s.toString()+" in protocol version "+protocol_version+".");
+					"Try to restore configuration from BigInteger value "+s.toString()+" in protocol version "+protocol_version+".");
 			SettingsActivity.SettingsSingleton.getInstance()
 					.setPrefMachineType(Enigma.chooseEnigmaFromSave(s));
 			layoutContainer = LayoutContainer.createLayoutContainer();
@@ -454,7 +449,7 @@ public class MainActivity extends Activity
 	{
 		String inputString = layoutContainer.getInput().getText();
 		SettingsActivity.SettingsSingleton.getInstance()
-		.setPrefMachineType(Enigma.chooseEnigmaFromSeed(seed));
+				.setPrefMachineType(Enigma.chooseEnigmaFromSeed(seed));
 		layoutContainer = LayoutContainer.createLayoutContainer();
 		layoutContainer.getEnigma().setStateFromSeed(seed);
 		layoutContainer.setInputPreparer(InputPreparer.createInputPreparer());
