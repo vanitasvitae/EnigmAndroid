@@ -1,5 +1,3 @@
-Simulation of the famous Enigma cipher machine used in the Second World War.
-
 The Enigma Machine is a typewriter-like machine, which uses a set of mechanical Rotors to achieve polyalphabetic substitution to encrypt texts.
 
 EnigmAndroid lays its focus on realistic and authentic encryption, rather than on authentic look and feel. The goal is to have an application that can decrypt historic messages given the correct settings.

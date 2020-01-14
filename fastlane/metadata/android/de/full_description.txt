@@ -1,5 +1,3 @@
-EnigmAndroid ist eine Simulation der berühmten Enigma Verschlüsselungsmaschine bekannt aus dem zweiten Weltkrieg.
-
 Die Enigma ist ein Schreibmaschinen-ähnliches Gerät, welches eine Reihe von Walzen und Steckern besitzt, mit denen per polyalphabetischer Ersetzung Texte und Nachrichten verschlüsselt werden können.
 
 EnigmAndroid legt großen Wert darauf, die Verschlüsselungsroutinen realistisch und historisch genau umzusetzen und verzichtet dabei auf authentische Optik. Ziel der Anwendung ist es, historische Nachrichten korrekt entschlüsseln zu können.
